@@ -1,0 +1,123 @@
+Intro:
+  * Why have semi-classical sims? Why make treat nuclei classical? What is the
+    BO approximation? Why is the BO approximation sometimes invalid? What sort
+    of systems is it invalid in?
+
+  * What is non-adiabatic MD? Why is it needed? Why use CTMQC and not another
+    method?
+
+  * How does CTMQC work -it is Ehrenfest + QM.
+
+  * What is the meaning of each term in the CTMQC equations and how do they
+    affect the dynamics?
+
+    + QM only active during mixing of populations -clumps nuclei together, acts
+      to collapse the WF with the ad_mom.
+    + ad_mom is similar to the QM.
+    + dlk causes the initial mixing of the populations
+    + H is the hamiltonian and in the diab basis it causes mixing it also
+      contains energies etc...
+      .
+      .
+      .
+
+
+What have I done?
+    CHAPTER 1
+  * Implemented CTMQC for the 1D, 1 atom Tully Models.
+
+    This was first implemented as standalone code in python then integrated into
+    CP2K.
+
+    This chapter should only discuss the adiabatic propagation and the results
+    of that.
+
+    - How was this implemented?
+        # What are the Tully Models? How to calculate the properties?
+
+        # Make a flow chart of the main parts of the code and the dependencies of
+          each variable.
+
+        # Wigner distribution
+
+    - How was the data verified/tested?
+        # Norm conservation
+
+        # Rabi oscillation
+
+        # Numerical tests
+            + Eq S26
+            + X_qmll diagonal thing
+
+        # Comparison to literature
+            + Models 1, 2, 3 and 4
+            + high and low mom
+
+        # Comparison to Subotnik
+          + Models 1, 2 and 3
+          + high and low mom
+
+
+    - The results match the literature results well. There are many conclusions
+      to be drawn from this mini-project:
+
+        # The calculation of the quantum momentum is dependent on the sigma,
+          which is hard to parameterise. It could in theory be done via
+          numerical methods such as geom opt, though in practice this would make
+          a simulation infeasibly expensive.
+
+        # The QM suffers from large diveregences in one of the terms that is
+          used in its calculation... These can be fixed in the Tully models.
+
+        # CTMQC works well if well parameterised.
+
+        # The adiabatic momentum must be reset after the adiabatic populations
+          fully decohere.
+
+
+    CHAPTER 2
+  * Transformed equations from adiabatic to diabatic basis and implemented for
+    molecular systems (diabatic propagation).
+
+    This was implemented in CP2K in the diabatic basis (built upon the Tully
+    Model code).
+
+    This chapter should discuss the basis transformation as well as the findings
+    from the molecular systems.
+
+    - How was it implemented?
+        # What is AOM:
+            + AOM gives an analytic way to calculate the Hamiltonian and
+              nonadiabtic couplings via the overlap of SOMOs.
+
+            + It is very fast and is used in the group in surface hopping and
+              CTMQC.
+
+        # How to implement CTMQC in the diabatic basis for AOM compatibility.
+            + Make a flow chart of the code, showing what changes from the Tully
+              models in order to simulate molecular systems.
+
+            + Show equations and their derivation.
+
+    - Does it work? Why not?
+        # Spikes increase in frequency with more complex systems.
+
+        # Can't parametrise the sigma value reliably.
+
+        # Bad norm conservation.
+
+
+      CHAPTER 3
+    * Helped optimise surface hopping code. This was mostly coded up by Sam, but
+      I helped by discussing and doing bits of coding. RK4 optimisation, memory
+      profiling, speed profiling, speed up the NACE calculation.
+
+      - Sped up the code by:
+        # Optimising the RK4 propagator
+        # Profiling memory and help determine the memory problem with the
+          multiple force_env sections.
+        # Re-wrote the NACE calculation to use LAPACK and split triple matrix
+          multiplications into 2 matrix-matrix multiplications.
+
+      - Used these speed ups to apply the code to larger systems... Amorphous
+        Pentacene.

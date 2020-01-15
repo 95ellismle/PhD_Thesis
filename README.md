@@ -1,3 +1,7 @@
+# My PhD Thesis
+This is based on the UCL LaTeX Thesis Template whose README is show below (use that for compile instructions etc...):
+
+
 # UCL LaTeX Thesis Templates
 
 [![Build Status](https://travis-ci.org/UCL/ucl-latex-thesis-templates.svg?branch=master)](https://travis-ci.org/UCL/ucl-latex-thesis-templates)

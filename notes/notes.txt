@@ -21,6 +21,17 @@ Intro:
       .
       .
 
+  * What other techinques are available -i.e. surface hopping.
+    + How does it work.
+    + How does it differ from CTMQC
+    + What can it be applied to -it's shortcomings
+
+  * Anything to do with Electrostatics?
+    + Direct Coulomb Sum -conditionally convergent, very slow
+    + Ewald -absolutely convergent, slow
+    + DSF -absolutely convergent, approximation, very quick
+    + Addition-subtraction.
+
 
 What have I done?
     CHAPTER 1
@@ -121,3 +132,40 @@ What have I done?
 
       - Used these speed ups to apply the code to larger systems... Amorphous
         Pentacene.
+
+    * Implemented the electrostatics in surface hopping.
+        - Why is it important? ES is vital to many systems such as polar molecules
+          or amorphous/semi-crystalline systems.
+          # Can show the collapse of the pentacene systems with and without the
+            electrostaics implemented.
+        - What schemes are available? What are the problems with each scheme and
+          what are the advantages of each? Ewald is formally (classically) exact
+          but expensive. DSF is an approximation but very cheap and probably a
+          good one.
+        - Implemented Ewald equations with a trick to efficiently calculate the
+          full ES for a Nmol system.
+        - Implemented DSF with addition-subtraction trick to speed things up even
+          further.
+        - Show speed up between DSF, Ewald and re-calculating for every state
+        - Show difference in results with DSF, Ewald and re-calculating for every
+          state
+
+
+       CHAPTER 4
+     * Amorphous and semi-crystalline pentacene is important to study, as in real
+       systems the pentacene structure is rarely perfectly crystalline.
+     * How did I make the systems?
+        - Melted at 800K, Quenched over various timescales.
+        - Longer timescales result in more ordered systems.
+        - Electrostatic interactions are very important as without these the classic
+          Herringbone packing doesn't form.
+        - Can result in very high couplings without ES -can show coupling networks.
+     * Applied surface hopping to large amorphous systems.
+        - Required the speed-ups and electrostatics in the previous chapter.
+     * More to come.
+
+
+
+
+
+

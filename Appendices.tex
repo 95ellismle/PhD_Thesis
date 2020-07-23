@@ -5,54 +5,215 @@
 \appendix
 \chapter{Tully Model Paramters}
 \label{app:tully_params}
+
 \section{Model 1 -Single Avoided Crossing}
-\begin{flalign*}
-  H_{11}(\mathbf{R}) \ &= \ A \ \tanh(B\mathbf{R}) &\\
-  H_{12}(\mathbf{R}) \ &= \ C e^{-D\mathbf{R}^2} \\
-  H_{21}(\mathbf{R}) \ &= \ H_{12}(\mathbf{R}) \\
-  H_{22}(\mathbf{R}) \ &= \ -H_{11}(\mathbf{R})
-\end{flalign*}
-Where A = 0.03, B = 0.4, C = 0.005 and D = 0.3
+  \begin{minipage}{0.5\textwidth}
+      \textbf{Hamiltonian Paramters:}
+      \begin{flalign*}
+        H_{11}(\mathbf{R}) \ &= \ A \ \tanh(B\mathbf{R}) &\\
+        H_{12}(\mathbf{R}) \ &= \ C e^{-D\mathbf{R}^2} \\
+        H_{21}(\mathbf{R}) \ &= \ H_{12}(\mathbf{R}) \\
+        H_{22}(\mathbf{R}) \ &= \ -H_{11}(\mathbf{R})
+      \end{flalign*}
+      Where A = 0.03, B = 0.4, C = 0.005 and D = 0.3
+  \end{minipage}
+  \hspace{0.5cm}
+  \vrule
+  \hspace{0.5cm}
+  \begin{minipage}{0.6\textwidth}
+      \begin{tabular}{l|l|c}
+        \textbf{Quantity} & \textbf{Value} & \textbf{Unit} \\
+        \hline
+        Initial Position & -20 & a.u. \\
+        Initial Velocities & 15.0, 25.0 & a.u. \\
+        Initial Adiab Pop & ground state & - \\
+        Simulation Time & 6000, 4000 & a.u. \\
+        $\sigma_{\nu}^{(I)}$ & 0.5 & a.u. \\
+        M ($\sigma$ constant) & 40 & - \\
+        $\Delta t_{\text{nuclear}}$ & 0.1 & fs \\
+        $\Delta t_{\text{electonic}}$ & 0.01 & fs \\
+        $\frac{\delta \mathbf{R}_{lk, \nu}^{(I)}}{\delta t}$ threshold & 0.15 & a.u. \\
+        N$_{rep}$ & 200 & - \\
+      \end{tabular}
+  \end{minipage}
 
 \section{Model 2 -Dual Avoided Crossing}
-\begin{flalign*}
-  H_{11}(\mathbf{R}) \ &= \ 0 &\\
-  H_{12}(\mathbf{R}) \ &= \ C e^{-D \mathbf{R}^2} \\
-  H_{21}(\mathbf{R}) \ &= \ H_{12}(\mathbf{R}) \\
-  H_{22}(\mathbf{R}) \ &= \ -A e^{-B\mathbf{R}^2} + E
-\end{flalign*}
-Where A = 0.1, B = 0.28, C = 0.015, D = 0.06 and E = 0.05
+\begin{minipage}{0.48\textwidth}
+    \textbf{Hamiltonian Paramters:}
+    \begin{flalign*}
+      H_{11}(\mathbf{R}) \ &= \ 0 &\\
+      H_{12}(\mathbf{R}) \ &= \ C e^{-D \mathbf{R}^2} \\
+      H_{21}(\mathbf{R}) \ &= \ H_{12}(\mathbf{R}) \\
+      H_{22}(\mathbf{R}) \ &= \ -A e^{-B\mathbf{R}^2} + E
+    \end{flalign*}
+    Where A = 0.1, B = 0.28, C = 0.015, D = 0.06 and E = 0.05
+  \end{minipage}
+  \hspace{0.5cm}
+  \vrule
+  \hspace{0.5cm}
+  \begin{minipage}{0.6\textwidth}
+      \begin{tabular}{l|l|c}
+        \textbf{Quantity} & \textbf{Value} & \textbf{Unit} \\
+        \hline
+        Initial Position & -8 & a.u. \\
+        Initial Velocities & 16.0, 30.0 & a.u. \\
+        Initial Adiab Pop & ground state & - \\
+        Simulation Time & 2500, 1500 & a.u. \\
+        $\sigma_{\nu}^{(I)}$ & 0.5 & a.u. \\
+        M ($\sigma$ constant) & 40 & - \\
+        $\Delta t_{\text{nuclear}}$ & 0.1 & fs \\
+        $\Delta t_{\text{electonic}}$ & 0.01 & fs \\
+        $\frac{\delta \mathbf{R}_{lk, \nu}^{(I)}}{\delta t}$ threshold & 0.15 & a.u. \\
+        N$_{rep}$ & 200 & - \\
+      \end{tabular}
+  \end{minipage}
 
 \section{Model 3 -Extended Coupling}
-\begin{flalign*}
-  H_{11}(\mathbf{R}) \ &= \ A  &\\
-  H_{12}(\mathbf{R}) \ &= \ \left \lbrace
-  \begin{array}{l}
-    B e^{C\mathbf{R}}, \qquad \qquad \qquad R \leq 0 \\
-      B(2 - e^{-C\mathbf{R}}),  \qquad \quad R > 0\\
-  \end{array} \right . \\
-  H_{21}(\mathbf{R}) \ &= \ H_{12}(\mathbf{R}) \\
-  H_{22}(\mathbf{R}) \ &= \ -H_{11}(\mathbf{R})
-\end{flalign*}
-Where A = 6$\times$ 10$^{-4}$, B = 0.1 and C = 0.9
+\begin{minipage}{0.5\textwidth}
+    \textbf{Hamiltonian Paramters:}
+    \begin{flalign*}
+      H_{11}(\mathbf{R}) \ &= \ A  &\\
+      H_{12}(\mathbf{R}) \ &= \ \left \lbrace
+      \begin{array}{l}
+        B e^{C\mathbf{R}}, \qquad \qquad R \leq 0 \\
+          B(2 - e^{-C\mathbf{R}}), \quad R > 0\\
+      \end{array} \right . \\
+      H_{21}(\mathbf{R}) \ &= \ H_{12}(\mathbf{R}) \\
+      H_{22}(\mathbf{R}) \ &= \ -H_{11}(\mathbf{R})
+    \end{flalign*}
+    Where A = 6$\times$ 10$^{-4}$, B = 0.1 and C = 0.9
+  \end{minipage}
+  \hspace{0.2cm}
+  \vrule
+  \hspace{0.6cm}
+  \begin{minipage}{0.6\textwidth}
+      \begin{tabular}{l|l|c}
+        \textbf{Quantity} & \textbf{Value} & \textbf{Unit} \\
+        \hline
+        Initial Position & -15 & a.u. \\
+        Initial Velocities & 10, 30 & a.u. \\
+        Initial Adiab Pop & ground state & - \\
+        Simulation Time & 5000, 1500 & a.u. \\
+        $\sigma_{\nu}^{(I)}$ & 0.5 & a.u. \\
+        M ($\sigma$ constant) & 40 & - \\
+        $\Delta t_{\text{nuclear}}$ & 0.1 & fs \\
+        $\Delta t_{\text{electonic}}$ & 0.01 & fs \\
+        $\frac{\delta \mathbf{R}_{lk, \nu}^{(I)}}{\delta t}$ threshold & 0.15 & a.u. \\
+        N$_{rep}$ & 200 & - \\
+      \end{tabular}
+  \end{minipage}
+
 
 \section{Model 4 -Dual Arch}
-\begin{flalign*}
-  H_{11}(\mathbf{R}) \ &= \ A  &\\
-  H_{12}(\mathbf{R}) \ &= \ \left \lbrace
-  \begin{array}{l}
-    B \left( -e^{C(\mathbf{R} - D)} + e^{C(\mathbf{R} + D)} \right), \qquad \qquad \ \ \qquad \quad \ \ R \leq -D \\
-    B \left( e^{-C(\mathbf{R} - D)} - e^{-C(\mathbf{R} + D)} \right), \qquad \qquad \ \ \qquad \quad R \geq D \\
-    B \left( 2 - e^{C(\mathbf{R} - D)} - e^{-C(\mathbf{R} + D)} \right), \qquad \qquad -D < R < D \\
-  \end{array} \right . \\
-  H_{21}(\mathbf{R}) \ &= \ H_{12}(\mathbf{R}) \\
-  H_{22}(\mathbf{R}) \ &= \ -H_{11}(\mathbf{R})
-\end{flalign*}
-Where A = 6$\times$ 10$^{-4}$, B = 0.1 and C = 0.9
+\hspace*{-1.5cm}
+\begin{minipage}{0.49\textwidth}
+    \textbf{Hamiltonian Paramters:}
+    \begin{flalign*}
+      H_{11}(\mathbf{R}) \ &= \ A  &\\
+      H_{12}(\mathbf{R}) \ &= \ \left \lbrace
+      \begin{array}{l}
+        B \left[ -e^{C(\mathbf{R} - D)} + e^{C(\mathbf{R} + D)} \right] \ \qquad \qquad \ R \leq -D \\
+        B \left[ e^{-C(\mathbf{R} - D)} - e^{-C(\mathbf{R} + D)} \right] \ \ \ \ \ \qquad \quad R \geq D \\
+        B \left[ 2 - e^{C(\mathbf{R} - D)} - e^{-C(\mathbf{R} + D)} \right] \ \ -D < R < D \\
+      \end{array} \right . \\
+      H_{21}(\mathbf{R}) \ &= \ H_{12}(\mathbf{R}) \\
+      H_{22}(\mathbf{R}) \ &= \ -H_{11}(\mathbf{R})
+    \end{flalign*}
+    Where A = 6$\times$ 10$^{-4}$, B = 0.1 and C = 0.9
+  \end{minipage}
+  \hspace*{-0.2cm}
+  \vrule
+  \hspace{0.2cm}
+  \begin{minipage}{0.6\textwidth}
+      \begin{tabular}{l|l|c}
+        \textbf{Quantity} & \textbf{Value} & \textbf{Unit} \\
+        \hline
+        Initial Position & -20 & a.u. \\
+        Initial Velocities & 10, 40 & a.u. \\
+        Initial Adiab Pop & ground state & - \\
+        Simulation Time & 6000, 2000 & a.u. \\
 
-\chapter{Another Appendix About Things}
-\label{appendixlabel2}
-(things)
+        $\sigma_{\nu}^{(I)}$ & 0.5 & a.u. \\
+        M ($\sigma$ constant) & 40 & - \\
+        $\Delta t_{\text{nuclear}}$ & 0.1 & fs \\
+        $\Delta t_{\text{electonic}}$ & 0.01 & fs \\
+        $\frac{\delta \mathbf{R}_{lk, \nu}^{(I)}}{\delta t}$ threshold & 0.15 & a.u. \\
+        N$_{rep}$ & 200 & - \\
+      \end{tabular}
+  \end{minipage}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\chapter{Wigner Distribution Derivation}
+\label{app:Wigner}
+The nuclear wavepacket (at time 0) is given by:
+\begin{equation}
+  \chi(R) = \frac{1}{(\pi \mu^2)^{\frac{1}{4}}} e^{-\frac{(R - R_0)^2}{2 \mu^2} + \im k_0 (R - R_0) }
+  \label{eq_app:initial_nucl_wp}
+\end{equation}
+The Wigner quassiprobability function for momentum and position (p, R) is given by:
+\begin{equation}
+  W(p, R) = \frac{1}{\pi \hbar} \int_{-\infty}^{\infty} \chi^{*}(R + y) \chi(R -y) e^{\frac{2 \im p y}{\hbar}} dy
+  \label{eq_app:Wig_def}
+\end{equation}
+However, both Ehrenfest and CTMQC require atomic positions as input so we must extract the position and velocity probability densities from this. We get these from the marginal integrals of the Wigner distribution i.e.
+\begin{equation}
+  |f(R)|^2 = \int^{\infty}_{-\infty} W(R, p) dp
+\end{equation}
+\begin{equation}
+  |f(p)|^2 = \int^{\infty}_{-\infty} W(R, p) dR
+\end{equation}
+In order to calculate these marignal integrals we must first crunch through the maths of equation \eqref{eq_app:Wig_def}. Substituting eq \eqref{eq_app:initial_nucl_wp} into \eqref{eq_app:Wig_def}:
+\begin{equation}
+  W(p, R) = \frac{1}{\pi \hbar} \int_{-\infty}^{\infty} \frac{1}{\mu \sqrt{\pi}} e^{- \frac{(R + y - R_0)^2}{2 \mu^2} - 2\im k_0y - \frac{(R - y - R_0)^2}{2 \mu^2} } e^{\frac{2 \im p y}{\hbar}} dy
+  \label{eq_app:step1}
+\end{equation}
+Simplifying the 2 quadratic equations (equation \eqref{eq_app:step1}) we get:
+\begin{equation}
+  W(p, R) = \frac{1}{\pi \hbar} \int_{-\infty}^{\infty} \frac{1}{\mu \sqrt{\pi}} e^{-\mu^{-2} \left(y^2 - 2\im k_0y \mu^2 + (R - R_0)^2 \right) } e^{\frac{2 \im p y}{\hbar}} dy
+  \label{eq_app:step2}
+\end{equation}
+We can now take the expressions not dependant on y outside of the integral and combine the exponents.
+\begin{equation}
+  W(p, R) = \frac{1}{\pi \sqrt{\pi} \mu \hbar} e^{-\frac{(R - R_0)^2}{\mu^2}} \int_{-\infty}^{\infty} e^{-\frac{y^2 + 2 \im y\mu^{2}\left( \frac{p}{\hbar} - k_0\right)}{\mu^{2}}  } dy
+  \label{eq_app:step3}
+\end{equation}
+Integrating we get:
+\begin{equation}
+  \int e^{-\frac{y^2 + 2 \im y\mu^{2}\left( \frac{p}{\hbar} - k_0\right)}{\mu^{2}}  } dy = \frac{\sqrt{\pi} \mu}{2} e^{-\frac{\mu^2}{\hbar^2} (p - \ \hbar k_0)^2} erf\left[\frac{y}{\mu} + \im \left(\frac{p \mu}{\hbar} - \mu k_0 \right)\right]
+   \label{eq_app:step4}
+\end{equation}
+Applying limits we get:
+\begin{equation}
+  \int_{-\infty}^{\infty} e^{-\frac{y^2 + 2 \im y\mu^{2}\left( \frac{p}{\hbar} - k_0\right)}{\mu^{2}}  } dy = \sqrt{\pi} \mu e^{-\frac{\mu^2}{\hbar^2} \left(p - \ \hbar k_0 \right)^2}
+  \label{eq_app:step5}
+\end{equation}
+Substituting this back into the Wigner distribution (equation \eqref{eq_app:Wig_def}) we finally get:
+\begin{equation}
+  W(p, R) = \frac{1}{\pi \hbar} e^{-\frac{(R - R_0)^2}{\mu^2}} e^{-\frac{\left(p - \ \hbar k_0 \right)^2}{\hbar^2/\mu^2}}
+  \label{eq_app:step6}
+\end{equation}
+Taking the maringal integrals we get the position and velocity probability distributions:
+\begin{equation}
+  |f(R)|^2 = \frac{2}{\mu \sqrt{\pi}} e^{- \frac{(R - R_0)^2}{\mu^2}}
+\end{equation}
+\begin{equation}
+  |f(p)|^2 = \frac{2}{\frac{\hbar}{\mu} \sqrt{\pi}} e^{- \frac{\mu^2}{\hbar^2}(p - \ \hbar k_0)^2}
+\end{equation}
+The above distributions are randomly sampled to get initial atomic velocities and positions for each simulation.
 
 \chapter{Colophon}
 \label{appendixlabel3}

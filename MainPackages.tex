@@ -12,8 +12,7 @@
 %  controls the default dpi resolution of images you use.
 %  72 is the default, but 300 is more normal, and 600 is
 %  as good as you can expect to be able to get on normal paper.
-\pdfimageresolution=600
-
+%\pdfvariable imageresolution 72
 
 % The float package improves LaTeX's handling of floats,
 %  and also adds the option to *force* LaTeX to put the float
@@ -27,7 +26,8 @@
 
 % Use these two packages together -- they define symbols
 %  for e.g. units that you can use in both text and math mode.
-\usepackage{gensymb}
+\usepackage{amssymb}
+%\usepackage{gensymb}
 \usepackage{textcomp}
 % You may also want the units package for making little
 %  fractions for unit specifications.

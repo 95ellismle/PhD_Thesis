@@ -9,7 +9,7 @@ LaTeXSources= $(wildcard *.tex *.bib) ucl_thesis.cls
 
 .PHONY: all clean superclean test
 all: Main.pdf
-
+thesis: Main.pdf; xdg-open Main.pdf
 
 Main.pdf: $(LaTeXSources)
 	lualatex --halt-on-error $(basename $@).tex

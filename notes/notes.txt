@@ -1,5 +1,5 @@
 Intro:
-  * Why have semi-classical sims? Why make treat nuclei classical? What is the
+  * Why have semi-classical sims? Why treat nuclei classically? What is the
     BO approximation? Why is the BO approximation sometimes invalid? What sort
     of systems is it invalid in?
 
@@ -144,11 +144,20 @@ What have I done?
           good one.
         - Implemented Ewald equations with a trick to efficiently calculate the
           full ES for a Nmol system.
+          # Need to explain how surface hopping work with site-energies etc...
+          # Need to explain why implementing ES the naive way is way too expensive (loop Nmol times)
         - Implemented DSF with addition-subtraction trick to speed things up even
           further.
+          # What is the DSF method?
+          # Why is it faster than Ewald? -Recip not used...
         - Show speed up between DSF, Ewald and re-calculating for every state
         - Show difference in results with DSF, Ewald and re-calculating for every
           state
+
+    * How were things tested?
+        - Tested against FIST with 1 mol in charge state.
+        - Tested against simply re-calculating the ES for every charge state.
+        - Tested for
 
 
        CHAPTER 4
@@ -160,6 +169,9 @@ What have I done?
         - Electrostatic interactions are very important as without these the classic
           Herringbone packing doesn't form.
         - Can result in very high couplings without ES -can show coupling networks.
+     * How did I parameterise the systems?
+        - Used GAFF...
+        - Partial Charges from Gaussian (B3LYP with 6-311G(d))
      * Applied surface hopping to large amorphous systems.
         - Required the speed-ups and electrostatics in the previous chapter.
      * More to come.

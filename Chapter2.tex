@@ -1,9 +1,9 @@
 \chapter{CTMQC applied to the Tully Models}
 \label{chap:tully_models}
 
-The Tully models, first proposed by John Tully in 1990 \cite{tully_molecular_1990}, are a collection of model systems. They were designed to be simple enough to obtain accurate quantum results to benchmark new nonadiabatic molecular dynamics (NAMD) methods against. Originally there were 3, 1 dimensional, 1 atom models. However, in this work an extra model has been introduced with parameters taken from Gossel, 18 \cite{gossel_coupled-trajectory_2018}. This is to allow a full comparison of my implementation of CTMQC with the literature. In this chapter my implementation of CTMQC will be tested using these model systems and by comparing my results with those in the literature.
+The Tully models, first proposed by John Tully in 1990 \cite{tully_molecular_1990}, are a collection of simple 1 dimensional model systems. They were designed to be simple enough to obtain accurate quantum results to benchmark new nonadiabatic molecular dynamics (NAMD) methods against. Originally there were 3, 1 dimensional, 1 atom models. However, in this work an extra model has been introduced with parameters taken from Gossel, 18 \cite{gossel_coupled-trajectory_2018}. This is to allow a full comparison of my implementation of CTMQC with the literature. In this chapter my implementation of CTMQC will be tested using these model systems and by comparing my results with those in the literature.
 \\\\
-In each of the Tully models the (diabatic) Hamiltonian is defined by the nuclear positions and is a 2$\times$2 matrix that takes the form:
+In each of the Tully models the (diabatic) Hamiltonian is a function of nuclear positions and is a 2$\times$2 matrix that takes the form:
 \begin{equation}
   \hat{H} = \frac{\ \hat{P} ^2}{2M} + \left(
                                               \begin{array}{cc}
@@ -12,7 +12,7 @@ In each of the Tully models the (diabatic) Hamiltonian is defined by the nuclear
                                               \end{array}
                                          \right)
 \end{equation}
-The nuclear mass is set to 2000 a.u., this was set to be very close to the proton's mass of 1836 a.u. so we can expect significant quantum effects that classical theory couldn't replicate. The values of the Hamiltonian elements are set to produce systems that resemble common features in a typical nonadiabatic simulation such as avoided crossings and regions of extended coupling. The parameters used in each systems' Hamiltonian where taken from Gossel, 18 \cite{gossel_coupled-trajectory_2018} in order to compare the 2 implementations. These can be found in appendix \ref{app:tully_params}.
+The nuclear mass has been set to 2000 a.u.. This was set to be very close to the proton's mass of 1836 a.u. so we can expect significant quantum effects that classical theory couldn't replicate. The values of the Hamiltonian matrix elements are set to produce systems that resemble common features in a typical nonadiabatic simulation such as avoided crossings and regions of extended coupling. The parameters used in each systems' Hamiltonian where taken from Gossel, 18 \cite{gossel_coupled-trajectory_2018} in order to compare the 2 implementations. These can be found in appendix \ref{app:tully_params}.
 \\\\
 In order to propagate dynamics in the adiabatic basis we need to calculate various quantities from the hamiltonian at each timestep. These are, for Ehrenfest, the (adiabatic) nonadiabatic coupling vector ($\mathbf{d}_{lk}^{(I)}$) and the adiabatic energies ($E_{l}^{(I)}$). In the full CTMQC simulations we must also calculate the adiabatic momentum term $\mathbf{f}_{l}^{(I)}$ from the Hamiltonian. The adiabatic energies are the eigenvalues of the Hamiltonian. The adiabatic NACV can be calculated via an (explicit Euler) finite difference method and equation \eqref{eq:NACV_def} below.
 \begin{equation}

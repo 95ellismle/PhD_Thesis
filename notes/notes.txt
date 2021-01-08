@@ -3,6 +3,8 @@ Intro:
     BO approximation? Why is the BO approximation sometimes invalid? What sort
     of systems is it invalid in?
 
+  * What are the alternatives to semi-classical simulations? Hopping theory basics -maybe I don't need to mention band theory as I've not used it...
+
   * What is non-adiabatic MD? Why is it needed? Why use CTMQC and not another
     method?
 

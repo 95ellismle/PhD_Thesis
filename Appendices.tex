@@ -171,10 +171,10 @@ The Wigner quassiprobability function for momentum and position (p, R) is given 
 \end{equation}
 However, both Ehrenfest and CTMQC require atomic positions as input so we must extract the position and velocity probability densities from this. We get these from the marginal integrals of the Wigner distribution i.e.
 \begin{equation}
-  |f(R)|^2 = \int^{\infty}_{-\infty} W(R, p) dp
+  \vert f(R)\vert^2 = \int^{\infty}_{-\infty} W(R, p) dp
 \end{equation}
 \begin{equation}
-  |f(p)|^2 = \int^{\infty}_{-\infty} W(R, p) dR
+  \vert f(p)\vert^2 = \int^{\infty}_{-\infty} W(R, p) dR
 \end{equation}
 In order to calculate these marignal integrals we must first crunch through the maths of equation \eqref{eq_app:Wig_def}. Substituting eq \eqref{eq_app:initial_nucl_wp} into \eqref{eq_app:Wig_def}:
 \begin{equation}
@@ -208,12 +208,53 @@ Substituting this back into the Wigner distribution (equation \eqref{eq_app:Wig_
 \end{equation}
 Taking the maringal integrals we get the position and velocity probability distributions:
 \begin{equation}
-  |f(R)|^2 = \frac{2}{\mu \sqrt{\pi}} e^{- \frac{(R - R_0)^2}{\mu^2}}
+  \vert f(R)\vert^2 = \frac{2}{\mu \sqrt{\pi}} e^{- \frac{(R - R_0)^2}{\mu^2}}
 \end{equation}
 \begin{equation}
-  |f(p)|^2 = \frac{2}{\frac{\hbar}{\mu} \sqrt{\pi}} e^{- \frac{\mu^2}{\hbar^2}(p - \ \hbar k_0)^2}
+  \vert f(p)\vert^2 = \frac{2}{\frac{\hbar}{\mu} \sqrt{\pi}} e^{- \frac{\mu^2}{\hbar^2}(p - \ \hbar k_0)^2}
 \end{equation}
 The above distributions are randomly sampled to get initial atomic velocities and positions for each simulation.
+
+
+
+
+\chapter{Norm Conservation in CTMQC and Ehrenfest}
+\label{app:norm_cons}
+A statement of the conservation of the norm is given below in equation \eqref{eq:normConsState}
+\begin{equation}
+	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 = \sum_{l} C_{l}^{*}(t)\frac{d C_{l}(t)}{dt} + \frac{d C_{l}^{*}(t)}{dt}C_{l}(t)
+	\label{eq:normConsState} = 0
+\end{equation}
+Because the adiabatic populations are real we can remove any imaginary parts.
+\begin{equation}
+	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 = 2 \mathbb{R} \left[ C_{l}^{*}(t) \frac{d C_{l}(t)}{dt} \right]
+	\label{eq:RealNorm}
+\end{equation}
+Substituting the equation for the evolution of the adiabatic coefficients (and removing the purely imaginary term into \eqref{eq:RealNorm} we get equation \eqref{eq:KsumKadNorm}
+\begin{align}
+	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 &= 2 \sum_{l} \mathbb{R} \left[ \cancel{\frac{-i}{\hbar} \epsilon_{BO}^{l} C_l(t)^*C_l^{}(t)}
+	- \sum_{k} C_l(t)^*C_k(t) d_{lk}^{ad} - (K^{sum} - K^{ad}_{l}) C_l(t)^*C_l(t)  \right]
+	\\
+	&= -2 \sum_{l} \mathbb{R} \left[ \sum_{k} C_l(t)^*C_k(t) d_{lk}^{ad} - (K^{sum} - K^{ad}_{l}) C_l(t)^*C_l(t)  \right]
+	\label{eq:KsumKadNorm}
+\end{align}
+Where:
+\begin{align}
+	K^{sum} &= \sum_{\nu = 1}^{N_n} \sum_{k} \frac{\mathcal{Q}_{lk, \nu}(t)}{\hbar M_\nu}\cdot \vert C_k(t) \vert^2 \mathbf{f}_{k, \nu}(t) \\
+	K^{ad}_{l} &= \sum_{\nu = 1}^{N_n} \sum_{k} \frac{\mathcal{Q}_{lk, \nu}(t)}{\hbar M_\nu}\cdot \mathbf{f}_{l, \nu}(t)
+\end{align}
+The NACE term evaluates to 0 due to the anti-symmetry of the NACE giving us equation \eqref{eq:KsumKadFinalNorm}. 
+\\\\
+So far, we have proved that the norm should be conserved here for all terms apart from the quantum momentum terms i.e. Ehrenfest.
+\begin{align}
+	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 &= 2 \sum_{l} \mathbb{R} \left[ (K^{sum} - K^{ad}_{l}) C_l(t)^*C_l(t)  \right] \\
+	&= 2 \left[ K^{sum} - \sum_{l} K^{ad}_{l} \vert C_{l}(t) \vert^2 \right]
+	\label{eq:KsumKadFinalNorm}
+\end{align}
+However, $K^{sum} \equiv \sum_{l} K^{ad}_{l} |C_{l}|^2$, therefore the norm should be conserved when summed over trajectories. This statement doesn't apply to individual trajectories though, and the norm may or may not be conserved for each of them. This is because they are coupled via the quantum momentum and population may transfer between trajectories.
+\newpage
+
+
 
 \chapter{Colophon}
 \label{appendixlabel3}

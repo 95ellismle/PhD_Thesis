@@ -1,0 +1,45 @@
+\chapter{CTMQC applied to the Tully Models}
+\label{chap:tully_models}
+
+The Tully models, first proposed by John Tully in 1990 \cite{tully_molecular_1990}, are a collection of simple 1 dimensional model systems. They were designed to be simple enough to obtain accurate quantum results to benchmark new nonadiabatic molecular dynamics (NAMD) methods against. Originally there were 3, 1 dimensional, 1 atom models. However, in this work an extra model has been introduced with parameters taken from Gossel, 18 \cite{gossel_coupled-trajectory_2018}. This is to allow a full comparison of my implementation of CTMQC with the literature. In this chapter my implementation of CTMQC will be tested using these model systems and by comparing my results with those in the literature.
+\\\\
+In each of the Tully models the (diabatic) Hamiltonian is a function of nuclear positions and is a 2$\times$2 matrix that takes the form:
+\begin{equation}
+  \hat{H} = \frac{\ \hat{P} ^2}{2M} + \left(
+                                              \begin{array}{cc}
+                                                H_{11}(\mathbf{R}) & H_{12}(\mathbf{R}) \\
+                                                H_{21}(\mathbf{R}) & H_{22}(\mathbf{R})
+                                              \end{array}
+                                         \right)
+\end{equation}
+The nuclear mass has been set to 2000 a.u.. This was set to be very close to the proton's mass of 1836 a.u. so we can expect significant quantum effects that classical theory couldn't replicate. The values of the Hamiltonian matrix elements are set to produce systems that resemble common features in a typical nonadiabatic simulation such as avoided crossings and regions of extended coupling. The parameters used in each systems' Hamiltonian where taken from Gossel, 18 \cite{gossel_coupled-trajectory_2018} in order to compare the 2 implementations. These can be found in appendix \ref{app:tully_params}.
+\\\\
+In order to propagate dynamics in the adiabatic basis we need to calculate various quantities from the hamiltonian at each timestep. These are, for Ehrenfest, the (adiabatic) nonadiabatic coupling vector ($\mathbf{d}_{lk}^{(I)}$) and the adiabatic energies ($E_{l}^{(I)}$). In the full CTMQC simulations we must also calculate the adiabatic momentum term $\mathbf{f}_{l}^{(I)}$ from the Hamiltonian. The adiabatic energies are the eigenvalues of the Hamiltonian. The adiabatic NACV can be calculated via an (explicit Euler) finite difference method and equation \eqref{eq:NACV_def} below.
+\begin{equation}
+  \mathbf{d}_{lk}^{(I)} = \langle \psi_{l}^{(I)} | \nabla \psi_k^{(I)} \rangle
+  \label{eq:NACV_def}
+\end{equation}
+Where $\psi_{l}^{(I)}$ is the adiabatic electronic basis function for adiabatic state l. This is given by the eigenvector of the Hamiltonian, on replica I, corresponding to state l. Illustrations of these 2 properties can be found below in fig \ref{fig:tully_schematics} for each of the 4 models systems.
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{Chapter_tullyModels/model_schematics.png}
+  \caption{\label{fig:tully_schematics}Adiabatic potential energy surfaces (orange and blue) and element 1, 2 of the nonadiabatic coupling vector (black) for the 4 model systems. For parameters see appendix \ref{app:tully_params}.}
+\end{figure}
+\newpage
+\noindent In order to initialise the simulations coordinates and velocities were sampled from the Wigner phase-space distribution of a gaussian nuclear wavepackets given by equation \eqref{eq:initial_nucl_wp}. A derivation of this can be found in appendix \ref{app:Wigner}. The nuclear positions/velocities were then propagated using a velocity verlet algorithm and the adiabatic expansion coefficients were propagated using a 4$^{th}$ order Runge-Kutta method.
+\begin{equation}
+  \chi(R, 0) = \frac{1}{(\pi \mu^2)^{\frac{1}{4}}} e^{-\frac{(R - R_0)^2}{2 \mu^2} + \im k_0 (R - R_0) }
+  \label{eq:initial_nucl_wp}
+\end{equation}
+The adiabatic coefficients were initialised purely on the ground state and the initial width of the nuclear wavepacket was set to $\mu = \sqrt{2}$ bohr. 2 values of initial momenta $k_0$ were chosen for each model, 1 low value and another higher one. Full details of all input parameters can be found in appendix \ref{app:tully_params}. I have implemented a serial version of CTMQC acting on Tully's toy model systems and real molecular systems using couplings derived from the analytic overlap method \cite{gajdos_ultrafast_2014} within the software package CP2K \cite{cp2k} and for Tully's model systems as standalone python code. These are accessible publicly via github repositories at: \href{https://github.com/95ellismle}{github.com/95ellismle}.
+
+\section{Testing My Implementation}
+The motivation behind implementing CTMQC for the Tully models was to serve as a verifiable base for later extensions, such as integrating CTMQC within the fragment-orbital based (FOB) \cite{spencer_fob-sh:_2016} framework which will be discussed in a later chapter \cite{chap:molecular_systems}. Using such simple systems will also help to clarify how each new parameter works and make testing and debugging easier. As well as many numerical tests on individual terms in the equations,  I have implemented some physical tests on the overall system dynamics. In this section, I will outline the key tests I have performed on both the Ehrenfest and full CTMQC parts of the equations. These are: verifying we obtain Rabi oscillation in the limit of fixed nuclear geometries, checking energy and the norm of the wavefunction is conserved and verifying the time-derivative of the sum over trajectories of adiabatic populations is 0.
+\\\\
+\subsection{Rabi Oscillation}
+...
+\subsection{Energy Conservation}
+...
+\subsection{Norm Conservation}
+In appendix \ref{ap:norm_cons} it is shown that the norm of the adiabatic coefficients
+\subsection{Time Derivative of Trajectory-Sum of Adiabatic Populations}
+...

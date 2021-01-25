@@ -37,10 +37,20 @@ The mass density of the 4 different quenching simulations can be seen below in f
 \end{figure}
 
 \subsection{Angular Distribution}
-The angular distribution of the 4 quench times and a crystal structure before and after a short MD run is shown below in figure \ref{fig:ang_dist}. This was calculated
-\begin{figure}{H}
+The angular distribution of the 4 quench times and a crystal structure before and after a short MD run is shown below in figure \ref{fig:ang_dist}. This was calculated by calculating the angle of an axis of each molecule with its nearest neighbours (20 $\AA$ center of mass cutoff was used). This data was then grouped into a histogram which is plotted below.
+\begin{figure}[H]
 	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/AngularDist.png}
-	\caption{\label{fig:ang_dist}The angular distribution for the 4 different quench times is shown above. The 
+	\caption{\label{fig:ang_dist}The angular distribution for the 4 different quench times is shown above. The brown and purple lines are from a perfect crystal before and after a short MD run. The others are after the various melt-quench simulations. On the right is a schematic showing which angles are referenced in each plot.}
+\end{figure}
+In figure \ref{fig:ang_dist} we can see as the quenching time increases we start to notice an ever more prominent peak appear at either extreme of the x axis. This is because the molecules are aligning parallel with one another. The symmetry of the plot is an artefact of the melt stage of the simulation were each molecule was free to rotate randomly.
+\\\\
+If we now look at the short axis plot we can see that, again, as the quench time increases we start to see a more ordered structure start to form. This time the herringbone intersection angle between molecules (54.3$^{o}$ \cite{PentaceneAngle}) within the herringbone structure is retrieved. This is a result of using partial charges in the simulation -running the same simulations without partial charges results in an unrealistic face-to-face stacking. The brown and purple line show the same calculation run on a crystal of pentacene before and after MD. The purple line comes from an analysis of a repeated unit cell, hence we get 2 delta functions: one at 54.3$^{o}$ and one at 0$^{o}$. This structure was then equilibrated with electrostatics for 50ps and we start to see a broadening of the herringbone intersection angle and to a lesser extent (on the left side) a broadening of the angle between parallel pairs.
+\subsection{Radial Distribution Function}
+The radial distribution function for the 4 different quench times and the crystal before and after a short molecular dynamics equilibration is shown in figure \ref{fig:RDF}
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/RDF.png}
+	\caption{\label{fig:RDF}The radial distribution function for 4 different quenching times and a crystal before and after 50ps of MD. The quenches (0, 1, 10 and 100ns) are shown in blue, orange, green and red respectively. The crystal data are shown in purple and brown.}
 \end{figure}
 
 

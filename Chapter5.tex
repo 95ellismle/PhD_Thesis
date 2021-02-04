@@ -29,24 +29,26 @@ A movie showing the full 100ns melt-quench simulation can be found here: \href{h
 	\caption{\label{fig:final_snapshots}The final snapshot of each quenching simulation visualised in VMD \cite{VMD} and rendered with Tachyon \cite{Tachyon}. Snapshots are ordered by quenching time i.e. a) is the 0ns quench, b) is the 1ns quench and so on.}
 \end{figure}
 \subsection{Molecular Packing}
-We can isolate clusters in each of the different structures shown in figure \ref{fig:final_snapshots} to reveal the molecular packing within. In figure \ref{fig:Layer11} a DBSCAN-like algorithm has been used to cluster molecules based on density. These clusters have then been highlighted by different colours. The top-most green cluster has been rotated such that, on the left, we are viewing it perpendicular to the plane of molecules, as shown by the cartoon eye. Comparing this plane to the crystal plane to the right of it we can see a remarkable similarity in the packing motif. The herringbone stacking has formed and as can be seen in figure \ref{fig:ang_dist} in section \ref{sect:ang_dist} this the herringbone intersection angle is remarkably similar to the crystal plane. This serves as a confirmation of the choice of force-field and the parameterisation of the partial charges.
+We can isolate clusters in each of the different structures shown in figure \ref{fig:final_snapshots} to reveal the molecular packing within. In figure \ref{fig:Layer11} a DBSCAN-like algorithm has been applied to the final structure from the 100ns quench to cluster molecules based on the molecular density in a given region of space. These clusters have then been highlighted by different colours. The top-most green cluster has been rotated such that, on the left, we are viewing it at an angle perpendicular to the plane of molecules, as shown by the cartoon eye. Comparing this plane to the crystal plane to the right of it we can see a remarkable similarity in the packing motif. The herringbone packing has formed and (as can be seen in figure \ref{fig:ang_dist} in section \ref{sect:ang_dist}) the herringbone intersection angle is remarkably similar to the crystal plane. This serves as a confirmation of the choice of force-field and the parameterisation of the partial charges.
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/100ns/Layer11_Demonstration.png}
 	\caption{\label{fig:Layer11}The 100ns quenched structure with different clusters shown with different colours. A bird's eye view of the green cluster has been shown on the left to demonstrate the herringbone packing within each cluster/layer. The far-right image labelled `Crystal' is a snapshot of a crystal plane after a short MD equilibration.}
 \end{figure}
 \\\\
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
+	\includegraphics[width=0.51\textwidth]{./img/DifferentQuenchTimes/0ns/Slice6_4Clusters.png}
+	\caption{\label{fig:ClustInst}A slice from the 0ns quenched structure with selected clusters of herringbone-like packing highlighted.}
+\end{wrapfigure}
 Although this herringbone packing pattern is most obvious in the 100ns quenched structure, it can also be seen in the other structures. At the other extreme in the 0ns quenched structure we see small clusters ($<$15 mols) of pentacene crystals forming. This is shown in figure \ref{fig:ClustInst}. As the quench time increases these crystal fragments have more time to grow unimpeded by other crystals seeded nearby.
-\begin{figure}[h]
-	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/0ns/Slice6_4Clusters.png}
-	\caption{\label{fig:ClustInst}A slice from the 0ns quenched structure with clusters of herringbone-like packing highlighted.}
-\end{figure}
 \\\\
 \noindent To quantify the change in the structure for the differently quenched structures 4 macroscopic properties can be plotted: the mass density, the angular distribution, the radial distribution function and the orientational order parameter. These are discussed in the following sections.
 \subsection{Mass Density}
 The mass density of the 4 different quenching simulations can be seen below in figure \ref{fig:QuenchDensity}. This was calculated by dividing the total mass of the atoms in the system by the volume (product of cell vectors) of the simulation box. The first thing to notice in this graph is as we increase the quenching time we increase the density of the final sample. This is due to the molecules packing more efficiently in the crystal than in an amorphous structure. We also see very clearly in the plots the sudden increase in density associated with the phase transition from liquid to solid Pentacene. In the 1ns quench structure (quenched with the barostat set to 1 atmosphere) this occurs around Pentacene's experimental melting of 530.15K \cite{PentaceneMeltingPoint} providing confirmation of the choice of force-field. The 0ns, 1ns and 10ns runs were performed in a single 24 hour run. The 100ns quench was performed using many restarts, the discontinuities in the density for the 100ns structure come from these restarts. I don't believe they affect the final structure as these only occur while the system is in the liquid state.
-\begin{figure}[H]
-	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/Density.png}
-	\caption{\label{fig:QuenchDensity}The time-evolution of the density of the differently quenched structures with annotations of the final density of each.}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{./img/DifferentQuenchTimes/Density.png}
+	\caption{\label{fig:QuenchDensity}A time series of the density of the quenched structures. The black line shows the experimental mass density of crystal pentacene.}
 \end{figure}
 
 \subsection{Angular Distribution}
@@ -61,8 +63,9 @@ In figure \ref{fig:ang_dist} we can see as the quenching time increases we start
 \\\\
 If we now look at the short axis plot we can see that, again, as the quench time increases we start to see a more ordered structure start to form. This time the herringbone intersection angle between molecules (54.3$^{o}$ \cite{PentaceneAngle}) within the herringbone structure is retrieved. This is a result of using partial charges in the simulation -running the same simulations without partial charges results in an unrealistic face-to-face stacking. The brown and purple line show the same calculation run on a crystal of pentacene before and after MD. The purple line comes from an analysis of a repeated unit cell, hence we get 2 delta functions: one at 54.3$^{o}$ and one at 0$^{o}$. This structure was then equilibrated with electrostatics for 50ps and we start to see a broadening of the herringbone intersection angle and to a lesser extent (on the left side) a broadening of the angle between parallel pairs.
 \subsection{Radial Distribution Function}
-The radial distribution function (RDF) describes the change of density from each particle in the system and is normalised to the bulk density (i.e. $\frac{N}{V}$). This was calculated by counting the number of atoms within a spherical shell from each atom and then dividing by the volume between these spheres. This local density was then normalised to the bulk crystal density. In systems with atoms regularly placed throughout the system we would expect to see sharp peaks in the RDF as there would be many gaps with no atoms. Conversely, with a totally amorphous system we would expect to see (once we reach twice the Van der Waals radius from each atom) a flat line at 1 as local density should be very similar to the global density. This pattern is what we observe in figure \ref{fig:RDF} below. The sharp peaks of the purple line show the RDF of a perfect crystal (repeated unit cell) confirming we have a highly ordered system. On the other extreme the blue line shows very weak ordering of the atoms' positions with any ordering vanishing after $\sim$12.5$\angstrom$ from each atom. Again as the quench time increases, the ordering increases resulting in larger peaks that more closely match the RDF of the crystal after a short MD equilibration.
-\begin{figure}[h]
+The radial distribution function (RDF) describes the change of density from each particle in the system and is normalised to the bulk density (i.e. $\frac{N}{V}$). This was calculated by counting the number of atoms within a spherical shell from each atom and then dividing by the volume between these spheres. This local density was then normalised to the bulk crystal density. In systems with atoms regularly placed throughout the system we would expect to see sharp peaks in the RDF as there would be many gaps with no atoms. Conversely, with a totally amorphous system we would expect to see (once we reach twice the Van der Waals radius from each atom) a flat line at 1 as local density should be very similar to the global density. This pattern is what we observe in figure \ref{fig:RDF} below. The sharp peaks of the purple line show the RDF of a perfect crystal (repeated unit cell) confirming we have a highly ordered system. On the other extreme the blue line shows very weak ordering of the atoms' positions with any ordering vanishing after $\sim$12.5$\angstrom$ from each atom. This is due to the 0ns structure comprising primarily of small crystal fragments giving rise to a small amount of very local order but over longer distances this order vanishes. Again, as the quench time increases, the ordering increases resulting in larger peaks that more closely match the RDF of the crystal after a short MD equilibration.
+\begin{figure}[H]
+	\centering
 	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/RDF.png}
 	\caption{\label{fig:RDF}The carbon-carbon radial distribution function for 4 different quenching times and a crystal before and after 50ps of MD. The quenches (0, 1, 10 and 100ns) are shown in blue, orange, green and red respectively. The crystal data are shown in purple and brown.}
 \end{figure}
@@ -81,7 +84,33 @@ In figure \ref{fig:OOP} we can see the change in the orientational order paramet
 	\caption{\label{fig:OOP}The change in the orientational order parameter (OOP) with respect to the quenching time. The blue data represents the values for the long axis and the orange data represents the short axis values. The horizontal lines show the theoretical value for a perfect crystal.}
 \end{figure}
 
+\section{Charge Transfer Properties}
+We have seen that the final structure of the pentacene systems becomes more ordered and crystal-like as the quenching time is increased. It would be good now to see how this affects the charge transfer properties. A key quantity governing charge transfer rates is the ratio between electronic coupling and reorganisation energy, $\frac{H_{ab}}{\lambda}$. Seeing as we have a single molecule system, by plotting the electronic coupling we can get a qualitative view of the charge transfer dynamics and see which paths are the most likely within the structure.
+\subsection{Coupling Graphs}
+In figure \ref{fig:crystalCouplingGraph} the graph of electronic couplings between molecules has been plotted for each of the quenched systems and a crystal system after a short equilibration run with MD. In this figure the centers of mass each molecule is represented by a small black dot and the calculated coupling value with a coloured line (red, green blue). That is, if 2 molecules have a non-negligible coupling between them they would be represented by 2 black dots with either a red, green or blue line connecting them. The couplings were calculated via the analytic overlap method \cite{gajdos_ultrafast_2014} and a pertinent cluster of molecules was selected for each quench time. For the 0ns and 1ns quench times this was simply a slice 1 molecule thick in the z dimension, containing a few hundred molecules. For the 10ns and 100ns quenched structures a reasonable cluster of molecules was chosen after applying a density based clustering algorithm on the superstructure. For the crystal a plane from the crystal was chosen. All panes in figure \ref{fig:crystalCouplingGraph} show the coupling of the selected system from an angle perpendicular to the plane of molecules.
+\begin{figure}
+	\includegraphics[width=\textwidth]{./img/CouplingPlots/CouplingGraphs_all.png}
+	\caption{\label{fig:crystalCouplingGraph}A representative network of electronic coupling that each quenched structure has formed. Each structure is labelled by the quench time (e.g. 0ns, 1ns, 10ns, 100ns) or Crystal for a crystal after a short MD equilibration. Coupling strengths are categorised as high (red), medium (green) and low (blue). The definitions of the categories are given in the legend in the bottom right corner.}
+\end{figure}
+\\\\
+We can see in the graph of the 0ns quenched structure there is very little order to the coupling network. Only very small fragments of high (red) coupling are formed and each one is connected via weak or medium coupling. We can define a 'high coupling fragment' as any set of molecules which can all be reached from any member of the set via an unbroken path of high coupling. The mean size of these high coupling fragments in the 0ns structure is 4.1 molecules and there are 503 of them. In this structure we would expect to see a localised polaron (over a $\sim$ 3 molecules) and low mobilities due to the lack of conductive channels in the structure. The mean size of fragments increases and the number of fragments decreases as we increase the quenching time as shown in table \ref{tab:cluster_sizes}.
+\\
+\begin{table}[h]
+	\begin{tabular}{cccc}
+		\textbf{Quench Time} [ns] & \textbf{Mean Fragment Size} & \textbf{Fragment Size Std Dev} & \textbf{Num Fragments} \\
+		\hline &&&\\
+		0 & 4.2 & 3.8 & 503 \\
+		1 & 4.5 & 5.0 & 493 \\
+		10 & 6.5 & 9.3 & 373 \\
+		100 & 8.7 & 16.2 & 292 \\
+		\hline &&&\\
+	\end{tabular}
+	\caption{\label{tab:cluster_sizes}The change in the number of high coupling fragments, and the mean and standard deviation of their size, found in each structure as the quenching time was varied.}
+\end{table}
+\\
+We can see in table \ref{tab:cluster_sizes} that as the quenching time increases, the size of the highly coupled fragments (how many molecules are connected) increases and fewer of them are formed. The standard deviation also increases showing in the 0ns quenched structure most fragments are very small but as we increase the quench time we still get smaller fragments but much larger ones can now form too. These larger fragments can act as regions of high conductivity allowing much larger mobilities to be achieved than in the quicker quenching times.
 
+\clearpage
 \subsection{Molecular Dynamics without Partial Charges}
 
 

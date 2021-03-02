@@ -1,5 +1,7 @@
 \addcontentsline{toc}{chapter}{Appendices}
 
+
+
 % The \appendix command resets the chapter counter, and changes the chapter numbering scheme to capital letters.
 %\chapter{Appendices}
 \appendix
@@ -215,12 +217,49 @@ Taking the maringal integrals we get the position and velocity probability distr
 \end{equation}
 The above distributions are randomly sampled to get initial atomic velocities and positions for each simulation.
 
+\chapter{$\mathbf{R}_{lk, \nu}$ Alternatives}
+\label{ap:RlkAlternatives}
+\section{$\mathbf{R}_{lk, \nu}$ Extrapolation}
+\label{ap:RlkExtrap}
+
+\section{Alternative Quantum Momentum Intercept}
+\label{ap:AltIntercept}
+In Agostini, 16 \cite{agostini_quantum-classical_2016} another quantum momentum intercept term is discussed. This term is not used because, as previously discussed in section \ref{sect:CTMQC_Approx}, it leads to unphysical transfer of population between adiabatic states when the nonadiabatic coupling elements are 0. However, it can be used in these Tully Models as an effective fix to the discontinuities caused by the $\mathbf{R}_{lk, \nu}$ term.
+\\\\
+The other quantum momentum intercept, $\mathbf{R}_{0, \nu}^{(I)}$, comes directly from the construction of the nuclear density using a linear combination of a product of gaussians (see equation \eqref{eq:NuclDens} in the introduction). It is defined as in equation \eqref{eq:RI0} below:
+\begin{equation}
+    \mathbf{R}_{0, \nu}^{(I)} = \sum_{J}^{N_{tr}} \left[ \frac{\hbar          \prod_{\nu'}                                                                  g_{\sigma_{\nu'}^{(J)}(t)}\left(\mathbf{R}_{\nu'}^{(I)}(t) -                  \mathbf{R}_{\nu'}^{(J)}(t)\right)}   {2                                       \sigma_{\nu}^{(J)}(t)^2\sum_{K}^{N_{tr}}\prod_{\nu'}                                                                                                        g_{\sigma_{\nu'}^{(K)}(t)}\left(\mathbf{R}_{\nu'}^{(I)}(t) -                  \mathbf{R}_{\nu'}^{K)}(t)\right)} \mathbf{R}_{\nu}^{(I)} \right]
+    \label{eq:RI0}
+\end{equation}
+
+
+
+
+
+
+\chapter{Rabi Oscillation \label{ap:Rabi}}
+The time dependant Schr\"odinger equation is given below:
+\begin{equation}
+	i \hbar \frac{\delta}{\delta t} \Phi(\textbf{R}(t), t) = \hat{H}(\textbf{R}(t), t) \Phi(\textbf{R}(t), t)
+\end{equation}
+If we hold the nuclear coordinates in place (e.g. remove time-dependence from nuclear coordinates) we get an ordinary differential equation as shown below:
+\begin{equation}
+	i \hbar \frac{d}{d t} \Phi(\mathbf{R}, t) = \hat{H}(\mathbf{R}, t) \Phi(\mathbf{R}, t)
+\end{equation}
+This has the following general solution.
+\[\Phi(\mathbf{R}, t) = e^{i \hbar \hat{H}t} \Phi(\mathbf{R}, 0)\]
+
+
+
+
+
+
 
 
 
 \chapter{Norm Conservation in CTMQC and Ehrenfest}
-\label{app:norm_cons}
-A statement of the conservation of the norm is given below in equation \eqref{eq:normConsState}
+\label{ap:norm_cons}
+A statement of the conservation of the norm, for a single trajectory, is given below in equation \eqref{eq:normConsState}
 \begin{equation}
 	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 = \sum_{l} C_{l}^{*}(t)\frac{d C_{l}(t)}{dt} + \frac{d C_{l}^{*}(t)}{dt}C_{l}(t)
 	\label{eq:normConsState} = 0
@@ -230,28 +269,28 @@ Because the adiabatic populations are real we can remove any imaginary parts.
 	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 = 2 \mathbb{R} \left[ C_{l}^{*}(t) \frac{d C_{l}(t)}{dt} \right]
 	\label{eq:RealNorm}
 \end{equation}
-Substituting the equation for the evolution of the adiabatic coefficients (and removing the purely imaginary term into \eqref{eq:RealNorm} we get equation \eqref{eq:KsumKadNorm}
+Substituting the equation for the evolution of the adiabatic coefficients (and removing the purely imaginary term) into \eqref{eq:RealNorm} we get equation \eqref{eq:KsumKadNorm}
 \begin{align}
 	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 &= 2 \sum_{l} \mathbb{R} \left[ \cancel{\frac{-i}{\hbar} \epsilon_{BO}^{l} C_l(t)^*C_l^{}(t)}
-	- \sum_{k} C_l(t)^*C_k(t) d_{lk}^{ad} - (K^{sum} - K^{ad}_{l}) C_l(t)^*C_l(t)  \right]
+	- \sum_{k} \left[ C_l(t)^*C_k(t) d_{lk}^{ad} - (A_l - B_{l}) C_l(t)^*C_l(t)  \right] \right]
 	\\
-	&= -2 \sum_{l} \mathbb{R} \left[ \sum_{k} C_l(t)^*C_k(t) d_{lk}^{ad} - (K^{sum} - K^{ad}_{l}) C_l(t)^*C_l(t)  \right]
+	&= -2 \sum_{l} \mathbb{R} \left[ \sum_{k} \left[ C_l(t)^*C_k(t) d_{lk}^{ad} - (A_l - B_{l}) C_l(t)^*C_l(t)  \right] \right]
 	\label{eq:KsumKadNorm}
 \end{align}
 Where:
 \begin{align}
-	K^{sum} &= \sum_{\nu = 1}^{N_n} \sum_{k} \frac{\mathcal{Q}_{lk, \nu}(t)}{\hbar M_\nu}\cdot \vert C_k(t) \vert^2 \mathbf{f}_{k, \nu}(t) \\
-	K^{ad}_{l} &= \sum_{\nu = 1}^{N_n} \sum_{k} \frac{\mathcal{Q}_{lk, \nu}(t)}{\hbar M_\nu}\cdot \mathbf{f}_{l, \nu}(t)
+	A_{l} &= \sum_{\nu = 1}^{N_n} \sum_{k} \frac{\mathcal{Q}_{lk, \nu}(t)}{\hbar M_\nu}\cdot \mathbf{f}_{k, \nu}(t) \vert C_k(t) \vert^2 \ \\
+	B_{l} &= \sum_{\nu = 1}^{N_n} \sum_{k} \frac{\mathcal{Q}_{lk, \nu}(t)}{\hbar M_\nu}\cdot \mathbf{f}_{l, \nu}(t) \vert C_{k}(t)\vert^2
 \end{align}
 The NACE term evaluates to 0 due to the anti-symmetry of the NACE giving us equation \eqref{eq:KsumKadFinalNorm}. 
 \\\\
 So far, we have proved that the norm should be conserved here for all terms apart from the quantum momentum terms i.e. Ehrenfest.
 \begin{align}
-	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 &= 2 \sum_{l} \mathbb{R} \left[ (K^{sum} - K^{ad}_{l}) C_l(t)^*C_l(t)  \right] \\
-	&= 2 \left[ K^{sum} - \sum_{l} K^{ad}_{l} \vert C_{l}(t) \vert^2 \right]
+	\frac{d}{dt} \sum_{l} \left\vert C^{QM}_{l}(t) \right\vert^2 &= 2 \sum_{l} \mathbb{R} \left[ (A_l - B_{l}) C_l(t)^*C_l(t)  \right] \\
+	&= 2 \left[ \sum_l A_l |C_{l}(t)|^2 - \sum_{l} B_{l} \vert C_{l}(t) \vert^2 \right]
 	\label{eq:KsumKadFinalNorm}
 \end{align}
-However, $K^{sum} \equiv \sum_{l} K^{ad}_{l} |C_{l}|^2$, therefore the norm should be conserved when summed over trajectories. This statement doesn't apply to individual trajectories though, and the norm may or may not be conserved for each of them. This is because they are coupled via the quantum momentum and population may transfer between trajectories.
+However, $\sum_{l}A_l |C_{l}|^2 \equiv \sum_{l} B_{l} |C_{l}|^2$, therefore there is no change in the population and the norm should be conserved.
 \newpage
 \chapter{Adiabatic State Initialisation}
 \label{ap:AdiabaticSelector}

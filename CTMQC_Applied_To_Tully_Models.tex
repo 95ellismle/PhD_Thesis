@@ -94,19 +94,18 @@ The calculation of the quantum momentum is discussed in detail in Min, 17 \cite{
 \noindent The alternative propagation methods I have investigated are:
 \begin{enumerate}
 	\item Use Ehrenfest Dynamics (set $\mathcal{Q}_{lk, \nu}$ term to 0).
-	\item Extrapolate the value of $\mathbf{R}_{lk, \nu}$ from values before the divergence (see appendix \ref{ap:RlkExtrap}.
-	\item Switch to using the alternative intercept $\mathbf{R}_{0, \nu}^{(I)}$ (see appendix \ref{ap:AltIntercept}.
+	\item Extrapolate the value of $\mathbf{R}_{lk, \nu}$ from values before the divergence (see appendix \ref{ap:RlkExtrap}).
+	\item Switch to using the alternative intercept $\mathbf{R}_{0, \nu}^{(I)}$ (see appendix \ref{ap:AltIntercept}).
 \end{enumerate}
 of these 3 methods, method 3 was the most successful in reducing the norm drift in the Tully Models as can be seen in figure \ref{fig:NormConsCorr}.
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{img/CTMQC/TullyModels/CTMQC_Norm_Conservation_wCorr.png}
 	\caption{\label{fig:NormConsCorr}Norm conservation in CTMQC after applying a divergence correction to the $\mathbf{R}_{lk, \nu}$ term. RI0 refers to method 3, Extrap DC refers to method 2 and Ehren DC refers to method 1. No DC Corr shows the population norm without any corrections applied.}
 \end{figure}
-In figure \ref{fig:NormConsCorr} we see the norm drift results after the 3 $\mathbf{R}_{lk, \nu}$ correction methods have been applied. The original data (red curve) shows the original data (as in figure \ref{fig:CTMQCNormCons})
-
-
+In figure \ref{fig:NormConsCorr} we see the norm drift results after the 3 $\mathbf{R}_{lk, \nu}$ correction methods have been applied. The red curve shows the original data (as in figure \ref{fig:CTMQCNormCons}) with it's large divergences in the norm drift. The green curve shows the alternative intercept method, the blue curve shows the effect of switching to Ehrenfest during the $\mathcal{Q}_{lk, \nu}^{(I)}$ spikes and the black shows a method that involved extrapolating the $\mathbf{R}_{lk, \nu}$ value from data before the spike began. We can see clearly all 3 methods improve the norm drift, though using the alternative intercept seems to help the most. Model 3 is not affected as we do not see these divergences in the $\mathbf{R}_{lk, \nu}$ due to the denominator in this particular model never crossing from positive to negative (through zero). It is important to note that in each of the models with the divergence correction applied all models exhibit the expected trend of decreasing the time-step improves norm conservation. However, the norm conservation in all 4 models is still significantly higher ($\sim$ 7-8 orders of magnitude) higher than that of Ehrenfest. I think this is due to the product of the adiabatic populations, $|C_{l}^{(I)}|^2 |C_{k}^{(I)}|^2$, being used in the calculation of the quantum momentum which can be a more quickly varying quantity than just the adiabatic populations alone.
 
 \subsection{Time Derivative of Trajectory-Sum of Adiabatic Populations}
-...
+In the SI of Min, 17 \cite{min_ab_2017} an conservation equation (S27) was given 
+
 \subsection{Energy Conservation}
 ...

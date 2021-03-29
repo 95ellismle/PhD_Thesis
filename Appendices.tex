@@ -232,9 +232,26 @@ The other quantum momentum intercept, $\mathbf{R}_{0, \nu}^{(I)}$, comes directl
     \label{eq:RI0}
 \end{equation}
 
+However, as switching to this intercept directly may cause discontinuities in itself a smoothing parameter is applied to ease the switch. This is given in equation \eqref{eq:effR} below:
+\begin{equation}
+	\left[ 1 - A(t) \right] R_{good}(t) + A(t)R_{bad}(t) = R_{effective}(t)
+	\label{eq:effR}
+\end{equation}
 
+$R_{good}$ refers to the intercept that should be switched to (e.g. for the detection of a spike in the $R_{lk, \nu}^{(I)}$ we switch to the intercept in in equation \eqref{eq:RI0}). $R_{lk, \nu}^{(I)}$ refers to the intercept that is being switched from (e.g. when it is detected that the divergence of $R_{lk, \nu}^{(I)}$ has finished then we switch from the alternative intercept back to $R_{lk, \nu}^{(I)}$). $A(t)$ is a smoothing parameter and is given in equation \eqref{eq:tanhSmoothParam} below:
 
+\begin{equation}
+	A(t) = \frac{D_{\nu}^{(I)}}{2} \left[ tanh\left( t - \frac{t_{final} + t_{init}}{0.6 N dt} \right) + 1 \right]
+	\label{eq:tanhSmoothParam}
+\end{equation}
 
+Where $D_{\nu}^{(I)}$ is the distance between the 2 intercepts (e.g. $D_{\nu}^{(I)} = R_{lk, \nu}^{(I)} - R_{0, \nu}^{(I)}$), $N$ is the number of steps to take before settling solely on one intercept, $t_{init}$ is the time of detection of the divergence, $t_{final}$ is the time at which the code settles on 1 intercept and dt is the timestep taken.
+\\
+A cartoon of this process is given in figure \ref{fig:tanh_explan}
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{./img/CTMQC/tanh_explanation.png}
+	\caption{\label{fig:tanh_explan}A crude demonstration of the principle behind the smoothing procedure in switching between intercepts. The black line shows an intercept begin to diverge and the alternative intercept is shown in purple. As the step is incremented the amount of the alternative intercept that makes up the effective intercept is increased until only 1 intercept is used.}
+\end{figure}
 
 
 \chapter{Rabi Oscillation \label{ap:Rabi}}

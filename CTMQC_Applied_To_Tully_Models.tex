@@ -105,7 +105,19 @@ of these 3 methods, method 3 was the most successful in reducing the norm drift 
 In figure \ref{fig:NormConsCorr} we see the norm drift results after the 3 $\mathbf{R}_{lk, \nu}$ correction methods have been applied. The red curve shows the original data (as in figure \ref{fig:CTMQCNormCons}) with it's large divergences in the norm drift. The green curve shows the alternative intercept method, the blue curve shows the effect of switching to Ehrenfest during the $\mathcal{Q}_{lk, \nu}^{(I)}$ spikes and the black shows a method that involved extrapolating the $\mathbf{R}_{lk, \nu}$ value from data before the spike began. We can see clearly all 3 methods improve the norm drift, though using the alternative intercept seems to help the most. Model 3 is not affected as we do not see these divergences in the $\mathbf{R}_{lk, \nu}$ due to the denominator in this particular model never crossing from positive to negative (through zero). It is important to note that in each of the models with the divergence correction applied all models exhibit the expected trend of decreasing the time-step improves norm conservation. However, the norm conservation in all 4 models is still significantly higher ($\sim$ 7-8 orders of magnitude) higher than that of Ehrenfest. I think this is due to the product of the adiabatic populations, $|C_{l}^{(I)}|^2 |C_{k}^{(I)}|^2$, being used in the calculation of the quantum momentum which can be a more quickly varying quantity than just the adiabatic populations alone.
 
 \subsection{Time Derivative of Trajectory-Sum of Adiabatic Populations}
-In the SI of Min, 17 \cite{min_ab_2017} an conservation equation (S27) was given 
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{./img/CTMQC/TullyModels/CTMQC_S27.png}
+	\caption{\label{fig:S27}The conserved quantity given in equation \eqref{eq:S27}. Each color represents data outputted by a simulation using a different model (specified in the legend). Each time-series is plotted with a translucent color meaning each model's data can be seen at once.}
+\end{figure}
+
+In the SI of Min, 17 \cite{min_ab_2017} a conservation equation (S27) is given. This is repeated below in equation \eqref{eq:S27}
+\begin{equation}
+	\sum_{I} \mathcal{Q}_{lk, \nu}^{(I)}(t) \left( f_{k, \nu}^{(I)} - f_{l, \nu}^{(I)} \right) |C_{k}^{(I)} (t)|^2 |C_{l}^{(I)} (t)|^2 = 0  \qquad \forall l, k, \nu
+	\label{eq:S27}
+\end{equation}
+
+An example time-series of this quantity is given in figure \ref{fig:S27} for each Tully model. The data used to calculate come from simulations of each of the Tully models using the parameters given in appendix \ref{app:tully_params}. No smoothing was used for the $\mathbf{R}_{lk, \nu}^{(I)}$ term. It can be seen in this figure that the conservation quantity hovers around 0 for each model with a maximum deviation of 10$^{-15}$.
+
 
 \subsection{Energy Conservation}
 ...

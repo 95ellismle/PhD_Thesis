@@ -30,7 +30,7 @@ Where $\psi_{l}^{(I)}$ is the adiabatic electronic basis function for adiabatic 
   \chi(R, 0) = \frac{1}{(\pi \mu^2)^{\frac{1}{4}}} e^{-\frac{(R - R_0)^2}{2 \mu^2} + \im k_0 (R - R_0) }
   \label{eq:initial_nucl_wp}
 \end{equation}
-The adiabatic coefficients were initialised purely on the ground state and the initial width of the nuclear wavepacket was set to $\mu = \sqrt{2}$ bohr. 2 values of initial momenta $k_0$ were chosen for each model, 1 low value and another higher one. Full details of all input parameters can be found in appendix \ref{app:tully_params}. I have implemented a serial version of CTMQC acting on Tully's toy model systems and real molecular systems using couplings derived from the analytic overlap method \cite{gajdos_ultrafast_2014} within the software package CP2K \cite{cp2k} and for Tully's model systems as standalone python code. These are accessible publicly via github repositories at: \href{https://github.com/95ellismle}{github.com/95ellismle}.
+The adiabatic coefficients were initialised purely on the ground state and the initial width of the nuclear wavepacket was set to $\mu = \sqrt{2}$ bohr. 2 values of initial momenta $k_0$ were chosen for each model, 1 low value and another higher one. Full details of all input parameters can be found in appendix \ref{app:tully_params}. I have implemented a serial version of CTMQC acting on Tully's toy model systems and real molecular systems using couplings derived from the analytic overlap method \cite{gajdos_ultrafast_2014} within the software package CP2K \cite{cp2k} and for Tully's model systems as standalone python code. These are accessible publicly via github repositories at: \href{https://github.com/95ellismle}{github.com/95ellismle}. This work will only focus on results from the CP2K implementation as we will later see this code extended and applied to systems of real Ethylene molecules.
 
 \section{Testing My Implementation}
 The motivation behind implementing CTMQC for the Tully models was to serve as a verifiable base for later extensions, such as integrating CTMQC within the fragment-orbital based (FOB) \cite{spencer_fob-sh:_2016} framework which will be discussed in a later chapter \cite{chap:molecular_systems}. Using such simple systems will also help to clarify how each new parameter works and make testing and debugging easier. As well as many numerical tests on individual terms in the equations,  I have implemented some physical tests on the overall system dynamics. In this section, I will outline the key tests I have performed on both the Ehrenfest and full CTMQC parts of the equations. These are: ... %verifying we obtain Rabi oscillation in the limit of fixed nuclear geometries, checking energy and the norm of the wavefunction is conserved and verifying the time-derivative of the sum over trajectories of adiabatic populations is 0.
@@ -55,6 +55,14 @@ In order to compare to results in the literature the same setup had to be used. 
 The results in figure \ref{fig:LitCompEhrenTully} show that both the adiabatic populations and coherence indicator give exactly the same results as in the literature, within reasonable error. Any deviations of results come from either a slightly different initial sampling of positions (sampled from a Wigner distribution) or small errors in retrieving data from the graphs in each paper. For example, in the case of the high initial momentum simulation of model 4 all 3 results show some differences though the trend is very similar. This is true also in the Model 2 results where the Agostini, 16 populations show some transient oscillations before settling onto the same equilibrium population. This may be due to a smaller spread of positions being used in the initial sample leading to similar oscillations that aren't smoothed out in the averaging over all trajectories. There are also a couple of models that start at a slightly different initial mean position in Frederica, 16 thus they hit the nonadiabatic crossing region sooner. These are model 1 and 4 for the high momentum case.
 \\\\
 Although not all results are exactly the same, I believe the populations agree well enough within a reasonable error to serve as a confirmation of my implementation.
+\subsubsection{Comparisons of Ehrenfest to Other Data}
+In a Subotnik, 2010 \cite{SubotnikMomentumEhrenfest}, results were published for Ehrenfest simulations carried out on the 3 original Tully Models. In that work, the author presented the probabilities of the population being found transmitted through the region of nonadiabatic coupling on the ground or excited state and the probability of being reflected on the ground or upper state. In the results below, I will show comparisons of just the transmission probability onto the ground state. That is, the population that travels on the ground state beyond the region of high nonadiabatic coupling. Other probabilities will not be shown in the interest of brevity, though they agree with the published results as well as the ground state transmission in figure \ref{fig:SubotnikComparison}.
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{img/CTMQC/TullyModels/Ehrenfest_vs_Subotnik.png}
+  \caption{\label{fig:SubotnikComparison}Comparison of transmission probabilities through the region of high nonadiabatic coupling on the ground state. Tully model 1 is shown in the top-left, Tully model 2 is shown in the top-right and Tully model 3 is shown in the bottom-left.}
+\end{figure}
+\\
+As can  be seen in figure \ref{fig:SubotnikComparison} my implementation of the Ehrenfest simulation code for the Tully models agrees very well with those in Subotnik, 2010 \cite{SubotnikMomentumEhrenfest}. The small deviation (less than 1\% disagreement) within each model is due to errors in retrieving data from images in original paper.
 \subsection{CTMQC}
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{img/CTMQC/TullyModels/CTMQC_LitComp.png}
@@ -68,12 +76,13 @@ To calculate the quantum momentum one must take the spatial derivative of the nu
 
 
 \subsection{Norm Conservation}
+\label{sect:normCons}
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{/home/matt/Documents/PhD/PhD_Thesis/img/CTMQC/TullyModels/Ehren_Norm_Conservation.png}
 	\caption{\label{fig:EhrenNormCons}The norm conservation averaged over all replicas for Ehrenfest simulations with various electronic timesteps for each Tully model using a initial high momenta.}
 \end{figure}
 
-\noindent In appendix \ref{ap:norm_cons}, it is shown that the norm of the adiabatic expansion coefficients should be conserved throughout the simulation. In order to test this various simulations were carried out with various size electronic timesteps (i.e. the timestep used to propagate the electronic subsystem). As can be seen in figure \ref{fig:EhrenNormCons}, the norm of the wavefunction is conserved within numerical error ($10^{-12}$) when using a sufficiently small timestep in every Tully model. However, when we now use the full CTMQC equation we see a very different picture.
+\noindent In appendix \ref{ap:norm_cons}, it is shown that the norm of the adiabatic expansion coefficients should be conserved throughout the simulation. In order to test this simulations were carried out using the parameters from the high momentum cases given in appendix \ref{app:tully_params} with various size electronic timesteps (i.e. the timestep used to propagate the electronic subsystem). The nuclear timestep was held constant. As can be seen in figure \ref{fig:EhrenNormCons}, the norm of the wavefunction is conserved within numerical error ($10^{-12}$) when using a sufficiently small timestep in every Tully model. However, when we now use the full CTMQC equation we see a very different picture.
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{/home/matt/Documents/PhD/PhD_Thesis/img/CTMQC/TullyModels/CTMQC_Norm_Conservation.png}
 	\caption{\label{fig:CTMQCNormCons}The norm conservation when using standard CTMQC as outlined in the literature for each of the Tully models. These simulations were ran with a high initial momentum. The red markers show data points and vertical bars show error bars associated with each point.}
@@ -116,8 +125,21 @@ In the SI of Min, 17 \cite{min_ab_2017} a conservation equation (S27) is given. 
 	\label{eq:S27}
 \end{equation}
 
-An example time-series of this quantity is given in figure \ref{fig:S27} for each Tully model. The data used to calculate come from simulations of each of the Tully models using the parameters given in appendix \ref{app:tully_params}. No smoothing was used for the $\mathbf{R}_{lk, \nu}^{(I)}$ term. It can be seen in this figure that the conservation quantity hovers around 0 for each model with a maximum deviation of 10$^{-15}$.
+An example time-series of this quantity is given in figure \ref{fig:S27} for each Tully model. The data used to calculate come from simulations of each of the Tully models using the parameters given in appendix \ref{app:tully_params}. No smoothing was used for the $\mathbf{R}_{lk, \nu}^{(I)}$ term. It can be seen in this figure that the conservation quantity hovers around 0 for each model with a maximum deviation of 10$^{-15}$ m$_{e}$Ha.
 
 
 \subsection{Energy Conservation}
-...
+\subsubsection{Ehrenfest}
+Energy conservation is a very important property in most molecular dynamics simulations. In Ehrenfest of mean-field molecular dynamics nuclei are propagated on a population-weighted mean potential energy surface, e.g. $\sum_{k}|C_{l}^{(I)}(t)|^2 = E_{eff}(t)$ \cite{EhrenEnerCons}. Kinetic energy of the classical nuclei is given by the standard formula, e.g. $\frac{1}{2} m v^2$. We can therefore write down the conserved quantity as defined below in equation \eqref{eq:EhrenfestEnergyConservation}:
+\begin{equation}
+  \frac{d E}{dt} = \frac{d}{dt} \left[ \frac{1}{2} m v^2 + \sum_{k}|C_{l}^{(I)}(t)|^2 \right] = 0
+  \label{eq:EhrenfestEnergyConservation}
+\end{equation}
+As in the norm conservation checks in section \ref{sect:normCons},  parameters from the high momentum cases were taken as initial conditions for simulations with various nuclear timesteps, this time holding the electronic timestep constant. The high momenta cases were chosen to show the worst case energy conservations, within this very simple system. A linear line of best fit was then fitted to the data and the drift in the total energy (given in \eqref{eq:EhrenfestEnergyConservation}) was calculated from its gradient. The results of these simulations are given in figure \ref{fig:EhrenEnerCons}.
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{./img/CTMQC/TullyModels/Ehren_EnerCons.png}
+  \caption{\label{fig:EhrenEnerCons}Energy conservation values for various nuclear timesteps for the high momentum case of each Tully model.}
+\end{figure}
+In figure \ref{fig:EhrenEnerCons}, we see the expected results that as the nuclear timestep is decrease the drift in the total energy also decreases. This trend validates the implementation and shows that in the limit of infinitely small timestep (and infinite computer precision) perfect energy conservation would be achieved. However, fairly small nuclear timesteps are required to achieve reasonable energy conservations. This is because the system contains only 1 atom with a mass comparable to that of Hydrogen. If one needed an improved energy conservation a higher order integrator than the velocity verlet used here may also improve results slightly.
+\subsubsection{CTMQC}
+In CTMQC the energy conservation is 

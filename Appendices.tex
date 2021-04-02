@@ -279,12 +279,7 @@ This has the following general solution.
 A statement of the conservation of the norm, for a single trajectory, is given below in equation \eqref{eq:normConsState}
 \begin{equation}
 	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 = \sum_{l} C_{l}^{*}(t)\frac{d C_{l}(t)}{dt} + \frac{d C_{l}^{*}(t)}{dt}C_{l}(t)
-	\label{eq:normConsState} = 0
-\end{equation}
-Because the adiabatic populations are real we can remove any imaginary parts.
-\begin{equation}
-	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 = 2 \mathbb{R} \left[ C_{l}^{*}(t) \frac{d C_{l}(t)}{dt} \right]
-	\label{eq:RealNorm}
+	\label{eq:normConsState} = 2 \mathbb{R} \left[ \sum_{l} C_{l}(t)^{*} \frac{d C_{l}(t)}{dt} \right]
 \end{equation}
 Substituting the equation for the evolution of the adiabatic coefficients (and removing the purely imaginary term) into \eqref{eq:RealNorm} we get equation \eqref{eq:KsumKadNorm}
 \begin{align}

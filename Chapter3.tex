@@ -1,2 +1,95 @@
 \chapter{CTMQC applied to molecular systems}
 \label{chap:molecular_systems}
+In order to apply CTMQC to large molecular systems (hundreds of molecules) a new way to construct the Hamiltonian is needed. In this work I have implemented the CTMQC equations within the fragment-orbital based framework. This relies on the equations being expressed in a pseudo-diabatic basis and the Hamiltonian being constructed in 2 parts: the diagonal elements (site energies) and the off-diagonals (electronic couplings). The basis is termed 'pseudo-diabatic' due to the fact that non-adiabatic coupling vectors are small but non vanishing, this results in a basis where the excess charge carrier is strongly but not strictly localised on a single molecule. Within the Hamiltonian, the site energies are calculated via classical force-fields and the electronic couplings are calculated via the analytic overlap method \cite{gajdos_ultrafast_2014, spencer_fob-sh:_2016} (AOM). In this method the coupling elements are assumed to be proportional to the overlap between the highest singly occupied molecular orbitals (SOMO) on the donor and acceptor molecules (see equation \eqref{eq:AOM_proportional}). This approximation is often used in the literature, e.g. in the fragment orbital density functional theory \cite{KirkpatrickJ2008,C2CP41348E,TroisiA2002} (FODFT) method and has been shown to be valid for $\pi$-conjugated molecules \cite{KubasA2014, gajdos_ultrafast_2014}.
+\begin{equation}
+  H_{ab} = C \langle \varphi_{a} | \varphi_{b} \rangle = C S_{ab}
+  \label{eq:AOM_proportional}
+\end{equation}
+Where $\varphi_{a(b)}$ represents a singly occupied molecular orbital on the donor (acceptor) and C is the scaling constant and comes from DFT parameterisation. The singly occupied molecular orbitals are calculated as a linear combination of Slater-type orbitals (STO) as in equation  \eqref{eq:SOMO_def}. In this equation we loop over each molecule in the atom and sum the size of the contribution, $c_{p\pi, i}$, multiplied by the STO, $p_{\pi, j}$. In this case the STO is represented by a p-orbital. The size of the p-orbital on each atom, $c_{p\pi, i}$, is parameterised before the simulation with DFT.
+\begin{equation}
+  | \varphi_{mol} \rangle = \sum_{i \in mol}^{N_{\text{atoms}}} c_{p\pi, i} | p_{\pi, i} \rangle
+  \label{eq:SOMO_def}
+\end{equation}
+
+
+\section{Basis Transformation}
+In order to use the FOB method, as stated above the CTMQC equations in the adiabatic basis must be transformed to the diabatic basis. In the following derivation $C_{l}$ will represent the adiabatic expansion coefficient corresponding to state l and $u_{l}$ will represent the orthogonal diabatic expansion coefficients.
+\\\\
+The CTMQC equations in the adiabatic basis are given below in equation \eqref{eq:adForce} of the forces and \eqref{eq:adCoeff} coefficients:
+\begin{align}
+  \begin{split}
+	  \mathbf{F}_{\nu}^{(I)} = &- \sum_{k} |C_{k}^{(I)}|^2 \nabla_{\nu}E_{k}^{(I)} - \sum_{k, l} C_{l}^{* (I)} C_{k}^{(I)} \left(E_{k}^{(I)} - E_{l}^{(I)} \right) \mathbf{d}_{\nu, lk}^{ad, (I)} \\
+	  &- \sum_{l,k} |C_{l}^{(I)}|^2 \left( \sum_{\nu'}^{N_{n}} \frac{2}{\hbar M_{\nu'}} \mathcal{Q}_{\nu', lk}^{(I)} \cdot \mathbf{f}_{l, \nu'}^{(I)} \right)\left[ \mathbf{f}_{k, \nu}^{(I)} - \mathbf{f}_{l, \nu}^{(I)} \right] |C_{k}^{(I)}|^2 
+  \end{split}
+  \label{eq:adForce}
+\end{align}
+
+\begin{align}
+  \begin{split}
+	\dot{C}_{l}^{(I)} = &-\frac{i}{\hbar} E_{l}^{(I)} C_{l}^{(I)} - \sum_{k} C_{k}^{(I)} \sum_{\nu=1}^{N_{n}} \frac{\mathbf{P}_{\nu}^{(I)}}{M_{\nu}} \cdot \mathbf{d}_{\nu, lk}^{ad, (I)} \\
+	&- \sum_{\nu=1}^{N_{n}} \sum_{k} \frac{\mathcal{Q}_{\nu, lk}^{(I)}}{\hbar M_{\nu'}} \cdot \left[\mathbf{f}_{k, \nu}^{(I)} - \mathbf{f}_{l, \nu}^{(I)} \right] |C_{k}^{(I)}|^2 C_{l}^{(I)}
+  \end{split}
+  \label{eq:adCoeff}
+\end{align}
+
+\noindent Where:
+\begin{itemize}
+  \item $E_{k}^{(I)}$ is the adiabatic energy for state k and trajectory I
+  \item $C_{k}^{(I)}$ is the adiabatic expansion coefficient for state k and trajectory I
+  \item $\mathbf{P}_{\nu}^{(I)}$ is the classical momentum of atom $\nu$ on trajectory $I$
+  \item $\mathbf{d}_{\nu, lk}^{ad, (I)}$ is the nonadiabatic coupling vector (given in the adiabatic basis)
+  \item $M_{\nu}$ is the mass of nuclei $\nu$
+  \item $\mathcal{Q}_{\nu, lk}^{(I)}$ is the quantum momentum vector for atom $\nu$ corresponding to the $lk$ pair of states in trajectory $I$
+  \item $\mathbf{f}_{l, \nu}^{(I)}$ is the adiabatic momentum on state l, atom $\nu$ and trajectory $I$
+\end{itemize}
+
+\clearpage
+\subsection{Coefficients}
+To transform the equation for the propagation of the coefficients it is far neater to use the notation of linear algebra as in equation \eqref{eq:LA_Coeff} below:
+\begin{equation}
+	\dot{\mathbf{C}}^{(I)} = \mathbb{X}_{\nu}^{(I)} \mathbf{C}^{(I)} = \left(\mathbb{X}_{eh, \nu}^{(I)} + \mathbb{X}_{qm, \nu}^{(I)}\right) \mathbf{C}^{(I)}
+	\label{eq:LA_Coeff}
+\end{equation}
+Where the $\mathbb{X}$ matrices are defined as in equations \eqref{eq:Xeh_def} and \eqref{eq:Xqm_def} below.
+\begin{equation}
+  \mathbb{X}_{lk, \nu}^{eh (I)} = -\frac{i}{\hbar} E_{l}^{(I)} - \sum_{\nu}^{N_{n}}\frac{\mathbf{P}_{\nu}^{(I)}}{M_{\nu}} \cdot d_{lk, \nu}^{ad, (I)}
+  \label{eq:Xeh_def}
+\end{equation}
+
+\begin{equation}
+  \mathbb{X}_{ll, \nu}^{qm (I)} = -\sum_{\nu=1}^{N_{n}} \sum_{k} \frac{\mathcal{Q}_{\nu, lk}^{(I)}}{\hbar M_{\nu'}} \cdot \left[ \mathbf{f}_{k, \nu}^{(I)} - \mathbf{f}_{l, \nu}^{(I)} \right]  |C_{k}^{(I)}|^2
+  \label{eq:Xqm_def}
+\end{equation}
+
+
+\noindent Using the identities:
+\begin{align}
+  \mathbb{U}^{-1} &= \mathbb{U}^{\dagger} \\
+  \mathbf{C}^{(I)} &= \mathbb{U}^{\dagger (I)} \mathbf{u}^{(I)} \\
+  \dot{\mathbf{C}}^{(I)} &= \dot{\mathbb{U}^{\dagger (I)}} \mathbf{u}^{(I)} + \mathbb{U}^{\dagger (I)}\dot{\mathbf{u}}^{(I)}
+\end{align}
+Where $\mathbb{U}^{(I)} = \langle \phi_{l}^{(I)} | \psi_{n}^{(I)} \rangle$ is the unitary transformation matrix transforming from the diabatic to adiabatic basis. The $\mathbf{u}^{(I)}$ terms are the diabatic expansion coefficients on trajectory I.
+\\\\
+\noindent After some algebra we arrive at:
+\begin{equation}
+  \dot{\mathbf{u}}^{(I)} = \underbrace{\left(\mathbb{U}^{(I)} \mathbb{X}_{eh} \mathbb{U}^{\dagger (I)} + \mathbb{U}^{(I)}\mathbb{U}^{\dagger (I)}\right) \mathbf{u}^{(I)}}_{\text{Ehrenfest}} + \underbrace{\left(\mathbb{U}^{(I)} \mathbb{X}_{qm} \mathbb{U}^{\dagger (I)} \right) \mathbf{u}^{(I)}}_{\text{Quantum Momentum}}
+  \label{eq:diabMatEq}
+\end{equation}
+
+\noindent In equation \eqref{eq:diabMatEq} I've separated the contribution from Ehrenfest and the contribution from the new quantum momentum terms. The Ehrenfest part can be shown to reduce to a simpler form (see Spencer, 2016 \cite{spencer_fob-sh:_2016} and Carof, 17 \cite{carof_detailed_2017} for more details). The quantum momentum term must be coded up as shown -with the transformation matrices. This gives the final equation for the propagation of the diabatic expansion coefficients, shown in equation \eqref{eq:DiabPropagation}.
+\begin{equation}
+  \dot{\mathbf{u}}^{(I)} = \left(-\frac{i}{\hbar} \mathbb{H}^{(I)} - \mathbb{D}^{(I)}_{diab} \right) \mathbf{u}^{(I)} + \left(\mathbb{U}^{(I)} \mathbb{X}_{qm} \mathbb{U}^{(I)})^{-1} \right) \mathbf{u}^{(I)}
+  \label{eq:DiabPropagation}
+\end{equation}
+Where $\mathbb{H}^{(I)}$ is the diabatic Hamiltonian constructed via the AOM method, $\mathbb{D}_{diab}^{(I)}$ are the diabatic nonadiabatic coupling elements ($d_{diab, lk}^{(I)} = \langle \phi_{l} | \dot{\phi}_{k} \rangle$).
+
+\subsection{Forces}
+A full derivation of the transformation of basis for the equation propagating forces is given in appendix \ref{app:BasisTrans}. The final result is given in equation \eqref{eq:diabForces} below:
+\begin{align}
+  \begin{split}
+	  \mathbf{F}_{eh, \nu}^{(I)} &= \sum_{i,j} \mathbf{u}_{i}^{*(I)} \mathbf{u}_{j}^{(I)} \left( \nabla_{\nu} H_{ij}^{(I)} + \sum_{l} \mathbf{d}_{lk, \nu}^{(I)} H_{lj}^{(I)} - \sum_{l} \mathbf{d}_{lj, \nu}^{(I)} H_{il} \right) \\
+	  &- \sum_{l,k} |C_{l}^{(I)}|^2 \left( \sum_{\nu'}^{N_{n}}                \frac{2}{\hbar M_{\nu'}} \mathcal{Q}_{\nu', lk}^{(I)} \cdot                   \mathbf{f}_{l, \nu'}^{(I)} \right)\left[ \mathbf{f}_{k, \nu}^{(I)} -          \mathbf{f}_{l, \nu}^{(I)} \right] |C_{k}^{(I)}|^2
+	\end{split}
+  \label{eq:diabForces}
+\end{equation}
+

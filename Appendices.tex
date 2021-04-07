@@ -257,13 +257,13 @@ A cartoon of this process is given in figure \ref{fig:tanh_explan}
 \chapter{Rabi Oscillation \label{ap:Rabi}}
 The time dependant Schr\"odinger equation is given below:
 \begin{equation}
-	i \hbar \frac{\delta}{\delta t} \Phi(\textbf{R}(t), t) = \hat{H}(\textbf{R}(t), t) \Phi(\textbf{R}(t), t)
+	i \hbar \frac{\delta}{\delta t} \Phi(\mathbf{R}(t), t) = \hat{H}(\mathbf{R}(t), t) \Phi(\mathbf{R}(t), t)
 \end{equation}
 If we hold the nuclear coordinates in place (e.g. remove time-dependence from nuclear coordinates) we get an ordinary differential equation as shown below:
 \begin{equation}
 	i \hbar \frac{d}{d t} \Phi(\mathbf{R}, t) = \hat{H}(\mathbf{R}, t) \Phi(\mathbf{R}, t)
 \end{equation}
-This has the following general solution.
+This has the following general solution. This can be solved with a Taylor series expansion.
 \[\Phi(\mathbf{R}, t) = e^{i \hbar \hat{H}t} \Phi(\mathbf{R}, 0)\]
 
 
@@ -304,6 +304,80 @@ So far, we have proved that the norm should be conserved here for all terms apar
 \end{align}
 However, $\sum_{l}A_l |C_{l}|^2 \equiv \sum_{l} B_{l} |C_{l}|^2$, therefore there is no change in the population and the norm should be conserved.
 \newpage
+\chapter{Basis Transformation}
+\label{app:BasisTrans}
+We can expand the Schr\"odinger equation in terms of a diabatic basis, $\phi$ rather than an adiabatic one, $\psi$. These 2 expansions are given in equations \eqref{eq:SchrodingerAdExpan_ap} and \eqref{eq:SchrodingerDiExpan_ap}.
+\begin{equation}
+  |\Psi \rangle = \sum_{n} C_{n} | \psi_n \rangle
+  \label{eq:SchrodingerAdExpan_ap}
+\end{equation}
+\begin{equation}
+  |\Psi \rangle = \sum_{l} u_{l} | \phi_l \rangle
+  \label{eq:SchrodingerDiExpan_ap}
+\end{equation}
+It follows from this we can define a transformation matrix, $U_{ln}$ to transform between the adiabatic and diabatic bases. This is shown in equation \eqref{eq:TransMat_ap} where the $\overset{\leftrightarrow}{I}$ symbol represents the identity matrix. This identity only holds in the orthogonal diabatic basis $\phi$ and wouldn't hold for non-orthogonal bases.
+\begin{equation}
+  | \psi_n \rangle = \overset{\leftrightarrow}{I} \left| \psi_{n} \right\rangle = \sum\limits_{l}\left| \phi_{l} \right\rangle \left\langle \phi_{l} \right| \left. \psi_{n}\right\rangle  = \sum_{l} | \phi_{l} \rangle U_{ln}
+  \label{eq:TransMat_ap}
+\end{equation}
+A similar relation between expansion coefficients exists
+\begin{align}
+  \sum_{n} C_{n} | \psi_{n} \rangle &= \sum_{l} u_l |\phi_{l} \rangle \\
+  \sum_{n} C_{n} \langle \psi_{m} | \psi_{n} \rangle &=  \sum_{l} u_l \langle \psi_{m} |\phi_{l} \rangle \\
+  C_{m} &=  \sum_{l} u_l U^{*}_{lm}
+  \label{eq:ExpansTransMat_ap}
+\end{align}
+Finally an important property of the transformation matrix is given in equation \eqref{eq:transToDelta}.
+\begin{equation}
+  \sum_{m} U_{im} U^{*}_{lm} = \sum_{m} \langle \phi_{i} | \psi_{m} \rangle \langle \psi_{m}| \phi_{l}\rangle = \langle \phi_{i} | \phi_{l} \rangle = \delta_{il}
+  \label{eq:transToDelta}
+\end{equation}
+Equations \eqref{eq:TransMat_ap}, \eqref{eq:ExpansTransMat_ap} and \eqref{eq:transToDelta} will be used below to transform the propagation equations from the adiabatic basis to the diabatic one.
+
+\label{chap:basisTrans}
+\section{Forces}
+\label{sect:ad2di_frc}
+The equation for the propagation of the forces in the adiabatic basis is:
+\begin{align}
+  \begin{split}
+      \mathbf{F}_{\nu}^{(I)} = &- \sum_{n} |C_{n}^{(I)}|^2                    \nabla_{\nu}E_{n}^{(I)} - \sum_{n, m} C_{m}^{* (I)} C_{n}^{(I)}               \left(E_{n}^{(I)} - E_{m}^{(I)} \right) \mathbf{d}_{\nu, mn}^{ad, (I)} \\
+      &- \sum_{m, n} |C_{m}^{(I)}|^2 \left( \sum_{\nu'}^{N_{n}} \frac{2}{\hbar   M_{\nu'}} \mathcal{Q}_{\nu', mn}^{(I)} \cdot \mathbf{f}_{m, \nu'}^{(I)}       \right)\left[ \mathbf{f}_{n, \nu}^{(I)} -            \mathbf{f}_{m, \nu}^{(I)} \right] |C_{n}^{(I)}|^2 
+  \end{split}
+  \label{eq:adForce_ap}
+\end{align}
+The quantum momentum part of the equation cannot be easily transformed so this will focus on the Ehrenfest part:
+\begin{equation}
+  \mathbf{F}_{eh, \nu}^{(I)} = - \sum_{n} |C_{n}^{(I)}|^2 \nabla_{\nu}E_{n}^{(I)} - \sum_{n, m} C_{m}^{* (I)} C_{n}^{(I)} \left(E_{n}^{(I)} - E_{m}^{(I)} \right) \mathbf{d}_{\nu, mn}^{ad, (I)}
+  \label{eq:adForceEhren_ap}
+\end{equation}
+Using equation (10) in Carof, 17 \cite{carof_detailed_2017} and the Hellman-Feynman theorem we can rewrite equation \eqref{eq:adForceEhren_ap} as equation \eqref{eq:adForceReduce_ap}:
+\begin{equation}
+  \mathbf{F}_{eh, \nu}^{(I)} = \sum_{m, n} C_{m}^{* (I)} C_{n}^{(I)} \langle \psi_{m} | \nabla_{\nu} H | \psi_{n} \rangle
+  \label{eq:adForceReduce_ap}
+\end{equation}
+We can substitute the coefficients and basis functions for those in equations \eqref{eq:TransMat_ap} and \eqref{eq:ExpansTransMat_ap}. This carried out in equation \eqref{eq:transProc_ap}. However, I have removed the trajectory and atom index from the terms to make the notation clearer.
+\begin{align}
+  F_{eh, \nu} &= \sum_{m, n} C^{*}_{m} C_{n} \langle \psi_{m} | \nabla_ H | \psi_{n} \rangle \\
+  &= \sum_{m, n} \sum_{i} u_i^{*} U_{im} \sum_{j} u_j U^{*}_{jn} \sum_{l}U_{lm}^{*} \sum_{k} U_{kn} \langle \phi_{l} | \nabla H | \phi_{k} \rangle \\ 
+  &= \sum_{m, n} \sum_{i, j, k, l} u_i^{*}  u_j U_{im} U_{lm}^{*} U^{*}_{jn} U_{kn} \langle \phi_{l} | \nabla H | \phi_{k} \rangle \\ 
+  &= \sum_{i, j, k, l} u_i^{*}  u_j \delta_{il} \delta_{jk} \langle \phi_{l} | \nabla H | \phi_{k} \rangle \\ 
+  &= \sum_{i, j} u_i^{*}  u_j \langle \phi_{i} | \nabla H | \phi_{j} \rangle 
+  \label{eq:transProc_ap}
+\end{align}
+However, in the code the expectation value of the gradient of the Hamiltonian ($\langle \phi_i | \nabla H | \phi_j \rangle$) isn't very easily calculable. However, the gradient of the Hamiltonian matrix elements ($\nabla \langle \phi_i | H | \phi_j \rangle$) is easily calculable via the overlap term, $\nabla H = C \nabla S_{ij}$. Therefore, using chain rule we can re-write equation \eqref{eq:transProc_ap} as:
+\begin{align}
+  F_{eh, \nu} &= \sum_{i, j} u_i^{*}  u_j \langle \phi_{i} | \nabla H | \phi_{j} \rangle \\
+  &= \sum_{i, j} u_i^* u_j \left(\nabla \langle \phi_i| H | \phi_j \rangle - \langle \nabla \phi_i| H | \phi_j \rangle - \langle \phi_i| H | \nabla \phi_j \rangle \right) \\
+  &= \sum_{i, j} u_i^* u_j \left(\nabla \langle \phi_i| H | \phi_j \rangle - \sum_{l}\langle \nabla \phi_i| \phi_l \rangle \langle \phi_l | H | \phi_j \rangle - \sum_l \langle \phi_i| H | \phi_l \rangle \langle \phi_l | \nabla \phi_j \rangle \right) \\
+  &= \sum_{i, j} u_i^* u_j \left(\nabla \langle \phi_i| H | \phi_j \rangle + \sum_{l}\mathbf{d}_{il} \langle \phi_l | H | \phi_j \rangle - \sum_l \mathbf{d}_{lj} \langle \phi_i| H | \phi_l \rangle \right)
+\end{align}
+
+\noindent Giving the final equation for the transformed forces as:
+\begin{equation}
+  \mathbf{F}_{eh, \nu}^{(I)} = \sum_{i,j} \mathbf{u}_{i}^{*(I)} \mathbf{u}_{j}^{(I)} \left( \nabla_{\nu} H_{ij}^{(I)} + \sum_{l} \mathbf{d}_{lk, \nu}^{(I)} H_{lj}^{(I)} - \sum_{l} \mathbf{d}_{lj, \nu}^{(I)} H_{il} \right)
+  \label{eq:ForceDiab_ap}
+\end{equation}
+
 \chapter{Adiabatic State Initialisation}
 \label{ap:AdiabaticSelector}
 By diagonalising the Hamiltonian we get the adiabatic energies (eigenvalues) for each state and transformation matrix (eigenvectors) to calculate diabatic states $\mathbb{U}$. We can calculate diabatic coefficients corresponding to each adiabatic state via equation \eqref{eq:CtoU_trans} below.
@@ -328,6 +402,8 @@ Once we have the diabatic state corresponding to each adiabatic state, and the e
 The Euclidean distance between the center of the system and $\mathbf{R}_{COM, i}$ is calculated and if this distance is below some threshold value then we initialise the surface hopping trajectory on that adiabatic state. If we do not find any states within 3KT of the ground state and within an acceptable radius of the center we start again this time increasing the maximum allowed distance from the center. If this maximum allowed distance is increased such that we reach another threshold distance the energy threshold is increased this time until a state is found that is close enough to the center. In this way we find an adiabatic state, which when transformed, gives a diabatic population close to center of the system and near the ground state energy.
 
 
+
+\chapter{Analytic Overlap Method}
 
 \chapter{Colophon}
 \label{appendixlabel3}

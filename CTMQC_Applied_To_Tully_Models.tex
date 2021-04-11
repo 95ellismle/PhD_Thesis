@@ -113,7 +113,9 @@ of these 3 methods, method 3 was the most successful in reducing the norm drift 
 \end{figure}
 In figure \ref{fig:NormConsCorr} we see the norm drift results after the 3 $\mathbf{R}_{lk, \nu}$ correction methods have been applied. The red curve shows the original data (as in figure \ref{fig:CTMQCNormCons}) with it's large divergences in the norm drift. The green curve shows the alternative intercept method, the blue curve shows the effect of switching to Ehrenfest during the $\mathcal{Q}_{lk, \nu}^{(I)}$ spikes and the black shows a method that involved extrapolating the $\mathbf{R}_{lk, \nu}$ value from data before the spike began. We can see clearly all 3 methods improve the norm drift, though using the alternative intercept seems to help the most. Model 3 is not affected as we do not see these divergences in the $\mathbf{R}_{lk, \nu}$ due to the denominator in this particular model never crossing from positive to negative (through zero). It is important to note that in each of the models with the divergence correction applied all models exhibit the expected trend of decreasing the time-step improves norm conservation. However, the norm conservation in all 4 models is still significantly higher ($\sim$ 7-8 orders of magnitude) higher than that of Ehrenfest. I think this is due to the product of the adiabatic populations, $|C_{l}^{(I)}|^2 |C_{k}^{(I)}|^2$, being used in the calculation of the quantum momentum which can be a more quickly varying quantity than just the adiabatic populations alone.
 
-\subsection{Time Derivative of Trajectory-Sum of Adiabatic Populations}
+\subsection{Mathematical Tests}
+Multiple tests of the implementation of the quantities in the equations have been implemented in the code to ensure correct outputs. These range from checking the (anti-)symmetry of the (NACV) Hamiltonian when constructed to more involved tests such as the 2 examples below.
+\subsubsection{Time Derivative of Trajectory-Sum of Adiabatic Populations}
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{./img/CTMQC/TullyModels/CTMQC_S27.png}
 	\caption{\label{fig:S27}The conserved quantity given in equation \eqref{eq:S27}. Each color represents data outputted by a simulation using a different model (specified in the legend). Each time-series is plotted with a translucent color meaning each model's data can be seen at once.}
@@ -126,6 +128,22 @@ In the SI of Min, 17 \cite{min_ab_2017} a conservation equation (S27) is given. 
 \end{equation}
 
 An example time-series of this quantity is given in figure \ref{fig:S27} for each Tully model. The data used to calculate come from simulations of each of the Tully models using the parameters given in appendix \ref{app:tully_params}. No smoothing was used for the $\mathbf{R}_{lk, \nu}^{(I)}$ term. It can be seen in this figure that the conservation quantity hovers around 0 for each model with a maximum deviation of 10$^{-15}$ m$_{e}$Ha.
+
+\subsubsection{$\sum_{l} \mathbb{X}_{qm, ll} |C_{l}^{(I)}|^2$}
+\label{sect:sumXqmll}
+As the equations are currently formulated another numerical test validating the quantum momentum part of the propagation equations for the coefficients can be used. The CTMQC equation for the propagation of the adiabatic expansion coefficients is given in equation \eqref{eq:elec_adiab}. The quantum momentum part of this equation is given below in equation \eqref{eq:qmCTMQCAdiab}. 
+\begin{equation}
+  \mathbb{X}_{qm, ll}^{(I)} = \sum_{\nu=1}^{N_n}\sum_{k} \frac{\mathcal{Q}_{lk, \nu}^{(I)}}{\hbar     M_\nu} \cdot \left[ \mathbf{f}_{k,\nu}^{(I)} - \mathbf{f}_{l,\nu}^{(I)}   \right] |C_{k}^{(I)}|^2
+  \label{eq:qmCTMQCAdiab}
+\end{equation}
+Where $\mathbb{X}_{qm, ll}^{(I)}$ is the diagonal matrix that, when multiplied with the adiabatic expansion coefficients, gives the quantum momentum contribution to the propagation of the expansion coefficients.I
+\\\\
+We can test the construction of this matrix within the code by multiplying by the adiabatic populations and summing as shown in equation \eqref{eq:NumericalTestXqmll}. It can be shown, assuming perfect norm conservation, that this should equal exactly 0 -due to the symmetry of the $|C_{l}^{(I)}|^2|C_{k}^{(I)}|^2$ and the quantum momentum matrix. This is checked for every timestep during propagation.
+
+\begin{equation}
+  \sum_{l} \mathbb{X}_{qm, ll}^{(I)} |C_{l}^{(I)}|^2 = 0
+  \label{eq:NumericalTestXqmll}
+\end{equation}
 
 
 \subsection{Energy Conservation}
@@ -143,3 +161,7 @@ As in the norm conservation checks in section \ref{sect:normCons},  parameters f
 In figure \ref{fig:EhrenEnerCons}, we see the expected results that as the nuclear timestep is decrease the drift in the total energy also decreases. This trend validates the implementation and shows that in the limit of infinitely small timestep (and infinite computer precision) perfect energy conservation would be achieved. However, fairly small nuclear timesteps are required to achieve reasonable energy conservations. This is because the system contains only 1 atom with a mass comparable to that of Hydrogen. If one needed an improved energy conservation a higher order integrator than the velocity verlet used here may also improve results slightly.
 \subsubsection{CTMQC}
 In CTMQC the energy conservation is 
+
+
+
+

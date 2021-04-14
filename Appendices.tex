@@ -121,7 +121,7 @@
       H_{21}(\mathbf{R}) \ &= \ H_{12}(\mathbf{R}) \\
       H_{22}(\mathbf{R}) \ &= \ -H_{11}(\mathbf{R})
     \end{flalign*}
-    Where A = 6$\times$ 10$^{-4}$, B = 0.1 and C = 0.9
+    Where A = 6$\times$ 10$^{-4}$, B = 0.1, C = 0.9 and D = 4
   \end{minipage}
   \hspace*{-0.2cm}
   \vrule
@@ -262,9 +262,15 @@ The time dependant Schr\"odinger equation is given below:
 If we hold the nuclear coordinates in place (e.g. remove time-dependence from nuclear coordinates) we get an ordinary differential equation as shown below:
 \begin{equation}
 	i \hbar \frac{d}{d t} \Phi(\mathbf{R}, t) = \hat{H}(\mathbf{R}, t) \Phi(\mathbf{R}, t)
+	\label{eq:RABI}
 \end{equation}
 This has the following general solution. This can be solved with a Taylor series expansion.
 \[\Phi(\mathbf{R}, t) = e^{i \hbar \hat{H}t} \Phi(\mathbf{R}, 0)\]
+Figure 
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{./img/CTMQC/3_mols_with_python_sol_2_rep.png}
+  \caption{\label{fig:Rabi}Rabi oscillation occurring within a Ethylene trimer system. Dotted lines were calculated using equation \eqref{eq:RABI}, solid lines were calculated using the RK4 propagator within the CTMQC section of the CP2K code. The norm is shown on the top as a cyan line and the x axis shows the timestep in seconds.}
+\end{figure}
 
 
 

@@ -96,7 +96,7 @@ The calculation of the quantum momentum is discussed in detail in Min, 17 \cite{
 \label{sect:QlkSpikes}
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{./img/CTMQC/TullyModels/Spikes/RlkDenom_Rlk_Qlk_Norm.png}
-	\caption{\label{fig:QlkSpike}As the denominator of the $\mathbf{R}_{lk,\nu}$ term approaches zero (bottom panel) the full $\mathbf{R}_{lk, \nu}$ term (2$^{\text{nd}}$ to bottom panel) can approach infinity which propagates through the $\mathcal{Q}_{lk, \nu}^{(I)}$ term (2$^{\text{nd}}$ to top panel) causing discontinuities and norm drift in the populations (top panel). The grey vertical bar denotes the region the denominator approaches 0.}
+	\caption{\label{fig:QlkSpike}As the denominator of the $\mathbf{R}_{lk,\nu}$ term approaches zero (bottom panel) the full $\mathbf{R}_{lk, \nu}$ term (2$^{\text{nd}}$ to bottom panel) can approach infinity which propagates through the $\mathcal{Q}_{lk, \nu}^{(I)}$ term (2$^{\text{nd}}$ to top panel) causing discontinuities and norm drift in the populations (top panel). The grey vertical bar denotes the region the denominator approaches 0. The thin solid red lines in the top panel show the norm drift for individual trajectories.}
 \end{figure}
 \noindent As we can see in figure \ref{fig:QlkSpike}, as the denominator of the $\mathbf{R}_{lk, \nu}$ term approaches 0 the full $\mathbf{R}_{lk, \nu}$ term may spike causing a discontinuity in the populations. The reason this only occurs in Models 1, 2 and 4 is due to the fact that the difference in the adiabatic momenta terms ($\mathbf{f}_{l, \nu}^{(I)} - \mathbf{f}_{k, \nu}^{(I)}$) doesn't cross 0 in Model 3. In order to correct for this I have investigated a number of corrections to the calculation of the quantum momentum. These depend on the detection of the spikes/divergences in the $\mathbf{R}_{lk, \nu}$ term and then the appropriate treatment of them. In order to detect the divergences a simple threshold on the $|\frac{\delta}{\delta t} \mathbf{R}_{lk, \nu}|$ is applied when the denominator of the $\mathbf{R}_{lk, \nu}$ is sufficiently close to 0. For example, if the absolute time-derivative of the $\mathbf{R}{lk, \nu}$ term is larger than a value (say 5) and the bottom of the fraction in equation \eqref{eq:Rlk} is within 0.1 of 0 then we assume the $\mathbf{R}_{lk, \nu}$ term is diverging and the simulation code then uses a different method of propagating the electronic coefficients.
 \clearpage
@@ -114,7 +114,28 @@ of these 3 methods, method 3 was the most successful in reducing the norm drift 
 In figure \ref{fig:NormConsCorr} we see the norm drift results after the 3 $\mathbf{R}_{lk, \nu}$ correction methods have been applied. The red curve shows the original data (as in figure \ref{fig:CTMQCNormCons}) with it's large divergences in the norm drift. The green curve shows the alternative intercept method, the blue curve shows the effect of switching to Ehrenfest during the $\mathcal{Q}_{lk, \nu}^{(I)}$ spikes and the black shows a method that involved extrapolating the $\mathbf{R}_{lk, \nu}$ value from data before the spike began. We can see clearly all 3 methods improve the norm drift, though using the alternative intercept seems to help the most. Model 3 is not affected as we do not see these divergences in the $\mathbf{R}_{lk, \nu}$ due to the denominator in this particular model never crossing from positive to negative (through zero). It is important to note that in each of the models with the divergence correction applied all models exhibit the expected trend of decreasing the time-step improves norm conservation. However, the norm conservation in all 4 models is still significantly higher ($\sim$ 7-8 orders of magnitude) higher than that of Ehrenfest. I think this is due to the product of the adiabatic populations, $|C_{l}^{(I)}|^2 |C_{k}^{(I)}|^2$, being used in the calculation of the quantum momentum which can be a more quickly varying quantity than just the adiabatic populations alone.
 
 \subsection{Mathematical Tests}
-Multiple tests of the implementation of the quantities in the equations have been implemented in the code to ensure correct outputs. These range from checking the (anti-)symmetry of the (NACV) Hamiltonian when constructed to more involved tests such as the 2 examples below.
+Multiple tests of the implementation of the quantities in the equations have been implemented in the code to ensure correct outputs. A checklist of any mathematical tests is given below:
+\begin{itemize}
+  \item Checking the (anti-)symmetry of the (NACV) Hamiltonian when constructed
+  
+  \item Comparing the adiabatic momentum term to post-production time-integrated adiabatic energies (using trapezium rule)
+  
+  \item Checking special case solutions when all replicas are initialised at the same position such as:
+	\begin{itemize}
+	  \item $\mathcal{Q}_{lk, \nu}^{(I)} = 0$
+	  \item CTMQC = Ehrenfest
+	\end{itemize}
+
+  \item Checking special cases for when $\sigma$ is replica independent (i.e. $\sigma^{(I)} = \sigma$):
+	\begin{itemize}
+	  \item $\sigma = \frac{\hbar}{2 \sigma^2}$
+	  \item $\mathbf{R}_{lk, \nu} = \mathbf{R}_{\nu}^{(I)} \frac{\hbar}{2 \sigma^2}$ (Assuming the positions, $\mathbf{R}_{\nu}^{(I)}$ are also replica independent)
+	\end{itemize}
+
+  \item If all adiabatic population is localised on a single state ($|C_{l}^{(I)}|^2 = [1, 0, 0, \cdots, 0]$). Then we get Ehrenfest dynamics on that replica.
+\end{itemize}
+
+I have also provided 2 (more substantial) mathematical tests for the code below in the following sections.
 \subsubsection{Time Derivative of Trajectory-Sum of Adiabatic Populations}
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{./img/CTMQC/TullyModels/CTMQC_S27.png}
@@ -162,6 +183,15 @@ In figure \ref{fig:EhrenEnerCons}, we see the expected results that as the nucle
 \subsubsection{CTMQC}
 In CTMQC the energy conservation is 
 
+
+
+
+
+\section{Calculation of $\mathcal{Q}_{lk, \nu}^{(I)}$}
+\label{sect:SigmaSect}
+In order to calculate the quantum momentum the nuclear density must be constructed from the nuclei's positions. However, the nuclei are treated classically, i.e. as point particles. To approximate the nuclear density from atomic positions a normal distribution is placed with the mean at position of each particle with a width of $\sigma$. This introduces a new parameter which must be tuned in order to reproduce sensible results. If the width is too small the resulting nuclear density is too noisy and the quantum momentum values unreliable. If the width is too large the nuclear density is very smooth with little variation and the quantum momentum values become very small. Seeing as the quantum momentum is one of the most important factors affecting coherence between electronic states the careful selection of the $\sigma$ parameter is important. This issue is not very well addressed in the literature. In this section I will show results of calculation carried out with various values of $\sigma$ 
+ as well as a method for a dynamic calculation of $\sigma(t)$ on the fly.
+ \subsection{Constant Values of $\sigma$}
 
 
 

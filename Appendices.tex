@@ -6,7 +6,7 @@
 %\chapter{Appendices}
 \appendix
 \chapter{Tully Model Paramters}
-\label{app:tully_params}
+\label{ap:tully_params}
 
 \section{Model 1 -Single Avoided Crossing}
   \begin{minipage}{0.5\textwidth}
@@ -160,16 +160,16 @@
 
 
 \chapter{Wigner Distribution Derivation}
-\label{app:Wigner}
+\label{ap:Wigner}
 The nuclear wavepacket (at time 0) is given by:
 \begin{equation}
   \chi(R) = \frac{1}{(\pi \mu^2)^{\frac{1}{4}}} e^{-\frac{(R - R_0)^2}{2 \mu^2} + \im k_0 (R - R_0) }
-  \label{eq_app:initial_nucl_wp}
+  \label{eq_ap:initial_nucl_wp}
 \end{equation}
 The Wigner quassiprobability function for momentum and position (p, R) is given by:
 \begin{equation}
   W(p, R) = \frac{1}{\pi \hbar} \int_{-\infty}^{\infty} \chi^{*}(R + y) \chi(R -y) e^{\frac{2 \im p y}{\hbar}} dy
-  \label{eq_app:Wig_def}
+  \label{eq_ap:Wig_def}
 \end{equation}
 However, both Ehrenfest and CTMQC require atomic positions as input so we must extract the position and velocity probability densities from this. We get these from the marginal integrals of the Wigner distribution i.e.
 \begin{equation}
@@ -178,35 +178,35 @@ However, both Ehrenfest and CTMQC require atomic positions as input so we must e
 \begin{equation}
   \vert f(p)\vert^2 = \int^{\infty}_{-\infty} W(R, p) dR
 \end{equation}
-In order to calculate these marignal integrals we must first crunch through the maths of equation \eqref{eq_app:Wig_def}. Substituting eq \eqref{eq_app:initial_nucl_wp} into \eqref{eq_app:Wig_def}:
+In order to calculate these marignal integrals we must first crunch through the maths of equation \eqref{eq_ap:Wig_def}. Substituting eq \eqref{eq_ap:initial_nucl_wp} into \eqref{eq_ap:Wig_def}:
 \begin{equation}
   W(p, R) = \frac{1}{\pi \hbar} \int_{-\infty}^{\infty} \frac{1}{\mu \sqrt{\pi}} e^{- \frac{(R + y - R_0)^2}{2 \mu^2} - 2\im k_0y - \frac{(R - y - R_0)^2}{2 \mu^2} } e^{\frac{2 \im p y}{\hbar}} dy
-  \label{eq_app:step1}
+  \label{eq_ap:step1}
 \end{equation}
-Simplifying the 2 quadratic equations (equation \eqref{eq_app:step1}) we get:
+Simplifying the 2 quadratic equations (equation \eqref{eq_ap:step1}) we get:
 \begin{equation}
   W(p, R) = \frac{1}{\pi \hbar} \int_{-\infty}^{\infty} \frac{1}{\mu \sqrt{\pi}} e^{-\mu^{-2} \left(y^2 - 2\im k_0y \mu^2 + (R - R_0)^2 \right) } e^{\frac{2 \im p y}{\hbar}} dy
-  \label{eq_app:step2}
+  \label{eq_ap:step2}
 \end{equation}
 We can now take the expressions not dependant on y outside of the integral and combine the exponents.
 \begin{equation}
   W(p, R) = \frac{1}{\pi \sqrt{\pi} \mu \hbar} e^{-\frac{(R - R_0)^2}{\mu^2}} \int_{-\infty}^{\infty} e^{-\frac{y^2 + 2 \im y\mu^{2}\left( \frac{p}{\hbar} - k_0\right)}{\mu^{2}}  } dy
-  \label{eq_app:step3}
+  \label{eq_ap:step3}
 \end{equation}
 Integrating we get:
 \begin{equation}
   \int e^{-\frac{y^2 + 2 \im y\mu^{2}\left( \frac{p}{\hbar} - k_0\right)}{\mu^{2}}  } dy = \frac{\sqrt{\pi} \mu}{2} e^{-\frac{\mu^2}{\hbar^2} (p - \ \hbar k_0)^2} erf\left[\frac{y}{\mu} + \im \left(\frac{p \mu}{\hbar} - \mu k_0 \right)\right]
-   \label{eq_app:step4}
+   \label{eq_ap:step4}
 \end{equation}
 Applying limits we get:
 \begin{equation}
   \int_{-\infty}^{\infty} e^{-\frac{y^2 + 2 \im y\mu^{2}\left( \frac{p}{\hbar} - k_0\right)}{\mu^{2}}  } dy = \sqrt{\pi} \mu e^{-\frac{\mu^2}{\hbar^2} \left(p - \ \hbar k_0 \right)^2}
-  \label{eq_app:step5}
+  \label{eq_ap:step5}
 \end{equation}
-Substituting this back into the Wigner distribution (equation \eqref{eq_app:Wig_def}) we finally get:
+Substituting this back into the Wigner distribution (equation \eqref{eq_ap:Wig_def}) we finally get:
 \begin{equation}
   W(p, R) = \frac{1}{\pi \hbar} e^{-\frac{(R - R_0)^2}{\mu^2}} e^{-\frac{\left(p - \ \hbar k_0 \right)^2}{\hbar^2/\mu^2}}
-  \label{eq_app:step6}
+  \label{eq_ap:step6}
 \end{equation}
 Taking the maringal integrals we get the position and velocity probability distributions:
 \begin{equation}
@@ -248,7 +248,7 @@ $R_{good}$ refers to the intercept that should be switched to (e.g. for the dete
 Where $D_{\nu}^{(I)}$ is the distance between the 2 intercepts (e.g. $D_{\nu}^{(I)} = R_{lk, \nu}^{(I)} - R_{0, \nu}^{(I)}$), $N$ is the number of steps to take before settling solely on one intercept, $t_{init}$ is the time of detection of the divergence, $t_{final}$ is the time at which the code settles on 1 intercept and dt is the timestep taken.
 \\
 A cartoon of this process is given in figure \ref{fig:tanh_explan}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\includegraphics[width=\textwidth]{./img/CTMQC/tanh_explanation.png}
 	\caption{\label{fig:tanh_explan}A crude demonstration of the principle behind the smoothing procedure in switching between intercepts. The black line shows an intercept begin to diverge and the alternative intercept is shown in purple. As the step is incremented the amount of the alternative intercept that makes up the effective intercept is increased until only 1 intercept is used.}
 \end{figure}
@@ -267,7 +267,7 @@ If we hold the nuclear coordinates in place (e.g. remove time-dependence from nu
 This has the following general solution. This can be solved with a Taylor series expansion.
 \[\Phi(\mathbf{R}, t) = e^{i \hbar \hat{H}t} \Phi(\mathbf{R}, 0)\]
 Figure 
-\begin{figure}[h]
+\begin{figure}[ht]
   \includegraphics[width=\textwidth]{./img/CTMQC/3_mols_with_python_sol_2_rep.png}
   \caption{\label{fig:Rabi}Rabi oscillation occurring within a Ethylene trimer system. Dotted lines were calculated using equation \eqref{eq:RABI}, solid lines were calculated using the RK4 propagator within the CTMQC section of the CP2K code. The norm is shown on the top as a cyan line and the x axis shows the timestep in seconds.}
 \end{figure}
@@ -310,8 +310,56 @@ So far, we have proved that the norm should be conserved here for all terms apar
 \end{align}
 However, $\sum_{l}A_l |C_{l}|^2 \equiv \sum_{l} B_{l} |C_{l}|^2$, therefore there is no change in the population and the norm should be conserved.
 \newpage
+\chapter{Energy Conservation in CTMQC}
+\label{ap:EnerConsDerivation}
+\noindent \textit{Definition:}
+\[\mathbf{A}_{\nu} = \sum_{l} |C_{l}|^2 \mathbf{f}_{l, \nu}  + \hbar \mathbb{I}\left[ \sum_{l, k} C_{l}^{*}C_{k} \mathbf{d}_{\nu, lk} \right]\]
+\begin{align*}
+	\sum_{\nu} \frac{\mathbf{P}_{\nu}}{M_{\nu}} \cdot \mathbf{A}_{\nu} &= \sum_{l, \nu}  |C_{l}|^2 \mathbf{v}_{\nu} \cdot \mathbf{f}_{l, \nu} + \hbar \mathbb{I} \left[ \sum_{l,k, \nu} C_{l}^{*} C_{k} \mathbf{v}_{nu} \cdot \mathbf{d}_{lk, \nu} \right] \\
+	&= \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu} + \hbar \mathbb{I} \left[ \sum_{l,k} C_{l}^{*} C_{k} d_{lk} \right] \\
+\end{align*}
+
+
+\begin{align*}
+	\langle \Phi | \dot{\Phi} \rangle &= \langle \sum_{l} C_{l} \psi_{l} | \frac{d}{dt}\left[ \sum_{k} C_{k} \psi_{k} \right] \rangle \\
+	&= \sum_{l} C_{l}^{*} \langle \psi_{l} | \sum_{k} \dot{C}_{k} \psi_{k} + \sum_{k} C_{k} \dot{\psi}_{k} \rangle	\\
+	&= \sum_{l, k} C_{l}^{*}\dot{C}_{k} \langle \psi_{l} | \psi_{k} \rangle + \sum_{l, k} C_{l}^{*}C_{k} d_{lk}	\\
+	&= \sum_{l} C_{l}^{*} \dot{C}_{l} + \sum_{l, k} C_{l}^{*}C_{k} d_{lk} \\
+	&= \mathbb{R}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \sum_{l, k} C_{l}^{*}C_{k} d_{lk} \\
+	&= \frac{1}{2} \frac{d}{dt} \sum_{l} |C_{l}|^2 + \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \sum_{l, k} C_{l}^{*}C_{k} d_{lk} \\
+	&= \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \sum_{l, k} C_{l}^{*}C_{k} d_{lk}
+\end{align*}
+
+\begin{align*}
+	\langle \Phi | \hat{H} | \Phi \rangle &= \langle \sum_{l} C_{l} \psi_{l} | \hat{H} | \sum_{k} C_{k} \psi_{k} \rangle \\
+	&= \sum_{l, k} E_{k} C_{l}^{*} C_{k} \delta_{lk} \\
+	&= \sum_{l} E_{l} |C_{l}|^2
+\end{align*}
+
+
+\begin{align*}
+	E_{pot} &= \langle \Phi | \hat{H} | \Phi \rangle - i\hbar \langle \Phi | \dot{\Phi} \rangle - \sum_{\nu}^{N_{n}} \frac{\mathbf{P}_{\nu}}{M_{\nu}}
+ \mathbf{A}_{\nu}
+ \\
+  		    &= \sum_{l} E_{l} |C_{l}|^2 - i\hbar \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] - i\hbar \sum_{l, k} C_{l}^{*}C_{k} d_{lk} - \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu} - \hbar \mathbb{I}\left[ \sum_{l,k} C_{l}^{*} C_{k} d_{lk} \right]
+  \\
+  		    &= \sum_{l} E_{l} |C_{l}|^2 - i\hbar \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] - i\hbar \mathbb{I} \left[ \sum_{l, k, \nu} C_{l}^{*}C_{k} \mathbf{v}_{\nu} \cdot \mathbf{d}_{lk} \right] - \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu}
+  		    &= \sum_{l} E_{l} |C_{l}|^2 - \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu}
+\end{align*}
+\chapter{Dynamic $\sigma$ Calculation}
+\label{ap:DynamicSigma}
+The algorithm for dynamically updating the $\sigma$ parameter outlined in Gossel, 18 \cite{gossel_coupled-trajectory_2018} is provided below.
+\begin{enumerate}
+  \item Set an initial width parameter ($\sigma_{\nu}^{(I)}(t - dt)$) and a   constant we will name $D$.
+  \item Calculate a cutoff distance via: $r_{cut}(t) = D                      \sigma_{\nu}^{(I)}(t - dt)$.
+  \item For each atom index, $\nu$, and replica, $I$, gather replicas within  a cutoff distance of the current replica. Set the number of replicas within   the cutoff distance to $N$.
+  \item Calculate the distance between atoms on different replicas.
+  \item Find the standard deviation of these distances and set the width of   the gaussian, centered on atom $\nu$ and replica $I$, to this standard        deviation.
+  \item If the standard deviation is smaller than $\frac{D}{N} min_{I} \left[ \sigma_{\nu}^{(I)} (t - dt) \right]$ then set $\sigma_{\nu}^{(I)}(t) =        \frac{D}{N} min_{I} \left[ \sigma_{\nu}^{(I)} (t - dt) \right]$.
+\end{enumerate}
+
 \chapter{Basis Transformation}
-\label{app:BasisTrans}
+\label{ap:BasisTrans}
 We can expand the Schr\"odinger equation in terms of a diabatic basis, $\phi$ rather than an adiabatic one, $\psi$. These 2 expansions are given in equations \eqref{eq:SchrodingerAdExpan_ap} and \eqref{eq:SchrodingerDiExpan_ap}.
 \begin{equation}
   |\Psi \rangle = \sum_{n} C_{n} | \psi_n \rangle

@@ -1,14 +1,14 @@
 \section{Charge Transfer Properties}
 We have seen that the final structure of the pentacene systems becomes more ordered and crystal-like as the quenching time is increased. It would be good now to see how this affects the charge transfer properties. A key quantity governing charge transfer rates is the ratio between electronic coupling and reorganisation energy, $\frac{H_{ab}}{\lambda}$. Seeing as we have a single molecule system, by plotting the electronic coupling we can get a qualitative view of the charge transfer dynamics and see which paths are the most likely within the structure.
 \subsection{Global Couplings}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/GlobalCouplings.png}
 	\caption{\label{fig:glob_coup}The global coupling distribution for each of the quenched structures (in blue, orange, green and red) and 1 structure after a 10ns quench without using electrostatics (purple line). The black dashed lines represent the maximum coupling within a perfect pentacene crystal.}
 \end{figure}
 \noindent The global coupling distribution gives an overview of the values of coupling within the system, hence an idea of the charge transport properties of the system. To calculate these couplings I have used the analytic overlap method (AOM)\cite{gajdos_ultrafast_2014} to calculate couplings between all pairs of molecules (using a nearest neighbour cutoff) in the final snapshot of each quenched system. As can be seen from figure \ref{fig:glob_coup} as the quench time increases a knee starts to form in the distribution at a high coupling value ($~80 meV$), this is especially obvious in the 100ns quench structure (red curve). The figure also highlights the importance of electrostatics in the formation of the correct structure. The purple line shows the coupling distribution for the same simulation except electrostatics were switched off. In this curve we see far more very high values of coupling -substantially higher than those seen in the perfect crystal. This is due to it now being favourable to form a more tightly packed face-to-face structure giving rise to larger molecular overlaps hence higher couplings.
 \subsection{Coupling Graphs}
 \label{sect:couplGraphs}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\includegraphics[width=\textwidth]{./img/CouplingPlots/CouplingGraphs_all.png}
 	\caption{\label{fig:crystalCouplingGraph}A representative network of electronic coupling that each quenched structure has formed. Each structure is labelled by the quench time (e.g. 0ns, 1ns, 10ns, 100ns) or Crystal for a crystal after a short MD equilibration. Coupling strengths are categorised as high (red), medium (green) and low (blue). The definitions of the categories are given in the legend in the bottom right corner.}
 \end{figure}
@@ -16,7 +16,7 @@ We have seen that the final structure of the pentacene systems becomes more orde
 \\\\
 We can see in the graph of the 0ns quenched structure there is very little order to the coupling network. Only very small fragments of high (red) coupling are formed and each one is connected via weak or medium coupling. We can define a 'high coupling fragment' as any set of molecules which can all be reached from any member of the set via an unbroken path of high coupling. The mean size of these high coupling fragments in the 0ns structure is 4.1 molecules and there are 503 of them. In this structure we would expect to see a localised polaron (over a $\sim$ 3 molecules) and low mobilities due to the lack of conductive channels in the structure. The mean size of fragments increases and the number of fragments decreases as we increase the quenching time as shown in table \ref{tab:cluster_sizes}.
 \\
-\begin{table}[h]
+\begin{table}[ht]
 	\begin{tabular}{cccc}
 		\textbf{Quench Time} [ns] & \textbf{Mean Fragment Size} & \textbf{Fragment Size Std Dev} & \textbf{Num Fragments} \\
 		\hline &&&\\
@@ -52,7 +52,7 @@ The surface hopping simulations require a swarm of hundreds of independent traje
 In order to obtain initial positions and velocities for the individual trajectories an MD equilibration was carried out using the restraint set up. This was carried out for 220ps using the NVE ensemble. The first 4ps were discarded and positions and velocities were then sampled every 1ps in order to get 216 trajectories. When these 216 trajectories were created, the Hamiltonian was calculated for each. This allowed and adiabatic state to be selected which, when transformed to the diabatic basis gave a population close to the center of the system and had an energy within 3KT of the ground state energy. An explanation of how this was done is given in appendix \ref{ap:AdiabaticSelector}. In short the method consisted of finding the adiabatic energy (eigenvalue) and diabatic populations (eigenvector) corresponding to adiabatic state n which yielded a state both close to the center and within approximately 3KT of the ground state energy. This was done to ensure a quick convergence of the mean squared displacement of the charge carrier. The surface hopping simulations were then carried out with initial positions and velocities coming from the NVE equilibration run and the initial wavefunction being selected as mentioned above. Other parameters were taken from previous surface hopping simulations carried out by other members of the group.
 
 \subsubsection{0ns and 1ns Systems}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/0ns/0nsSubsystems.png}
 	\caption{\label{fig:0nsSubSys}Panel a) shows a system chosen to run surface hopping on, molecules in gray are fixed in place blue molecules show the active region. Panel b) shows every substructure chosen in the 0ns quenched structure.}
 \end{figure}
@@ -60,7 +60,7 @@ The selection of the region for each surface hopping simulation was important in
 \\\\
 In order to preserve the structure and maintain energy conservation a shell of inactive molecules was selected from the superstructure to surround the active region. The atoms within this remained fixed to their position at t=0.
 \subsection{100ns System}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/100ns/AllClusters_labelled.png}
 	\caption{\label{fig:100nsClusteredLabelled}The 100ns quenched structure clustered by layer. Each different colour represents a different cluster, labelled with the numbers around the edge of the structure.}

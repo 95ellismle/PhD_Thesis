@@ -5,11 +5,12 @@ In order to apply CTMQC to large molecular systems (hundreds of molecules) a new
   H_{ab} = C \langle \varphi_{a} | \varphi_{b} \rangle = C S_{ab}
   \label{eq:AOM_proportional}
 \end{equation}
-Where $\varphi_{a(b)}$ represents a singly occupied molecular orbital on the donor (acceptor) and C is the scaling constant and comes from DFT parameterisation. The singly occupied molecular orbitals are calculated as a linear combination of Slater-type orbitals (STO) as in equation  \eqref{eq:SOMO_def}. In this equation we loop over each molecule in the atom and sum the size of the contribution, $c_{p\pi, i}$, multiplied by the STO, $p_{\pi, j}$. In this case the STO is represented by a p-orbital. The size of the p-orbital on each atom, $c_{p\pi, i}$, is parameterised before the simulation with DFT.
+Where $\varphi_{a(b)}$ represents a singly occupied molecular orbital on the donor (acceptor) and C is the scaling constant and comes from DFT parameterisation. The singly occupied molecular orbitals are calculated as a linear combination of Slater-type orbitals (STO) as in equation  \eqref{eq:SOMO_def}. In this equation we loop over each atom in the molecule and sum the size of the contribution, $c_{p\pi, i}$, multiplied by the STO, $p_{\pi, j}$. In this case the STO is represented by a p-orbital. The size of the p-orbital on each atom, $c_{p\pi, i}$, is parameterised before the simulation with DFT.
 \begin{equation}
   | \varphi_{mol} \rangle = \sum_{i \in mol}^{N_{\text{atoms}}} c_{p\pi, i} | p_{\pi, i} \rangle
   \label{eq:SOMO_def}
 \end{equation}
+Importantly, the AOM method offers a very fast way to calculate the off-diagonal elements of the hamiltonian via a finite-difference method with an accuracy comparable to that of DFT methods. This has been implemented within an open-source software package named CP2K and is used by a fragment-orbital based surface hopping technique to study large systems of hundreds of molecules. In the next chapter the surface hopping technique will be discussed in further detail and applied to a system of pentacene molecules in order to investigate charge carrier (hole) transfer within amorphous systems.
 
 
 \section{Basis Transformation}
@@ -60,7 +61,6 @@ Where the $\mathbb{X}$ matrices are defined as in equations \eqref{eq:Xeh_def} a
   \label{eq:Xqm_def}
 \end{equation}
 
-
 \noindent Using the identities:
 \begin{align}
   \mathbb{U}^{-1} &= \mathbb{U}^{\dagger} \\
@@ -74,8 +74,7 @@ Where $\mathbb{U}^{(I)} = \langle \phi_{l}^{(I)} | \psi_{n}^{(I)} \rangle$ is th
   \dot{\mathbf{u}}^{(I)} = \underbrace{\left(\mathbb{U}^{(I)} \mathbb{X}_{eh} \mathbb{U}^{\dagger (I)} + \mathbb{U}^{(I)}\mathbb{U}^{\dagger (I)}\right) \mathbf{u}^{(I)}}_{\text{Ehrenfest}} + \underbrace{\left(\mathbb{U}^{(I)} \mathbb{X}_{qm} \mathbb{U}^{\dagger (I)} \right) \mathbf{u}^{(I)}}_{\text{Quantum Momentum}}
   \label{eq:diabMatEq}
 \end{equation}
-
-\noindent In equation \eqref{eq:diabMatEq} I've separated the contribution from Ehrenfest and the contribution from the new quantum momentum terms. The Ehrenfest part can be shown to reduce to a simpler form (see Spencer, 2016 \cite{spencer_fob-sh:_2016} and Carof, 17 \cite{carof_detailed_2017} for more details). The quantum momentum term must be coded up as shown -with the transformation matrices. This gives the final equation for the propagation of the diabatic expansion coefficients, shown in equation \eqref{eq:DiabPropagation}.
+In equation \eqref{eq:diabMatEq} I've separated the contribution from Ehrenfest and the contribution from the new quantum momentum terms. The Ehrenfest part can be shown to reduce to a simpler form (see Spencer, 2016 \cite{spencer_fob-sh:_2016} and Carof, 17 \cite{carof_detailed_2017} for more details). The quantum momentum term must be coded up as shown -with the transformation matrices. This gives the final equation for the propagation of the diabatic expansion coefficients, shown in equation \eqref{eq:DiabPropagation}.
 \begin{equation}
   \dot{\mathbf{u}}^{(I)} = \left(-\frac{i}{\hbar} \mathbb{H}^{(I)} - \mathbb{D}^{(I)}_{diab} \right) \mathbf{u}^{(I)} + \left(\mathbb{U}^{(I)} \mathbb{X}_{qm} \mathbb{U}^{(I)})^{-1} \right) \mathbf{u}^{(I)}
   \label{eq:DiabPropagation}
@@ -83,78 +82,67 @@ Where $\mathbb{U}^{(I)} = \langle \phi_{l}^{(I)} | \psi_{n}^{(I)} \rangle$ is th
 Where $\mathbb{H}^{(I)}$ is the diabatic Hamiltonian constructed via the AOM method, $\mathbb{D}_{diab}^{(I)}$ are the diabatic nonadiabatic coupling elements ($d_{diab, lk}^{(I)} = \langle \phi_{l} | \dot{\phi}_{k} \rangle$).
 
 \subsection{Forces}
-A full derivation of the transformation of basis for the equation propagating forces is given in appendix \ref{app:BasisTrans}. The result is given in equation \eqref{eq:diabForces} below:
+A full derivation of the transformation of basis for the equation propagating forces is given in appendix \ref{ap:BasisTrans}. The result is given in equation \eqref{eq:diabForces} below:
 \begin{align}
   \begin{split}
 	  \mathbf{F}_{eh, \nu}^{(I)} &= \sum_{i,j} \mathbf{u}_{i}^{*(I)} \mathbf{u}_{j}^{(I)} \left( \nabla_{\nu} H_{ij}^{(I)} + \sum_{l} \mathbf{d}_{lk, \nu}^{(I)} H_{lj}^{(I)} - \sum_{l} \mathbf{d}_{lj, \nu}^{(I)} H_{il} \right) \\
-	  &- \sum_{l,k} |C_{l}^{(I)}|^2 \left( \sum_{\nu'}^{N_{n}}                \frac{2}{\hbar M_{\nu'}} \mathcal{Q}_{\nu', lk}^{(I)} \cdot                   \mathbf{f}_{l, \nu'}^{(I)} \right)\left[ \mathbf{f}_{k, \nu}^{(I)} -          \mathbf{f}_{l, \nu}^{(I)} \right] |C_{k}^{(I)}|^2
+	  &- \sum_{l,k} |C_{l}^{(I)}|^2 \left( \sum_{\nu'}^{N_{n}} \frac{2}{\hbar M_{\nu'}} \mathcal{Q}_{\nu', lk}^{(I)} \cdot                   \mathbf{f}_{l, \nu'}^{(I)} \right)\left[ \mathbf{f}_{k, \nu}^{(I)} -          \mathbf{f}_{l, \nu}^{(I)} \right] |C_{k}^{(I)}|^2
 	\end{split}
   \label{eq:diabForces}
 \end{align}
 
-\noindent There are a couple of things to note with this equation. Firstly, the quantum momentum part has not been transformed. This is because the forces are basis independent and doesn't need to be transformed. The quantities required for the calculation of this part of the equation are already calculated in order to propagate the coefficients so only a small amount of extra effort is required to calculate the quantum momentum force term. The Ehrenfest part of the equation has been transformed. This is because the nonadiabatic coupling vectors within the adiabatic basis are never required so are never calculated. Further, the commutator term in the diabatic basis has be shown to provide a negligible contribution to the overall force. Seeing as this term requires significant computational effort it can be neglected. This makes the calculation of the Ehrenfest forces in the diabatic basis far cheaper than in the adiabatic basis.
+\noindent There are a couple of things to note with this equation. Firstly, (as in the coefficients equation) the quantum momentum part has not been transformed. This is because the forces are basis independent and don't need to be transformed. Secondly, the quantities required for the calculation of this part of the equation are already calculated in order to propagate the coefficients so only a small amount of extra effort is required to calculate the quantum momentum force term. The Ehrenfest part of the equation has been transformed. This is because the nonadiabatic coupling vectors within the adiabatic basis are never required so are never calculated. The Ehrenfest force term requires these nonadiabatic coupling vectors so would add extra computational overheads. Further, the commutator term in the diabatic basis has be shown to provide a negligible contribution to the overall force. This term requires significant computational effort and can be neglected. This makes the calculation of the Ehrenfest forces in the diabatic basis far cheaper than in the adiabatic basis.
 
 \section{Testing the diabatic propagator}
 The diabatic propagation can be tested against the already tested adiabatic propagator using the Tully model Hamiltonian. The code should give the same results, given the same inputs. To check this, in figure \ref{fig:diab_prop_vs_adiab}, the simulations carried out in figure \ref{fig:LitCompCTMQCTully} were repeated though this time the diabatic propagator was used.
-\begin{figure}[h]
+\begin{figure}[ht]
   \includegraphics[width=\textwidth]{./img/CTMQC/TullyModels/CTMQC_ad_vs_di_wTraj_pops.png}
   \caption{\label{fig:diab_prop_vs_adiab}The 4 Tully models simulated using propagating the equations within a diabatic and adiabatic basis. The green line shows results from the diabatic propagator and the red line shows results from the adiabatic propagator.}
 \end{figure}
 We can see in figure \ref{fig:diab_prop_vs_adiab} that the results for the adiabatic and diabatic propagator are almost exactly the same for each model. In model 3, where the problem with the divergent $\mathcal{Q}_{lk, \nu}^{(I)}$ doesn't occur, the 2 results are exactly on top of each other. In the other models there is a slight discrepancy. This is due to the unpredictable $\mathcal{Q}_{lk, \nu}^{(I)}$ spikes not being perfectly corrected. However, figure \ref{fig:diab_prop_vs_adiab} still serves as confirmation of the propagation within the diabatic basis.
 
 \section{Simulating Molecular Systems}
-To go beyond the 1D Tully model systems the AOM method is combined with CTMQC and applied to an Ethylene dimer. Fortunately, the majority of the code from the Tully model systems can be re-used. In fact, the only difference is the way the Hamiltonian (and diabatic NACE) is constructed. The code for carrying out these tasks (the AOM part) has been implemented by previous members of the group and has been well tested and verified against the literature. Therefore, I will not include any tests of this part of the code in this document but instead refer the reader to the numerous papers discussing AOM and its use in within the fewest switches surface hopping framework \cite{Carof2017FSSH, C9FD00046A, C9CP04770K, FOB-SH_Spencer,        C6FD00107F,FlickPolarons, Giannini2018Crossover, Giannini2019,          C9TC05270D,Gajdos2014, AOM_vs_HigherOrder}. An ethylene dimer was chosen as a reasonable first system due to its relative simplicity (shown in figure \ref{fig:EthDimer}) the total number of atoms is 12 and only 2 electronic states will be considered.
-\begin{figure}[h]
+To go beyond the 1D Tully model systems the AOM method is combined with CTMQC and applied to an Ethylene dimer. Fortunately, the majority of the code from the Tully model systems can be re-used. In fact, the only difference is the way the Hamiltonian (and diabatic NACE) is constructed. The code for carrying out these tasks (the AOM part) has been implemented by previous members of the group and has been well tested and verified against the literature and experimental studies. Therefore, I will not include any tests of this part of the code in this document but instead refer the reader to the numerous papers discussing AOM and its use in within the fewest switches surface hopping framework \cite{Carof2017FSSH, C9FD00046A, C9CP04770K, FOB-SH_Spencer, C6FD00107F,FlickPolarons, Giannini2018Crossover, Giannini2019, C9TC05270D,Gajdos2014, AOM_vs_HigherOrder}. An ethylene dimer was chosen as a reasonable first system due to its relative simplicity (shown in figure \ref{fig:EthDimer}) the total number of atoms is 12 and only 2 electronic states will be considered.
+\begin{figure}[ht]
   \includegraphics[width=\textwidth]{./img/CTMQC/Ethylene_Annotated.png}
   \caption{\label{fig:EthDimer}An example Ethylene dimer used to test the CTMQC implementation. The right panel shows the positions of just 1 replica. The left panel shows the positions of all replica with the replica shown on the right highlighted in red.}
 \end{figure}
-The system shown in figure \ref{fig:EthDimer} was initialised in the adiabatic ground state. Positions and velocities were sampled from a short NVT molecular dynamics equilibration. The scaling factor ($C$ in equation \eqref{eq:AOM_proportional}) was chosen to give a coupling of approximately 27 meV. This is approximately $\frac{1}{4} \times$ the reorganisation energy -parameterised to be 100 meV. The amount of charge transfer is dependent on the ratio between reorganisation energy and the electronic couplings ($\frac{H_{ab}}{\lambda}$). The factor of $\frac{1}{4}$ was chosen to be a reasonable factor -seen in other organic semiconducting systems. The nuclear timestep was chosen to be 0.05fs and the electronic one was 0.005 fs. The switch to $\mathbf{R}_{0, \nu}^{(I)}$ was chosen as the correction method of the quantum momentum and 100 trajectories were used.
+The system shown in figure \ref{fig:EthDimer} was initialised in the adiabatic ground state. Positions and velocities were sampled from a short NVT molecular dynamics equilibration. The scaling factor ($C$ in equation \eqref{eq:AOM_proportional}) was chosen to give a coupling of approximately 27 meV. This is approximately $\frac{1}{4} \times$ the reorganisation energy -parameterised to be 100 meV. The amount of charge transfer is dependent on the ratio between reorganisation energy and the electronic couplings ($\frac{H_{ab}}{\lambda}$). The factor of $\frac{1}{4}$ was chosen to be a reasonable factor -seen in other organic semiconducting systems. The nuclear timestep was chosen to be 0.05fs and the electronic one was 0.005 fs. The switch to $\mathbf{R}_{0, \nu}^{(I)}$ was chosen as the correction method of the quantum momentum and 100 trajectories were used. A constant $\sigma$ of 0.7 was used as the dynamic $\sigma$ tended to either vanish to 0 or blow up to a very large number.
 \\\\
-The populations from a trial run using the set up described above was carried out and the populations and norm of the adiabatic expansion coefficients are plotted in figure \ref{fig:CP2K_norm}. In this figure we see large jumps in the norm, these are caused by the divergences in the quantum momentum term. These occur more in this system as it is more complex (more atoms, higher dimensional) and runs for a longer time with more avoided crossings. The fact that there are 12 atoms and 3 Cartesian dimensions instead of 1 means that the $\mathbf{R}_{lk, \nu}^{(I)}$ term must be calculated many more times increasing the probability of happening upon a divergence. The errors can also accumulate meaning that after a few trivial crossings the populations become extremely noisy. This eventually causes the code to crash and results from it cannot be trusted. Most commonly the reason for the code crashing is a large spike in the computed forces caused by a spike in the quantum momentum. This large force then causes the atoms to collide and the code to crash. The code is very stable when just using Ehrenfest dynamics.
-\begin{figure}[h]
+In figure \ref{fig:CP2K_norm} the norm of the diabatic expansion coefficients are plotted, from the system described above. In this figure we see large jumps in the norm, these are caused by the divergences in the quantum momentum term. These occur more in this system than in the Tully models as it is more complex (more atoms, higher dimensional) and runs for a longer time with more avoided crossings. The fact that there are 12 atoms and 3 Cartesian dimensions instead of 1 means that the $\mathbf{R}_{lk, \nu}^{(I)}$ term must be calculated many more times increasing the probability of happening upon a divergence. The errors can also accumulate meaning that after a few trivial crossings the populations become extremely noisy. This eventually causes the code to crash and results from it cannot be trusted. Most commonly the reason for the code crashing is a large spike in the computed forces caused by a spike in the quantum momentum. This large force then causes the atoms to collide and the code to crash. The code is very stable when just using Ehrenfest dynamics.
+\begin{figure}[ht]
   \includegraphics[width=\textwidth]{./img/CTMQC/Ethylene_norm.png}
   \caption{\label{fig:CP2K_norm}The norm of the adiabatic expansion coefficients. Thin red lines show the norm for each trajectory and the thick green line shows the average over all trajectories.}
 \end{figure}
 Many more simulations have been carried out to diagnose and fix this issue. Results from all of these cannot be included in this document though I will provide a brief summary of results below.
 \\
-\textbf{Varying the number of replicas}
+\subsection{Varying the number of replicas}
 Increasing the number of replicas in the system, somewhat counterintuitively, decreases stability. This is because with more replicas there is more of a chance the code will stumble upon a calculation giving a divergence in the quantum momentum term.
 \\
-\textbf{Varying the timestep}
+\subsection{Varying the timestep}
 Decreasing the timestep does help to improve norm conservation (before the code crashes). However, it does not lead to a more stable simulation that allows for longer timescales to be simulated. This is because decreasing the timestep provides more opportunity for a small numerical error to cause a divergence in the quantum momentum term.
 \\
-\textbf{Removing Center of Mass Motion}
+\subsection{Removing Center of Mass Motion}
 In some simulations the replicas positions spread out so much that the quantum momentum term became negligible. This was to prevent that from happening.
 \\
-\textbf{Varying the gaussian width ($\sigma$) parameter}
+\subsection{Varying the gaussian width ($\sigma$) parameter}
 If the $\sigma$ parameter is set to be large (> 2) then the simulation is more stable as the quantum momentum term is smaller and errors don't accumulate as quickly. However, this the limit of a very large $\sigma$ is Ehrenfest dynamics. If the $\sigma$ is set to be small (< 0.2) the simulation becomes extremely unstable as the quantum momentum forces populations to decohere too quickly. This is discussed in more detail in section \ref{sect:SigmaSect}.
 \\
-\textbf{Turning off the quantum momentum addition to the force term}
+\subsection{Turning off the quantum momentum addition to the force term}
 The code runs more stably if the quantum momentum term is not included in the forces. This has also been shown to be much less important for the accuracy of the results than the quantum momentum addition to the coefficients. However, even in this case the code eventually crashes after an accumulation of errors in the coefficients results in erroneous forces resulting in geometries that fail CP2K internal checks.
 \\
-\textbf{Renormalisation}
+\subsection{Renormalisation}
 This does not seem to help with stability. Furthermore, it merely helps hide the large norm drift and doesn't fix the problems it causes.
 
-
-varying the number of replicas, varying the coupling strength, varying the timestep, removing center of mass motion, 
-
-
-
-\begin{itemize}
-	\item Plot Forces (and decomposition of forces -ehren and QM).
-	\item Plot Coeffs and Norm
-	\item State that the norm goes wild and atoms crash into each other
-	\item Relate this back to the quantum momentum term and it's spikes.
-	\item Show results of simulation of multiple Tully models
-	\item State that this system (even with the correction) still crashed towards the end.
-	\item More avoided crossings result in the quantum momentum being used more. Errors build up in these systems causing crashes.
-	\item The technique shouldn't be used for systems with multiple avoided crossings. Maybe for systems with just 1 or a few.
-\end{itemize}
 
 
 
 \section{Conclusions}
-The CTMQC method shows great promise as a new nonadiabatic molecular dynamics technique. It was derived as the semi-classical limit of the exact factorisation of the time-dependent electron-nuclear wave function \cite{abedi_exact_2010, agostini_semiclassical_2015}. It purports to handle decoherence corrections in a more rigorous, first principles way without the need of empirical parameters. Although this method was first reported in 2015 \cite{agostini_semiclassical_2015}, there are still very few papers reporting results using this method \cite{min_ab_2017, gossel_coupled-trajectory_2018,agostini_semiclassical_2015}. With the most complex system being restricted to a 7 atom molecule \cite{min_ab_2017}. I believe this is due to the problems with the current formalism.
+The CTMQC method shows great promise as a new nonadiabatic molecular dynamics (NAMD) technique. It was derived as the semi-classical limit of the exact factorisation of the time-dependent electron-nuclear wave function \cite{abedi_exact_2010, agostini_semiclassical_2015}. It purports to handle decoherence corrections in a more rigorous, first principles way without the need of empirical parameters. Although this method was first reported in 2015 \cite{agostini_semiclassical_2015}, there are still very few papers reporting results using this method \cite{min_ab_2017, gossel_coupled-trajectory_2018,agostini_semiclassical_2015}. With the most complex system being restricted to a 7 atom molecule \cite{min_ab_2017}. I believe this is due to the problems with the current formalism. Before, the widespread acceptance of CTMQC as a standard nonadiabatic molecular dynamics method 2 critical flaws must be addressed. First is the calculation of the gaussian width parameter, $\sigma$ and the second is the divergence of the quantum momentum term. It would be possible to further investigate the width parameter, perhaps through benchmarks against higher level calculations to establish a relationship between characteristics of the system and the width parameter. From a short investigation using the Tully models it seems a constant width parameter gives reasonable results and it should be set to be between 0.2 and 0.5. This problem does not seem intractable. However, it may be harder to correct for the large divergences in the quantum momentum caused by the denominator of the quantum momentum intercept term, $\mathbf{R}_{lk, \nu}$ approaching zero. This causes the code to become unstable for even simple molecular systems. In the 1D Tully models this could be corrected by switching to an alternative intercept, $\mathbf{R}_{0, \nu}^{(I)}$. However, this alternative intercept results in unphysical population transfer in regions of zero nonadiabatic coupling so cannot be used throughout the simulation. 
+\\\\
+Both these problems can both be traced back to the construction of the nuclear density from the nuclear positions. The method explored in this thesis is the method reported in the literature. That involved placing a gaussian function centered on each atomic position with a certain width, $\sigma$ to smear out the position and give a smooth nuclear distribution. I believe that exploring alternative technique to construct the nuclear density from atomic positions may lead to the largest improvements in the CTMQC technique. Perhaps even allowing one to study complex molecular systems with many nonadiabatic coupling regions such as those typically found in charge transfer studies. 
+\\\\
+In this chapter I have implemented and tested a working version of CTMQC in both CP2K and as a standalone python script. These are both available for downloading from the author's github page at: \href{https://github.com/95ellismle}{https://github.com/95ellismle}. I have given the CTMQC equations in an orthogonal diabatic basis and linked it to the AOM method, which provides a fast way of calculating electronic couplings within the Hamiltonian. I have also highlighted what I believe to be the largest problems facing CTMQC. However, as these problems may require an entire PhD project in themselves, I have not addressed them in much detail. In the rest of this work I will discuss an alternative NAMD technique, namely fewest switches surface hopping, and apply it to large molecular system to get experimentally verifiable results.
 
 
 

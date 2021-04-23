@@ -182,7 +182,7 @@ In Agostini, 16 \cite{agostini_quantum-classical_2016} it is stated that the app
   \caption{\label{fig:CTMQC_EnergyCons}Energy drift in the 4 Tully models using the full CTMQC equations. Error bars are from multiple simulations carried out with different random sampling of the initial positions and momenta.}
 \end{figure}
 \\
-As can be seen in figure \ref{fig:CTMQC_EnergyCons} the energy conservation in CTMQC\ldots
+As can be seen in figure \ref{fig:CTMQC_EnergyCons} the energy conservation in CTMQC does not improve with a decreasing nuclear timestep. In fact in the energy conservation worsens with decrease nuclear timestep in some models such as model 4. Additionally, in models 2 and 4 the errorbar increases as the timestep decreases. This is caused by an increased likelihood of coming across a divergence in the quantum momentum that can't be properly corrected, due to more steps being simulated. In model 3, the error bar stays the fairly consistent, and the energy conservation doesn't change with respect to the timestep. In this model there are no quantum momentum divergences which means the poor energy conservation is caused by something else. The potential energy as given in Agostini, 16 \cite{agostini_quantum-classical_2016} is an approximation and to achieve energy conservation comparable to Ehrenfest this may need amending.
 
 \subsection{Comparisons to literature}
 \begin{figure}[ht]

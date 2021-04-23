@@ -310,42 +310,42 @@ So far, we have proved that the norm should be conserved here for all terms apar
 \end{align}
 However, $\sum_{l}A_l |C_{l}|^2 \equiv \sum_{l} B_{l} |C_{l}|^2$, therefore there is no change in the population and the norm should be conserved.
 \newpage
-\chapter{Energy Conservation in CTMQC}
-\label{ap:EnerConsDerivation}
-\noindent \textit{Definition:}
-\[\mathbf{A}_{\nu} = \sum_{l} |C_{l}|^2 \mathbf{f}_{l, \nu}  + \hbar \mathbb{I}\left[ \sum_{l, k} C_{l}^{*}C_{k} \mathbf{d}_{\nu, lk} \right]\]
-\begin{align*}
-	\sum_{\nu} \frac{\mathbf{P}_{\nu}}{M_{\nu}} \cdot \mathbf{A}_{\nu} &= \sum_{l, \nu}  |C_{l}|^2 \mathbf{v}_{\nu} \cdot \mathbf{f}_{l, \nu} + \hbar \mathbb{I} \left[ \sum_{l,k, \nu} C_{l}^{*} C_{k} \mathbf{v}_{nu} \cdot \mathbf{d}_{lk, \nu} \right] \\
-	&= \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu} + \hbar \mathbb{I} \left[ \sum_{l,k} C_{l}^{*} C_{k} d_{lk} \right] \\
-\end{align*}
+%\chapter{Energy Conservation in CTMQC}
+%\label{ap:EnerConsDerivation}
+%\noindent \textit{Definition:}
+%\[\mathbf{A}_{\nu} = \sum_{l} |C_{l}|^2 \mathbf{f}_{l, \nu}  + \hbar \mathbb{I}\left[ \sum_{l, k} C_{l}^{*}C_{k} \mathbf{d}_{\nu, lk} \right]\]
+%\begin{align*}
+%	\sum_{\nu} \frac{\mathbf{P}_{\nu}}{M_{\nu}} \cdot \mathbf{A}_{\nu} &= \sum_{l, \nu}  |C_{l}|^2 \mathbf{v}_{\nu} \cdot \mathbf{f}_{l, \nu} + \hbar \mathbb{I} \left[ \sum_{l,k, \nu} C_{l}^{*} C_{k} \mathbf{v}_{nu} \cdot \mathbf{d}_{lk, \nu} \right] \\
+%	&= \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu} + \hbar \mathbb{I} \left[ \sum_{l,k} C_{l}^{*} C_{k} d_{lk} \right] \\
+%\end{align*}
+%
+%
+%\begin{align*}
+%	\langle \Phi | \dot{\Phi} \rangle &= \langle \sum_{l} C_{l} \psi_{l} | \frac{d}{dt}\left[ \sum_{k} C_{k} \psi_{k} \right] \rangle \\
+%	&= \sum_{l} C_{l}^{*} \langle \psi_{l} | \sum_{k} \dot{C}_{k} \psi_{k} + \sum_{k} C_{k} \dot{\psi}_{k} \rangle	\\
+%	&= \sum_{l, k} C_{l}^{*}\dot{C}_{k} \langle \psi_{l} | \psi_{k} \rangle + \sum_{l, k} C_{l}^{*}C_{k} d_{lk}	\\
+%	&= \sum_{l} C_{l}^{*} \dot{C}_{l} + \sum_{l, k} C_{l}^{*}C_{k} d_{lk} \\
+%	&= \mathbb{R}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \sum_{l, k} C_{l}^{*}C_{k} d_{lk} \\
+%	&= \frac{1}{2} \frac{d}{dt} \sum_{l} |C_{l}|^2 + \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \sum_{l, k} C_{l}^{*}C_{k} d_{lk} \\
+%	&= \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \sum_{l, k} C_{l}^{*}C_{k} d_{lk}
+%\end{align*}
+%
+%\begin{align*}
+%	\langle \Phi | \hat{H} | \Phi \rangle &= \langle \sum_{l} C_{l} \psi_{l} | \hat{H} | \sum_{k} C_{k} \psi_{k} \rangle \\
+%	&= \sum_{l, k} E_{k} C_{l}^{*} C_{k} \delta_{lk} \\
+%	&= \sum_{l} E_{l} |C_{l}|^2
+%\end{align*}
+%
 
-
-\begin{align*}
-	\langle \Phi | \dot{\Phi} \rangle &= \langle \sum_{l} C_{l} \psi_{l} | \frac{d}{dt}\left[ \sum_{k} C_{k} \psi_{k} \right] \rangle \\
-	&= \sum_{l} C_{l}^{*} \langle \psi_{l} | \sum_{k} \dot{C}_{k} \psi_{k} + \sum_{k} C_{k} \dot{\psi}_{k} \rangle	\\
-	&= \sum_{l, k} C_{l}^{*}\dot{C}_{k} \langle \psi_{l} | \psi_{k} \rangle + \sum_{l, k} C_{l}^{*}C_{k} d_{lk}	\\
-	&= \sum_{l} C_{l}^{*} \dot{C}_{l} + \sum_{l, k} C_{l}^{*}C_{k} d_{lk} \\
-	&= \mathbb{R}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \sum_{l, k} C_{l}^{*}C_{k} d_{lk} \\
-	&= \frac{1}{2} \frac{d}{dt} \sum_{l} |C_{l}|^2 + \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \sum_{l, k} C_{l}^{*}C_{k} d_{lk} \\
-	&= \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] + \sum_{l, k} C_{l}^{*}C_{k} d_{lk}
-\end{align*}
-
-\begin{align*}
-	\langle \Phi | \hat{H} | \Phi \rangle &= \langle \sum_{l} C_{l} \psi_{l} | \hat{H} | \sum_{k} C_{k} \psi_{k} \rangle \\
-	&= \sum_{l, k} E_{k} C_{l}^{*} C_{k} \delta_{lk} \\
-	&= \sum_{l} E_{l} |C_{l}|^2
-\end{align*}
-
-
-\begin{align*}
-	E_{pot} &= \langle \Phi | \hat{H} | \Phi \rangle - i\hbar \langle \Phi | \dot{\Phi} \rangle - \sum_{\nu}^{N_{n}} \frac{\mathbf{P}_{\nu}}{M_{\nu}}
- \mathbf{A}_{\nu}
- \\
-  		    &= \sum_{l} E_{l} |C_{l}|^2 - i\hbar \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] - i\hbar \sum_{l, k} C_{l}^{*}C_{k} d_{lk} - \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu} - \hbar \mathbb{I}\left[ \sum_{l,k} C_{l}^{*} C_{k} d_{lk} \right]
-  \\
-  		    &= \sum_{l} E_{l} |C_{l}|^2 - i\hbar \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] - i\hbar \mathbb{I} \left[ \sum_{l, k, \nu} C_{l}^{*}C_{k} \mathbf{v}_{\nu} \cdot \mathbf{d}_{lk} \right] - \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu}
-  		    &= \sum_{l} E_{l} |C_{l}|^2 - \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu}
-\end{align*}
+%\begin{align*}
+%	E_{pot} &= \langle \Phi | \hat{H} | \Phi \rangle - i\hbar \langle \Phi | \dot{\Phi} \rangle - \sum_{\nu}^{N_{n}} \frac{\mathbf{P}_{\nu}}{M_{\nu}}
+% \mathbf{A}_{\nu}
+% \\
+%  		    &= \sum_{l} E_{l} |C_{l}|^2 - i\hbar \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] - i\hbar \sum_{l, k} C_{l}^{*}C_{k} d_{lk} - \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu} - \hbar \mathbb{I}\left[ \sum_{l,k} C_{l}^{*} C_{k} d_{lk} \right]
+%  \\
+%  		    &= \sum_{l} E_{l} |C_{l}|^2 - i\hbar \mathbb{I}\left[ \sum_{l} C_{l}^{*} \dot{C}_{l} \right] - i\hbar \mathbb{I} \left[ \sum_{l, k, \nu} C_{l}^{*}C_{k} \mathbf{v}_{\nu} \cdot \mathbf{d}_{lk} \right] - \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu}
+%  		    &= \sum_{l} E_{l} |C_{l}|^2 - \sum_{l, \nu} \mathbf{v}_{\nu} |C_{l}|^2 \mathbf{f}_{l, \nu}
+%\end{align*}
 \chapter{Dynamic $\sigma$ Calculation}
 \label{ap:DynamicSigma}
 The algorithm for dynamically updating the $\sigma$ parameter outlined in Gossel, 18 \cite{gossel_coupled-trajectory_2018} is provided below.

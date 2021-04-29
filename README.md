@@ -1,5 +1,9 @@
 # My PhD Thesis
-This is based on the UCL LaTeX Thesis Template whose README is show below (use that for compile instructions etc...):
+This is based on the UCL LaTeX Thesis Template whose README is show below.
+
+**To compile:**
+
+     make thesis
 
 
 # UCL LaTeX Thesis Templates

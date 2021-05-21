@@ -457,6 +457,43 @@ The Euclidean distance between the center of the system and $\mathbf{R}_{COM, i}
 
 
 
+\chapter{Center of Mass Restraints}
+\label{ap:Restraints}
+\begin{wrapfigure}{r}{0.38\textwidth}
+    \vspace*{-0.7cm}
+    \centering
+    \includegraphics[width=0.14\textwidth]{./img/RestraintsPos.png}
+    \caption{\label{fig:rest}The restraint set up for 1 molecule. Each coloured zig-zag shows the atoms that are restrained.}
+\end{wrapfigure}
+The surface hopping code at the time did not support electrostatic interactions. So, in order to maintain the structure from the molecular dynamics simulations, center of mass restraints were used on each molecule. The restraint set up for 1 molecule is shown in figure \ref{fig:rest}. Here each of the 4 coloured zig-zag shapes show which atoms are restrained. These atoms were restrained about their center of mass. This configuration of restraints was used in order to stop rotations about the long axis for each molecule as this would allow molecules to form a face-to-face stacking giving rise to unphysically high couplings. The restraint strength was chosen to be the same as in another group members study to allow for a fair comparison of  results. A short MD equilibration was performed to determine whether the restraint spring constant was sufficient to hold the molecules in place well enough to prevent the very high couplings appearing in the global coupling    distribution. To further validate the choice of restraint/general set up a surface hopping simulation was carried out on a layer of bulk crystal and the mobilities were compared to known values.
+
+\chapter{Active Systems}
+\label{ap:system_divisions}
+
+\section{0ns and 1ns Systems}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/0ns/0nsSubsystems.png}
+	\caption{\label{fig:0nsSubSys}Panel a) shows a system chosen to run surface hopping on, molecules in gray are fixed in place blue molecules show the active region. Panel b) shows every substructure chosen in the 0ns quenched structure.}
+\end{figure}
+The selection of the region for each surface hopping simulation was important in order to get a fair representation of the mobilities achievable within each structure. In the 0ns and 1ns quenched structures 6 slices were selected from the final snapshot of the structure. These were chosen to be independent clusters evenly spaced to sample the mobility of the structure at various points. The selections are shown in figure \ref{fig:0nsSubSys} for the 0ns quenched structure. The same process was used in the 1ns quenched structure.
+\\\\
+In order to preserve the structure and maintain energy conservation a shell of inactive molecules was selected from the superstructure to surround the active region. The atoms within this remained fixed to their position at t=0.
+\section{100ns System}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{./img/DifferentQuenchTimes/100ns/AllClusters_labelled.png}
+	\caption{\label{fig:100nsClusteredLabelled}The 100ns quenched structure clustered by layer. Each different colour represents a different cluster, labelled with the numbers around the edge of the structure.}
+\end{figure}
+The 100ns system is a much more ordered system and forms very well defined layers. This makes picking out structures on which to run surface hopping different to the 0/1ns quenched structures. The method I used was to first extend the superstructure in the z axis by $\pm45 \angstrom$ by repeating the periodic image and discarding molecules more than $\pm45 \angstrom$ from the simulation box boundaries. This was to ensure the resulting system was sufficiently large to converge mobilities. This added approximately 1 extra periodic image in the $+^{\text{ve}}$ and $-^{\text{ve}}$ z direction. A density based clustering algorithm (similar to DBSCAN \cite{DBSCAN}) was used to isolate the layers in the full structure by clustering centers of mass. These are shown in figure \ref{fig:100nsClusteredLabelled}. In this figure clusters 6, 7 and 11 were chosen to calculate the mobility via surface hopping.
+
+\section{10ns System}
+\begin{wrapfigure}{r}{0.45\textwidth}
+	\includegraphics[width=0.45\textwidth]{./img/DifferentQuenchTimes/10ns/Clusters.png}
+	\caption{\label{fig:10nsClusters}The clusters chosen to run surface hopping simulations on. The coloured clusters each represent a different structure on which surface hopping was ran.}
+\end{wrapfigure}
+The choice of region within the 10ns quenched structure was different from the 0/1ns and the 100ns quenched structure. Here we have some large crystal fragments forming but still very few well defined layers. In this system the mobility is expected to be much more dependant on the initial position of the charge carrier within the structure than in the 0ns and 100ns quenched structure where the structure was more uniformly disordered or ordered respectively. In order to sample a reasonable range of mobilities in this structure 4 clusters were selected shown in fig \ref{fig:10nsClusters}. 3 of these (red, blue and purple) were selected using a similar clustering procedure as in the 100ns quenched structure. The center-right green cluster was selected as it looked like it was a fairly disordered region where multiple crystal fragments meet, which would give a lower bound on the mobility within the 10ns structure.
+
+
 \chapter{Analytic Overlap Method}
 
 \chapter{Colophon}

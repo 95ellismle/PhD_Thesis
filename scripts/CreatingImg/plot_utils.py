@@ -6,7 +6,7 @@ BLUE = (0.3, 0.4, 1)
 RED = (1, 0.3, 0.4)
 GREY = (0.3, 0.3, 0.3)
 
-ANNOTATE_FONTSIZE = 25
+ANNOTATE_FONTSIZE = 27
 
 
 

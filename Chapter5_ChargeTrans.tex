@@ -52,12 +52,12 @@ The IPR is an important quantity as the level of delocalisation of the wavefunct
 \subsection{Hole Mobilities}
 \label{sect:mobilities}
 A full discussion of the calculation of the charge carrier mobility can be found in various papers \cite{Carof17FSSH,Giannini2018Crossover,Giannini2019}. It is calculated from the Einstein diffusion constant, $D$, which in turn is calculated from the change in the mean squared displacement (MSD) of the charge carrier. The MSD is calculated via equation \eqref{eq:MSD} below
-\begin{eqnarray}
+\begin{align}
   \label{eq:MSD_Exact}
   MSD_{ab}(t) &= \frac{1}{N_{\text{traj}}} \sum_{n=1}^{N_{\text{traj}}} \left\langle \Psi^{n}(t) | (\mathbf{R} - \mathbf{R}_{0})^2 | \Psi^{n}(t) \right\rangle \\
   &\approx \frac{1}{N_{\text{traj}}} \sum_{n=1}^{N_{\text{traj}}} \left(\frac{1}{\sum_{i}^{N_{\text{mol}}}} \left| u^{n}_{i}(t) \right|^2 (\mathbf{R}_{i}^{n}(t))^2 \right)
   \label{eq:MSD}
-\end{eqnarray}
+\end{align}
 Where $\Psi^{n}$ is the wavefunction for trajectory $n$, $\mathbf{R}$ is the position coordinate and $\mathbf{R}_{0}$ is the position coordinate at time $t=0$. $\mathbf{R}_{i}^{n}(t)$ is the time-dependent position of the center of mass of molecule $i$ on trajectory $n$. Equation \eqref{eq:MSD_Exact} is the exact quantum mechanical equation for the MSD, equation \eqref{eq:MSD} is the equation that is used to calculate the MSD from the surface hopping output. The quantity is in general a 3x3 matrix and the values $a$ and $b$ are indices indexing each of the 3 Cartesian dimensions.
 \\\\
 After a small equilibration the MSD increases linearly. This is indicative of Einstein diffusion and the coefficient can be calculated, in this linear regime, as in equation \eqref{eq:DiffConst} below:

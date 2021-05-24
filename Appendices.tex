@@ -496,6 +496,48 @@ The choice of region within the 10ns quenched structure was different from the 0
 
 \chapter{Analytic Overlap Method}
 
+\chapter{Addition-Subtraction Forces}
+\label{ap:EwaldForcesAddSub}
+\section{Real Space}
+The real space forces in the addition subtraction scheme are given in equation \eqref{eq:AddSubForcesReal}.
+\begin{equation}
+  \mathbf{F}_{i}^{\gamma} = \left\lbrace \begin{array}{lc} \mathbf{F}_i^{N}(\mathbf{R}) + \sum_{j \in \gamma} (q_i^{C} q_j^C - q_{i}^N q_j^{N}) \mathbf{f}_{ij}(\mathbf{R}) + \sum_{j \notin \gamma} (q_i^{C} q_j^{N} - q_{i}^N q_j^{N}) \mathbf{f}_{ij}(\mathbf{R}); & i \in \gamma \\\\
+\mathbf{F}_i^{N}(\mathbf{R}) - \sum_{j \in \gamma} (q_i^{C} q_j^N - q_{i}^N q_j^{N}) \mathbf{f}_{ij}(\mathbf{R}); & i \notin \gamma
+\end{array} \right.
+  \label{eq:AddSubForcesReal}
+\end{equation}
+Where:
+\begin{itemize}
+  \item $\mathbf{f}_{ij}(\mathbf{R}) = \frac{\hat{\mathbf{R}}_{ij}}{|\rij|} \left(\frac{erfc\left(\alpha |\rij| \right)}{|rij|} + \frac{2 \alpha}{\sqrt{\pi}} e^{-\alpha^2 |\rij|^2} \right)$: the force between atoms i and j.
+  \item $\mathbf{F}_i^{N}(\mathbf{R}) = q_i^{N} \sum_{j}^{N_{at}} q_j^N \mathbf{f}_{ij}(\mathbf{R}) $: the total neutral force.
+  \item $q_{j}$ is the charge on atom j
+  \item $\gamma$ is the index of the charged molecule.
+\end{itemize}
+Once again, we first calculate the total force between all neutral molecules. The charge-charge interactions are substituted in for the neutral-neutral interactions for atoms on the charged molecule. The charge-neutral interactions are then substituted in for the neutral-neutral interactions for the charged molecule and its environment. The bonded interaction corrections are the same as these.
+
+\section{Reciprocal Space}
+\label{ap:EwaldForcesAddSubRecip}
+The reciprocal space forces, as mentioned in the main text, cannot be decomposed with the addition-subtraction scheme.
+
+\begin{equation}
+	\F_{i}^{\gamma}(\mathbf{R}) =  \left\lbrace \begin{array}{lc}
+	  4\pi q_{i}^{C} \sum_{\mathbf{k} \neq 0} \mathrm{Im}\left[ S^{'}_{\mathbf{k}} E_{\mathbf{k},i}^{*} \right]; & i \in \gamma\\\\
+	
+	4\pi q_{i}^{N} \sum_{\mathbf{k} \neq 0} \mathrm{Im}\left[ S^{'}_{\mathbf{k}} E_{\mathbf{k},i}^{*} \right];& i \notin \gamma
+	\end{array}
+	\right.
+	\label{eq:AddSubForcesRecip}
+\end{equation}
+Where:
+\begin{itemize}
+  \item $S_{\mathbf{k}}^{'} = A_{\mathbf{k}} \left[\sum_{j} q_j^{N} E_{\mathbf{k}, j} + \sum_{j \in \gamma} \left(q_j^{C} - q_{j}^{N}\right) E_{\mathbf{k}, j}\right]$
+
+  \item $A_{\mathbf{k}} = \frac{\mathbf{k}}{|\mathbf{k}|^2} e^{\frac{|\mathbf{k}|^2}{4 \alpha^2}}$
+
+  \item $E_{\mathbf{k}, j} = e^{2 \pi \mathrm{i} \mathbf{k} \cdot \R_{j}}$
+\end{itemize}
+\noindent The calculation of this equation scales as $\mathcal{O}(N^3)$ where $N^3 = N_{states} N_{at} N_{k}$. This is because for every atom, $i$, in charged molecule, $\gamma$, a loop over $\mathbf{k}$ vectors must be calculated.
+
 \chapter{Colophon}
 \label{appendixlabel3}
 \textit{This is a description of the tools you used to make your thesis. It helps people make future documents, reminds you, and looks good.}

@@ -2,15 +2,17 @@
 \makedeclaration
 
 \begin{abstract} % 300 word limit
-My research is about stuff.
-
-It begins with a study of some stuff, and then some other stuff and things.
-
-There is a 300-word limit on your abstract.
+This work will be split into 2 parts. The first will be concerned with the implementation of a novel nonadiabatic molecular dynamics technique, derived as the semi-classical limit of exact factorisation, named Coupled-Trajectory Mixed Quantum-Classical Molecular Dynamics (CTMQC). I will investigate its current formulation within the literature, highlight some current pitfalls ---and suggest ways to alleviate them--- and present results of my implementation. I will also give results of the integration of this technique within the fragment-orbital based framework (FOB). This is designed to allow the fast calculation of electronic couplings through formulating the equations in a diabatic basis. Initially, the CTMQC algorithm will be applied to the 1D Tully toy models and later to an Ethylene dimer. We will see that, although the Tully model results are very promising, instabilities in the calculation of key quantities makes the current algorithm unusable for molecular systems.
+\\\\
+The second part will be concerned with a well-tested, semi-classical technique, based on Tully's fewest switches surface hopping (FOB-SH). I will apply this to nanoscale systems of pentacene; will investigate the effect a variable quench time in a melt-quench scheme has on the crystallinity of these pentacene systems; and discuss how the resulting nanostructure affects charge transport dynamics. Finally, I will also discuss my implementation of 2 methods to calculate electrostatic interactions within FOB-SH. I will show how an addition-subtraction scheme and DSF (an approximation to full Ewald) can be used to optimise the calculations and test these methods against full Ewald.
 \end{abstract}
 
 \begin{acknowledgements}
-Acknowledge all the things!
+I'd like to start by thanking all the members of the Blumberger group for their supporti, both academically and socially, I know without them I wouldn't have completed the PhD. I would especially like to thank Prof Antoine Carof for holding my hand through the first several months, and Dr Samuele Giannini for the rest! Chris Ahart, Xiuyun Jiang, Dr Orestis Ziogos, Dr Xioajing Wu, Jan Elsner, Prof Soumya Ghosh, Dr Patrick Gutlein, Dr Hui Yang, Dr Lijljana Stojanovic, Dr Roohollah Hafizi, Dr Wei-Tao Peng and Prof Zdenek Futera also all deserve a special mention. I, of course, would like to thank my supervisor Jochen Blumberger for his guidance and many useful discussions throughout my PhD.
+\\\\
+I would also like to thank all the friends and family who have supported me throughout the PhD. Though, special thanks should go to: my parents, grandparents and brother; my partner's family (especially for putting up with living with me for several months over lockdown!); Victor and Rhiannon.
+\\\\
+Most of all, I would like to acknowledge my partner Liam for his support throughout the PhD, and would like to dedicate this thesis to him.
 \end{acknowledgements}
 
 \setcounter{tocdepth}{2} 

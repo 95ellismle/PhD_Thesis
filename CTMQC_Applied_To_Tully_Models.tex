@@ -51,7 +51,7 @@ Energy conservation is a very important property in most molecular dynamics simu
   \frac{d E}{dt} = \frac{d}{dt} \left[ \frac{1}{2} m v^2 + \sum_{k}|C_{l}^{(I)}(t)|^2 \right] = 0
   \label{eq:EhrenfestEnergyConservation}
 \end{equation}
-As in the norm conservation checks in section \ref{sect:normCons},  parameters from the high momentum cases were taken as initial conditions for simulations with various nuclear timesteps, this time holding the electronic timestep constant. The high momenta cases were chosen to show the worst case energy conservations. A linear line of best fit was then fitted to the data and the drift in the total energy (given in \eqref{eq:EhrenfestEnergyConservation}) was calculated from its gradient. The results of these simulations are given in figure \ref{fig:EhrenEnerCons}.
+As in the norm conservation checks in section \ref{ap:norm_cons},  parameters from the high momentum cases were taken as initial conditions for simulations with various nuclear timesteps, this time holding the electronic timestep constant. The high momenta cases were chosen to show the worst case energy conservations. A linear line of best fit was then fitted to the data and the drift in the total energy (given in \eqref{eq:EhrenfestEnergyConservation}) was calculated from its gradient. The results of these simulations are given in figure \ref{fig:EhrenEnerCons}.
 \begin{figure}[ht]
   \includegraphics[width=\textwidth]{./img/CTMQC/TullyModels/Ehren_EnerCons.png}
   \caption{\label{fig:EhrenEnerCons}Energy conservation values for various nuclear timesteps for the high momentum case of each Tully model using Ehrenfest dynamics.}

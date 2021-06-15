@@ -287,7 +287,7 @@ A statement of the conservation of the norm, for a single trajectory, is given b
 	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 = \sum_{l} C_{l}^{*}(t)\frac{d C_{l}(t)}{dt} + \frac{d C_{l}^{*}(t)}{dt}C_{l}(t)
 	\label{eq:normConsState} = 2 \mathbb{R} \left[ \sum_{l} C_{l}(t)^{*} \frac{d C_{l}(t)}{dt} \right]
 \end{equation}
-Substituting the equation for the evolution of the adiabatic coefficients (and removing the purely imaginary term) into \eqref{eq:RealNorm} we get equation \eqref{eq:KsumKadNorm}
+Substituting the equation for the evolution of the adiabatic coefficients (and removing the purely imaginary term) into \eqref{eq:normConsState} we get equation \eqref{eq:KsumKadNorm}
 \begin{align}
 	\frac{d}{dt} \sum_{l} \left\vert C_{l}(t) \right\vert^2 &= 2 \sum_{l} \mathbb{R} \left[ \cancel{\frac{-i}{\hbar} \epsilon_{BO}^{l} C_l(t)^*C_l^{}(t)}
 	- \sum_{k} \left[ C_l(t)^*C_k(t) d_{lk}^{ad} - (A_l - B_{l}) C_l(t)^*C_l(t)  \right] \right]
@@ -495,10 +495,13 @@ The choice of region within the 10ns quenched structure was different from the 0
 
 \chapter{Additional Pentacene Mobility Information}
 \label{ap:PentTable}
-\begin{table}[h!]
+\begin{figure}[htbp]
+%\begin{table}
 	\caption{\label{tab:ap:expCompPent}Experimental and computed charge mobilities for amorphous, polycrystalline and single-crystalline pentacene.}
 	\label{}
-	\begin{center}
+	%\begin{center}
+{\footnotesize
+\hspace*{-2.8cm}
 		\begin{tabular}{lllllll}
 			Author & device/comp.  & structure & gate dielectric & mobility & comments  \\
 			\hline \\
@@ -533,8 +536,11 @@ The choice of region within the 10ns quenched structure was different from the 0
 			26,  Arabi16 & OFET &  single crystal & SiO$_2$ & 5.6 & crystal size 50 $\mu$m \\
 			27,  this work &   comp.        &  single crystal &   & 10.5 & bulk, polymorph I \\
 		\end{tabular}
-	\end{center}
-\end{table}
+}
+	%\end{center}
+%\end{table}
+\end{figure}
+
 
 \chapter{Addition-Subtraction Forces}
 \label{ap:EwaldForcesAddSub}

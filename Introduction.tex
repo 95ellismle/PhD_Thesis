@@ -7,7 +7,7 @@ Conductive polymers were first discovered in 1977 by Shirakawa et al  \cite{chia
 \\\\
 There are a number of techniques currently used in the field to evaluate the performance of organic semiconductors, though all come with their own caveats. For example, transient localisation theory (TLT) \cite{Nematiaram2019, PhysRevB.83.081202, Fratini_2016}, while efficient and accurate, cannot be used in non-periodic systems or those with large amounts of static disorder. Another technique, multi-configurational time-dependent Hartree (MCTDH) \cite{MCTDH, cattarius_all_2001}, is considered the gold standard for wavepacket propagation and has been used extensively in numerous studies (e.g. refs \cite{MANTHE19937,doi:10.1063/1.463332,doi:10.1063/1.469292}). However, due to the treatment of the full system  (including nuclei) quantum mechanically, MCTDH is relatively expensive and can only be applied to a small molecular systems. In this work I will be studying electron-nuclear propagation methods that rely on the treatment of the nuclear degrees of freedom classically and the electronic ones quantum mechanically. This is approximation is termed the semi-classical approximation and allows the efficient simulation of mesoscopic systems.
 \\\\
-There are a number of semi-classical techniques used in the field. The most common are fewest switches surface hopping (FSSH) \cite{FSSH_orig} and mean-field dynamics (also called Ehrenfest dynamics) \cite{Ehrenfest1927}. In addition to these, in this work I will be exploring a relative newcomer to the (nonadiabatic) semi-classical simulation arsenal, namely coupled-trajectory mixed quantum-classical molecular dynamics (CTMQC). I will be focussed on the extension of these algorithms and their application to organic semiconducting systems, containing a hundreds of molecules.
+There are a number of semi-classical (MQC) techniques used in the field. The most common are fewest switches surface hopping (FSSH) \cite{FSSH_orig} and mean-field dynamics (also called Ehrenfest dynamics) \cite{Ehrenfest1927}. In addition to these, in this work I will be exploring a relative newcomer to the (nonadiabatic) semi-classical simulation arsenal, namely coupled-trajectory mixed quantum-classical molecular dynamics (CTMQC). I will be focussed on the extension of these algorithms and their application to organic semiconducting systems, containing a hundreds of molecules.
 
 \section{Semi-classical Nonadiabatic Molecular Dynamics}
 Semi-classical techniques all decompose the nuclear and electronic degrees of freedom and propagate nuclei with Newton's equations using standard molecular dynamics \cite{Coker1995Jan}. Here the forces are calculated with a parameterised forcefield and positions and velocities are often updated with the velocity Verlet technique. The forcefield outlines the shape of the potential energy surface (PES) the nuclei evolve on. The electronic subsystem is propagated using a variety of techniques that solve the time-dependent Schr\"odinger equation. There are numerous techniques for the calculating electronic properties used in propagation, though the most common are density functional theory (DFT) and model Hamiltonian based methods. However, in nonadiabatic processes (such as in charge transfer \cite{PhysRevB.79.115203} or photoexcitation \cite{Hammes-Schiffer2001Apr, Hammes-Schiffer1994Sep, Huynh2007}) the nuclear and electronic subsystems are not independent. That is, the specific nuclear geometry depends on the electron density and vice-versa. The resulting interaction between these 2 subsystems is the way each of the semi-classical techniques differ. In this regime the Born-Oppenheimer approximation cannot be applied \cite{john_c._tully_nonadiabatic_nodate}. This approximation, relied upon for almost a century \cite{Pisana2007Feb}, hinges on the fact that nuclei are much more massive than electrons and are approximately stationary with respect to electron motion\cite{Born1927Jan}. This results in nuclear evolution that is governed by a single, adiabatic, potential energy surface. Nonadiabatic molecular dynamics methods, such as the aforementioned surface hopping and mean-field techniques, facilitates the bypassing of this limitation and can be used to simulate molecular dynamics with electronic transitions. 
@@ -17,9 +17,9 @@ Semi-classical techniques all decompose the nuclear and electronic degrees of fr
   \includegraphics[width=\textwidth]{./img/Eh_hop.png}
   \caption{\label{fig:Eh_diag}An example of a typical Ehrenfest simulation near an avoided crossing. The black lines represent the adiabatic potential energy surface due to the ground (PES 1) and excited (PES 2) state. The red line represents the population weighted average potential the nuclei travel on.}
 \end{figure}
-\noindent The oldest, and most intuitive, NAMD method is Ehrenfest dynamics \cite{Ehren1927}. In this technique the nuclei evolve on a single, mean potential energy surface (PES). The shape of this PES comes from a population-weighted average, hence the electronic subsystem can influence the nuclear dynamics through the PES. This is method of propagation is displayed for a simple 1D, 1 atom, 2 state system in figure \ref{fig:Eh_diag}. In this figure we initialise the adiabatic population in the ground (red) state. As the atom (black dot) progress through the reaction coordinates it feels forces equal to the negative gradient of the population-weighted average PES (dotted black line).
+\noindent The oldest, and most intuitive, NAMD method is Ehrenfest dynamics \cite{Ehrenfest1927}. In this technique the nuclei evolve on a single, mean potential energy surface (PES). The shape of this PES comes from a population-weighted average, hence the electronic subsystem can influence the nuclear dynamics through the PES. This is method of propagation is displayed for a simple 1D, 1 atom, 2 state system in figure \ref{fig:Eh_diag}. In this figure we initialise the adiabatic population in the ground (red) state. As the atom (black dot) progress through the reaction coordinates it feels forces equal to the negative gradient of the population-weighted average PES (dotted black line).
 \\\\
-The Ehrenfest equations can be rigorously derived from the time-dependent Schr\"odinger equation by expanding the full the full electronic wavefunction as a linear combination of adiabatic states as in equation \eqref{eq:BornHuangExpansion} and assuming that the nuclei's motion is determined by a single population-weighted PES. The equation for the calculation of these forces is given in equation \eqref{eq:Eh_Force}.
+The Ehrenfest equations can be rigorously derived from the time-dependent Schr\"odinger equation by expanding the full electronic wavefunction as a linear combination of adiabatic states as in equation \eqref{eq:BornHuangExpansion} and assuming that the nuclei's motion is determined by a single population-weighted PES. The equation for the calculation of these forces is given in equation \eqref{eq:Eh_Force}.
 \begin{equation}
   \Psi(\mathbf{r}, \mathbf{R}, t) = \sum_{m} C_{m}(\mathbf{R}, t) \phi_i(\mathbf{r}, t)
   \label{eq:BornHuangExpansion}
@@ -58,16 +58,51 @@ Although surface hopping fixes many concerns from Ehrenfest dynamics there are s
 \\\\
 Further deficiencies of trajectory surface hopping are the fact that the hops are instant which can lead to discontinuities in the total energy. The standard methods to compensate for this is re-scaling velocities along the direction of the NACV (as mentioned previously). Due to the nuclear timestep being finite trivial crossings can be missed with propagating the system. This is because when adiabatic states become very close to each other (or even totally degenerate) the nonadiabatic coupling can form a large, sharp peak with respect to the reaction coordinate. If the nuclear timestep is too large this large peak can be completely missed leading to several artifacts. There have been various solutions proposed that are referenced in ref \cite{Carof2017FSSH, Wang2016}. In this work, I will use the self-consistent surface hopping correction introduced by Wang and Prezhdo \cite{Wang2014}.  A final shortcoming of surface hopping is that it has not been derived from first principles and cannot be guaranteed to work generally. Though, in practise, surface hopping has been widely adopted and tested on a variety of systems and its suitability for use in these has been reported and many problems have been addressed \cite{Wang2016}.
 \\\\
-The ongoing search to address these issues, and ultimately develop the panacea of nonadiabatic molecular dynamics techniques, has lead to a number of other techniques being developed. One of these, CTMQC, will be studied in detail in this thesis and is the semi-classical limit of the exact factorisation of the time-dependent Schr\"odinger equation.
+A flavour of surface hopping that has proved remarkably effective at simulating, large, organic, semi-conducting, systems is fragment orbital-based surface hopping (FOB-SH) \cite{FOB-SH_Spencer}. This technique combines Tully's fewest switches surface hopping; the corrections mentioned above; and fast coupling calculations through the analytic overlap method (AOM) \cite{gajdos_ultrafast_2014} to simulate systems of hundreds to thousands organic molecules. This method has been discussed in numerous publications \cite{Giannini2018Crossover, Carof2017FSSH, Giannini2019, C9FD00046A, C9CP04770K, C9TC05270D, FlickPolarons, FOB-SH_Spencer, C6FD00107F} so I will provide only a brief outline here.
+\\\\
+\subsection{FOB-SH}
+Dynamics within the system are dictated by a simplified 1-particle Hamiltonian (given in equation \eqref{eq:general_H}).
+\begin{equation}
+	H = \sum_k \epsilon_{k} | \phi_k  \rangle \langle \phi_k  | + \sum_{k \ne l} H_{kl}  | \phi_k  \rangle \langle \phi_l  |
+	\label{eq:general_H}
+\end{equation}
+where $\phi_k\!=\!\phi_k ({\bf r},{\bf R}(t))$ is the HOMO/LUMO of molecule $k$; 
+$\mathbf{r}$ is the position of the hole/electron; $\mathbf{R}(t)$ are the time-dependent nuclear coordinates; 
+$\epsilon_{k}\!=\!\epsilon_{k}(\mathbf{R}(t))$ is the site energy, that is, the potential energy of the state with the 
+hole/electron located at site $k$; and $H_{kl}\!=\!H_{kl}(\mathbf{R}(t))$ is the electronic coupling between 
+$\phi_k$ and $\phi_l$. All Hamiltonian matrix elements, {\it i.e.} site energies and couplings, depend on the nuclear 
+coordinates which, in turn, depend on time, $\mathbf{R\!=\!R}(t)$ as determined by the nuclear dynamics.
+In the FOB-SH approach the charge carrier is described by a time-dependent 1-particle wavefunction, $\Psi(t)$,
+expanded in the same basis that is used to represent the Hamiltonian Equation \eqref{eq:general_H},
+\begin{equation}
+\Psi(t)  = \sum\limits_{l=1}^{M} u_l (t)  \phi_{l} ({\bf R}(t)), \label{eq:fob-expansion0}
+\end{equation}
+where $u_l$ are the expansion coefficients. Insertion of Equation~(\ref{eq:fob-expansion0}) in the
+time-dependent Schr\"{o}dinger equation gives the time-evolution of the hole/electron wavefunction in the
+valence/conduction band,
+\begin{equation}
+i\hbar\dot{u}_{k}(t) = \sum\limits_{l=1}^{M}{u}_{l}(t)\left({H}_{kl}({\bf R}(t)) - i \hbar d_{kl}({\bf R}(t)) \right) \label{eq:cdot1},
+\end{equation}
+where $d_{kl} \!=\! \langle \phi_k \vert \dot{\phi}_l \rangle$ are the non-adiabatic coupling elements.
+The nuclear degrees of freedom are propagated on one of the potential energy surfaces (PES) obtained by diagonalizing the
+Hamiltonian Equation\eqref{eq:general_H} and denoted as $E_a$ (``$a$" for ``active surface"). While nuclear motion
+couples to the motion of the charge carrier via the dependences on ${\bf R}(t)$ in Equation \eqref{eq:cdot1}, feedback
+from the charge carrier to the nuclear motion is accounted for by transitions of the nuclear dynamics (``hops") from
+the PES of the active eigenstate $a$ to the PES of another eigenstate $j$ using Tully's surface hopping probability.\cite{FSSH_orig}
+The FOB-SH calculations are carried out, as described previously, for single crystalline pentacene\cite{Giannini2020} using decoherence correction, removal of decoherence-induced spurious long-range charge transfer, trivial crossing detection
+and a multiple time step algorithm. Importantly, as shown in previous work \cite{gajdos_ultrafast_2014}, the electronic Hamiltonian Equation\eqref{eq:general_H}
+reproduces the DFT valence band structure of single crystalline pentacene\cite{Giannini2020} very well.
+\\\\
+In addition to FOB-SH, CTMQC will be studied in detail in this thesis. This is a relative newcomer on the MQC scene and is the semi-classical limit of the exact factorisation of the time-dependent Schr\"odinger equation.
 \section{Exact Factorisation and its Semi-Classical Limit}
 Exact factorisation \cite{abedi_exact_2010} involves separating the total molecular wavefunction into a nuclear component and electronic component. Where the electronic component is parametrically dependent on the nuclear coordinates, $\mathbf{R}$. This is shown below in eq \eqref{eq:exact_fact} where $\chi$ is the nuclear wavefunction and $\Phi$ is the electronic one.
 \begin{equation}
  \Psi(\mathbf{R}, \mathbf{r}, t) = \Phi_{\mathbf{R}}(\mathbf{r}, t) \chi(\mathbf{R}, t)
  \label{eq:exact_fact}
  \end{equation}
- In the above equation (and throughout this report) I will denote nuclear coordinates and electronic coordinates $\mathbf{R}$ and $\mathbf{r}$ respectively. The nuclear and electronic wavefunctions then obey separate, but coupled, time-dependent Schr\"odinger equations for spatial and temporal evolution. In this report, I will be focussing on the semi-classical limit of these equations, named Coupled-Trajectory Mixed Quantum-Classical Molecular Dynamics (CTMQC), and give results of a combination of this and the AOM method explained in appendix \ref{ap:AOM}.
+ In the above equation (and throughout this report) I will denote nuclear coordinates and electronic coordinates $\mathbf{R}$ and $\mathbf{r}$ respectively. The nuclear and electronic wavefunctions then obey separate, but coupled, time-dependent Schr\"odinger equations for spatial and temporal evolution. In this report, I will be focussing on the semi-classical limit of these equations, named Coupled-Trajectory Mixed Quantum-Classical Molecular Dynamics (CTMQC), and give results of my implementation of this within the FOB framework.
 \\\\
-The equations for the evolution of the electronic and nuclear wavefunctions in the exact factorisation \cite{abedi_exact_2010} are given below:
+The (2 Schr\"odinger) equations for the evolution of the electronic and nuclear wavefunctions in the exact factorisation \cite{abedi_exact_2010} are given below:
 \begin{align}
   \im\hbar \frac{\delta}{\delta t} \Phi_{\mathbf{R}}(\mathbf{r}, t) &= \left( \hat{H}_{BO} + \hat{U}_{en}\left[ \Phi_{\mathbf{R}}, \chi\right] - \epsilon(\mathbf{R}, t) \right) \Phi_{\mathbf{R}} (\mathbf{r}, t)
   \label{eq:electronic_exact}

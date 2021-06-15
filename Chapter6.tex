@@ -62,7 +62,7 @@ For a single molecule system this value is the same for all $\gamma$ and no opti
   \label{eq:SelfScheme}
 \end{equation}
 In equation \eqref{eq:SelfScheme} we have removed the $\gamma$ index from the most expensive part of the sum; this means we can calculate it once and store it. In the second term we only sum over atoms in charged molecule $\gamma$ and remove the contribution from molecule $\gamma$ in its neutral state and add the contribution from molecule $\gamma$ in its charged state. Seeing as the correction part of equation \eqref{eq:SelfScheme} is the only part repeated from each $\gamma$ this reduces the cost of this calculation from $O(N_{mol}, N_{atom})$ to just $O(N_{atom})$. The same idea is used for the remaining terms in the Ewald sum.
-\subsection{real space addition subtraction}
+\subsection{Real space addition subtraction}
 The real space term is more complicated than the self-energy term, though the idea is the same. That is, the fully neutral contribution is calculated and for individual sites/molecules a correction is applied. This is shown in equation \eqref{eq:RealScheme}
 \begin{align}
   \begin{split}
@@ -77,7 +77,7 @@ In equation \eqref{eq:RealScheme} the most expensive summation ($O(N_{atom}^2)$)
 The bonded correction terms remove electrostatic contributions to energies (and forces) for atoms that are bonded. This is because interactions are already accounted for by the intra-molecular force-field (bonds, bends, torsions etc\ldots). These interactions are easily removed from the real space sum by omitting them in the loop. Therefore, this is a correction only for the reciprocal space sum.
 \\\\
 These interactions occur within molecules and their contribution can be decomposed into molecular contributions. These interactions can therefore be handled in the same way as the intra-molecular addition-subtraction scheme as discussed in section \ref{sect:addSubMethod}.
-\subsection{reciprocal space addition subtraction}
+\subsection{Reciprocal space addition subtraction}
 The reciprocal energies can be optimised using the addition-subtraction technique. However, the forces cannot. This is a big problem for any implementation of Ewald electrostatics within surface hopping as the electrostatic part of the Ewald sum is by far the most expensive. In fact in the same 250 molecule system as in figure \ref{fig:ES_Timings} the reciprocal space component took 88\% of the calculation time. In larger systems this increases. Repeating this calculation $N_{mol}$ times would be far too slow and would limit the surface hopping code to small systems of tens of molecules. However, the damped shifted forces technique (DSF) \cite{DSF} can be used to approximate the electrostatic interactions without the reciprocal force term. For completeness I have included the addition-subtraction scheme for the reciprocal space energies below in equation \eqref{eq:RecipScheme} and for the forces in appendix \ref{ap:EwaldForcesAddSubRecip}.
 \begin{equation}
   E^{\gamma}_{recip} = \frac{1}{2 \pi V} \sum_{\mathbf{k} \neq 0} \frac{1}{|\mathbf{k}|^2} e^{\frac{\pi^2 |\mathbf{k}|^2}{\eta^2}} \left| \sum_{j}^{N_{at}} q^{n}_{j} e^{2 \pi \mathbf{k} \cdot \mathbf{R}_{j}}  + \sum_{j \in \gamma}^{N_{at}} (q^{c}_{j} - q^n_j) e^{2 \pi \mathbf{k} \cdot \mathbf{R}_{j}} \right| ^2

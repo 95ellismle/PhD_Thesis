@@ -561,29 +561,6 @@ Where:
 \end{itemize}
 Once again, we first calculate the total force between all neutral molecules. The charge-charge interactions are substituted in for the neutral-neutral interactions for atoms on the charged molecule. The charge-neutral interactions are then substituted in for the neutral-neutral interactions for the charged molecule and its environment. The bonded interaction corrections are the same as these.
 
-\section{Reciprocal Space}
-\label{ap:EwaldForcesAddSubRecip}
-The reciprocal space forces, as mentioned in the main text, cannot be decomposed with the addition-subtraction scheme.
-
-\begin{equation}
-	\F_{i}^{\gamma}(\mathbf{R}) =  \left\lbrace \begin{array}{lc}
-	  4\pi q_{i}^{C} \sum_{\mathbf{k} \neq 0} \mathrm{Im}\left[ S^{'}_{\mathbf{k}} E_{\mathbf{k},i}^{*} \right]; & i \in \gamma\\\\
-	
-	4\pi q_{i}^{N} \sum_{\mathbf{k} \neq 0} \mathrm{Im}\left[ S^{'}_{\mathbf{k}} E_{\mathbf{k},i}^{*} \right];& i \notin \gamma
-	\end{array}
-	\right.
-	\label{eq:AddSubForcesRecip}
-\end{equation}
-Where:
-\begin{itemize}
-  \item $S_{\mathbf{k}}^{'} = A_{\mathbf{k}} \left[\sum_{j} q_j^{N} E_{\mathbf{k}, j} + \sum_{j \in \gamma} \left(q_j^{C} - q_{j}^{N}\right) E_{\mathbf{k}, j}\right]$
-
-  \item $A_{\mathbf{k}} = \frac{\mathbf{k}}{|\mathbf{k}|^2} e^{\frac{|\mathbf{k}|^2}{4 \alpha^2}}$
-
-  \item $E_{\mathbf{k}, j} = e^{2 \pi \mathrm{i} \mathbf{k} \cdot \R_{j}}$
-\end{itemize}
-\noindent The calculation of this equation scales as $\mathcal{O}(N^3)$ where $N^3 = N_{states} N_{at} N_{k}$. This is because for every atom, $i$, in charged molecule, $\gamma$, a loop over $\mathbf{k}$ vectors must be calculated.
-
 \chapter{Colophon}
 \label{appendixlabel3}
 This document was set in the Times Roman typeface using \LaTeX (specifically LuaTeX) and Bib\TeX + make, composed with Vim.

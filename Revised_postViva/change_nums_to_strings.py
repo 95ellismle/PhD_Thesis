@@ -19,7 +19,7 @@ with open(fn, 'r') as f:
 
 quantity_identifiers = {'of'}
 
-allOcc = re.findall(" [a-z]* [0-9] [a-z]* ", txt)
+allOcc = re.findall(" [a-z,]* [0-9] [,a-z]* ", txt)
 for i in allOcc:
     splitter = i.split()
     num_wrd = splitter[1]
@@ -39,7 +39,8 @@ for i in allOcc:
         txt = txt.replace(i, repl_txt)
 
 
-with open(fn.split('.')[0] + "_1.tex", 'w') as f:
+#with open(fn.split('.')[0] + "_1.tex", 'w') as f:
+with open(fn, 'w') as f:
     f.write(txt)
 
 

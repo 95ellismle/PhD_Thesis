@@ -10,7 +10,7 @@ num_map = {str(i): j for i, j in enumerate(('zero', 'one', 'two',
 import re
 
 
-fn = "CTMQC_Applied_To_Tully_Models.tex"
+fn = "Chapter3.tex"
 
 
 with open(fn, 'r') as f:
@@ -39,8 +39,8 @@ for i in allOcc:
         txt = txt.replace(i, repl_txt)
 
 
-#with open(fn.split('.')[0] + "_1.tex", 'w') as f:
-with open(fn, 'w') as f:
+with open(fn.split('.')[0] + "_1.tex", 'w') as f:
+#with open(fn, 'w') as f:
     f.write(txt)
 
 

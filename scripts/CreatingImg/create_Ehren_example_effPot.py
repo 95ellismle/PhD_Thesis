@@ -20,7 +20,7 @@ effPot[x > 0] *= 0.5
 
 
 
-f, a = plt.subplots(figsize=(10, 9))
+f, a = plt.subplots(figsize=(20, 10))
 
 a.plot(x, pot1, color=ut.RED, lw=5)
 a.plot(x, pot2, color=ut.BLUE, lw=5)
@@ -40,11 +40,11 @@ a.annotate("PES 2", (7.5, 7.1), fontsize=ut.ANNOTATE_FONTSIZE, color=ut.BLUE)
 
 a.grid(False)
 a.spines['bottom'].set_visible(True)
-a.set_xlabel("Reaction Coordinate", fontsize=22)
+a.set_xlabel("Reaction Coordinate", fontsize=28)
 a.spines['top'].set_visible(False)
 a.spines['right'].set_visible(False)
 a.spines['left'].set_visible(True)
-a.set_ylabel("Energy", fontsize=22)
+a.set_ylabel("Energy", fontsize=28)
 a.set_xticks([])
 a.set_yticks([])
 

@@ -9,12 +9,12 @@ LaTeXSources= $(wildcard *.tex *.bib) ucl_thesis.cls
 
 .PHONY: all clean superclean test
 all: Main.pdf
-thesis: Main.pdf & xdg-open Main.pdf
+thesis: Main.pdf; xdg-open Main.pdf
 
 Main.pdf: $(LaTeXSources)
-	lualatex --halt-on-error $(basename $@).tex
+	lualatex --dry-run --halt-on-error $(basename $@).tex
 	bibtex $(basename $@)
-	lualatex --halt-on-error $(basename $@).tex
+	lualatex --dry-run --halt-on-error $(basename $@).tex
 	lualatex --halt-on-error $(basename $@).tex
 
 TestCases=phd,a4paper,oneside.pdf phd,a4paper,twoside.pdf mres,a4paper,oneside.pdf mres,a4paper,twoside.pdf mphil,a4paper,oneside.pdf mphil,a4paper,twoside.pdf

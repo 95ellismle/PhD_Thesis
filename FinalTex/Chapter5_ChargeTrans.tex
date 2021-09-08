@@ -1,0 +1,183 @@
+\section{Charge Transfer Properties}
+We have seen that the final structure of the pentacene systems becomes more ordered and crystal-like as the quenching time is increased. It would be good now to see how this affects the charge transfer properties. A key quantity governing charge transfer rates is the ratio between electronic coupling and reorganisation energy, $\frac{H_{ab}}{\lambda}$. Seeing as we have a single molecule system, by plotting the electronic coupling we can get a qualitative view of the charge transfer dynamics and see which paths are the most likely within the structure.
+\subsection{Global Couplings}
+\label{sect:GlobCoup}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{../img/DifferentQuenchTimes/GlobalCouplings.png}
+	\caption{\label{fig:glob_coup}The global coupling distribution for each of the quenched structures (in blue, orange, green and red) and \replace{1}{one} structure after a 10ns quench without using electrostatics (purple line). The black dashed lines represent the maximum coupling within a perfect pentacene crystal.}
+\end{figure}
+\noindent The global coupling distribution gives an overview of the values of coupling within the system, hence an idea of the charge transport properties of the system. To calculate these couplings I have used the analytic overlap method (AOM)\cite{gajdos_ultrafast_2014} between all pairs of molecules (using a nearest neighbour cutoff) in the final snapshot of each quenched system. As can be seen from figure \ref{fig:glob_coup}, as the quench time increases a \replace{knee}{shoulder} starts to form in the distribution at a high coupling value ($\mremove{~80 meV}$ \madd{approximately eighty meV}). This is especially obvious in the 100ns quench structure (red curve) which has far fewer lower energy couplings and more coupling values approaching the crystal maximum of \mremove{$117$}\add{one hundred and seventeen} meV.
+\\\\
+The figure also highlights the importance of a correct account of electrostatic interactions in the formation of these structures. The purple line shows the coupling distribution for the same simulation without any electrostatics. In this curve we see far more very high values of coupling --substantially higher than those seen in the perfect crystal. This is due to it now being energetically favourable to form \mremove{a} more tightly packed face-to-face structures giving rise to larger molecular overlaps hence higher couplings. The effect of the inclusion of electrostatic interactions has been discussed in other studies \cite{C7CE01700F, Ryno2014, Kafer2008}. In short, the positive charges on the outside of each pentacene molecule and the negative charges in the centre forces each molecule to align tilted with respect to one another. We see all the other distributions fit well between the \replace{2}{two} black lines, which denote the maximum coupling value in a perfect crystal. This serves as a further confirmation of the forcefield parameterisation.
+\subsection{Coupling Networks}
+\label{sect:couplGraphs}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{../img/CouplingPlots/CouplingGraphs.png}
+	\caption{\label{fig:crystalCouplingGraph}Structure and electronic properties of bulk pentacene phases.  The disordered structures were obtained from melt-quench molecular dynamics simulation.   
+	The bottom row, show a 'front on' view of the entire simulated sample of \replace{3,000}{three thousand} molecules for amorphous and nanocrystalline phases.  The final (far-right) image shows the experimental structure of single-crystalline pentacene (polymorph I)\cite{Campbell1961}.  
+    The region highlighted in light gray, in the following denoted `active region', is shown enlarged in the middle and bottom rows and viewed `front on' or as indicated by arrows. 
+     The middle row, shows a weighted graph of electronic couplings within the active region. Molecular centers of mass are joined with lines denoting coupling 
+    strengths relative to the re-organisation energy of the pentacene molecule. Blue lines depict couplings of $\frac{\lambda}{100} \le H_{ab} < \frac{\lambda}{10}$, 
+    green lines depict couplings of $\frac{\lambda}{10} \le H_{ab} < \frac{\lambda}{2}$ and red lines depict couplings of $\frac{\lambda}{2} \le H_{ab}$.
+     The upper row, depicts an isosurface of the hole carrier wavefunction, $\Psi(t)$ (Eq. \eqref{eq:fob-expansion0}), during 
+     FOB-SH simulation of charge transport (red and blue).
+     The crystallinity is an indication of the structural order of the system and was calculated from linearly interpolating between the mass-density of amorphous and single crystalline 
+	 phases.}
+\end{figure}
+\noindent In figure \ref{fig:crystalCouplingGraph}, the lower row shows representative \replace{2D}{two dimensional} cuts through each of the quenched samples. These are the areas coloured in gray. In the middle row, the centres of mass of each molecule are joined with lines according to 
+the strength of electronic coupling ($H_{ab}$) between them. Blue, green and red lines depict small, medium and high coupling strengths respectively. The categories are: 
+$\lambda/100 \le H_{ab} < \lambda/10$,  $\lambda/10 \le H_{ab} < \lambda/2$ and $\lambda/2 \le H_{ab}$, where $\lambda$ is the molecular (or inner-sphere) 
+reorganisation free energy of pentacene, \replace{98}{ninty eight} meV.  If the picture of hole hopping between molecules was applicable, the blue and green lines would correspond to 
+ET steps in the non-adiabatic and adiabatic regime, respectively. For all red connections, ET theory breaks down because at this point electronic coupling is so strong 
+that there is no longer an activation barrier between initial and final state and the charge carrier starts to delocalise\cite{C6FD00107F}. As expected, it is observed that  
+the sample becomes electronically better connected (more red connections) as the crystallinity increases.  
+This is quantified by clustering regions of high couplings as sets of $N$ molecules that can all be connected with an uninterrupted path of red lines (see Table \ref{tab:fragments} for a summary).
+In the amorphous sample (0ns) formation of small islands of size \mremove{$4\pm4$}\madd{four plus or minus four} molecules begins. At \replace{30}{thirty}\% crystallinity these islands become connected resulting in the formation of 
+elongated \replace{1D}{one dimensional} paths, which extend to \replace{2D}{two dimensional} clusters at \replace{60}{sixty}\% crystallinity. At \replace{80}{eighty}\% crystallinity these clusters grow to \mremove{$9\pm16$}{nine plus or minus sixteen} molecules, but still short of the formally infinitely 
+large cluster size of the single crystal. The notably wide spread in cluster size distribution is due to the presence of a large number of smaller clusters (\replace{2-4}{two to four} molecules). 
+This, as will be discussed further below, has a marked impact on electron hole delocalisation and mobilities. \\
+\\
+\begin{table}
+ \caption{\label{tab:fragments}Properties of pentacene in different bulk structures and in ultrathin (2D) films.}
+\begin{center}
+  \begin{tabular}[htbp]{@{}llllllll@{}}
+    \hline
+     \multicolumn{8}{c}{bulk pentacene} \\
+    $\tau$ (ns)$^a$ & structure$^b$ & $\rho$ (g cm$^{-3}$)$^c$ &  $Cr$ (\%)$^d$  &  $N^e$   & IPR$^f$  & $\mu^{g,h}$ (comp) & $\mu^h$ (exp) \\
+    \hline
+    0       & am & 1.19   & 0     & $4\pm4$      & 3.0 & 0.21 &       \\
+    1       & nc & 1.22   & 30   & $5\pm5$      & 3.8	 & 0.23 &       \\
+    10     & nc & 1.25   & 60   & $7\pm9$    & 4.8 & 0.92   &        \\
+    100   & nc & 1.28  & 80   & $9\pm16$  & 9.5 & 1.8   &        \\
+ ($\infty$) & sc &  1.30  & 100 & $\infty$           & 17 & 10 & 5$^i$; 5.6$^j$ \\
+    \hline
+    \multicolumn{8}{c}{2D pentacene} \\
+             & sc, 1L &        &      &  $\infty$ &       5.4   &  4.2 & 1.6$^k$\\
+             & sc, 2L &        &     &  $\infty$ &         12 & 7.3 & 3$^k$ \\
+    \hline
+  \end{tabular}
+\end{center}
+\end{table}
+$^a$ Quench time from 800 K to 300 K in molecular dynamics simulation in the NPT ensemble. \\
+$^b$ am = amorphous, nc = nanocrystalline, sc = single crystalline, 1L = 1 wet layer + 1 sc monolayer, 2L = 1 wet layer + sc bilayer. \\
+$^c$ Mass density. \\
+$^d$ Crystallinity, see main text for definition. \\
+$^e$ Mean and root-mean-square fluctuation of number of molecules in clusters with high coupling, see main text. \\
+$^f$ Equation \eqref{eq:IPR}, defined later.  \\
+$^g$ Equation \eqref{eq:mobility}, defined later. \\
+$^h$ in units of cm$^2$ V$^{-1}$ s$^{-1}$. \\
+$^i$ Ref.\cite{Takeyama2012_PentCryst}, OFET, single crystal on Al$_2$O$_3$+ionic liquid, polymorph I. \\
+$^j$ Ref.\cite{Arabi2016}, OFET, thin single crystal on SiO$_2$. \\
+$^k$ Ref.\cite{Zhang2016TF}, OFET, ultrathin (2D) single crystal on boronitride.
+
+Finally, in figure \ref{fig:crystalCouplingGraph}, the upper row shows a representative wavefunction for each of the systems studied. In the first image (\replace{0}{zero}\% crystallinity) we see the wavefunction localised primarily on a single molecule with a small tail its neighbours. As the crystallinity increases so too does the delocalisation of the wavefunction, until eventually, in the single crystal sample (\replace{100}{one hundred}\% crystallinity) the wavefunction is delocalised over \replace{17}{seventeen} molecules.
+
+\section{Surface Hopping Methodology}
+Several experimental as well as computational studies have indicated that charge transport in crystalline molecular OS falls into a difficult regime where the charge is neither fully delocalised over the bulk material nor completely localised on a single molecule, as had often been assumed.\cite{Vehoff2010,Deng2004,Kwiatkowski2009,Athanasopoulos2007,Vehoff2010_2,Kordt2016,Zhang2019} It has recently been shown, using advanced quantum dynamical simulations, that charge carriers in single-crystalline OS form ``flickering polarons", objects that are half-way between waves and particles\cite{FlickPolarons,Giannini2019,Ziogos20}. It was found they are delocalised over up to \replace{10-20}{ten to twenty molecules} in the most conductive crystals and constantly change their shape and extension under the influence of the thermal motion of the atoms (crystal vibrations).  Taking the example of bulk crystalline pentacene, it was found that the excess hole is typically delocalised over \replace{17}{seventeen} molecules, in excellent agreement with experimental estimates from electron spin resonance data (\replace{17}{seventeen} molecules) The delocalisation of the polaron and mobility are limited by the thermal fluctuations of electronic coupling (off-diagonal electron-phonon coupling) and site energy. This picture of charge transport, obtained by numerically solving the time-dependent electronic Schr\"odinger equation coupled to nuclear motion, resembles closely, and gives support to, the transport scenario predicted by the recently established \replace{transient localisation theory}{Transient Localisation Theory} (TLT).\cite{Nematiaram2019,PhysRevB.83.081202}. However, this makes simulating the charge carrier particularly difficult as the \replace{2}{two} standard techniques (hopping and band theories) breakdown in this regime. Further, TLT is inapplicable to systems with high levels of disorder. For this reason, fragment orbital surface hopping (FOB-SH) was used to simulate the motion of the excess charge carrier in each of the samples and hole-mobilities and inverse participation ratios (IPR) were calculated.
+\\\\
+The FOB-SH methodology is a combination of Tully's original fewest switches surface hopping (described in the introduction) with fragment orbital based framework (described at the beginning of chapter \label{chap:molecular_systems}). That is, the Hamiltonian is constructed with diagonals calculated from a classical force-field and off-diagonals calculated from the overlap between singly occupied molecular orbitals (SOMOs). Various extensions to the original surface hopping method have been added to account for overcoherent propagation and trivial crossings leading to spurious transfer. These are mentioned in the introduction and have been discussed at length in various papers \cite{Giannini2018Crossover,Carof2017FSSH,C9FD00046A,C9CP04770K,C9TC05270D,FlickPolarons,FOB-SH_Spencer}.
+
+\subsection{Surface Hopping Setup}
+The surface hopping simulations require a swarm of hundreds of independent trajectories (\mremove{$\sim$200-500}\add{two hundred to five hundred}), each with slightly different geometries to fully sample phase space. To create these trajectories, initial positions and velocities were sampled every 1ps from a classical MD simulation (carried out under NVT). In order to initialise the (electron-hole) wavefunction for each trajectory, the Hamiltonian was calculated. This was then used to find an adiabatic state within \replace{3}{three}\mremove{K}\madd{k}$_{B}$T of the ground state energy and relatively close to the center of the simulated system. The details of this procedure are given in appendix \ref{ap:AdiabaticSelector}. This initialisation of the wavefunction in a low lying adiabatic state allowed for quick convergence of the mean-squared displacement of the charge carrier. Other parameters, such as the method chosen for correcting for over-coherence, trivial crossings and spurious transfer were taken from previous surface hopping simulations carried out by other members of the Blumberger group. The code at the time did not support the calculation of electrostatic interactions. So, in order to maintain the structure from the melt-quench simulations, center of mass restraints were used. These are shown in appendix \ref{ap:Restraints}. Finally, the full system for each of the \replace{4}{four} quench times was very large (\replace{3,000}{three thousand} mol). So, to sample the mobility at various points within the superstructure the full system was divided into smaller subsystems. The procedure for dividing the superstructure was different for each quench time and full details are given in appendix \ref{ap:system_divisions}. In the 0ns and 1ns quenched runs, the full system was divided into \replace{6}{six} roughly even slabs. This was because these structures had very little order and the charge transport was expected to be isotropic. In the 10ns and 100ns quenched systems, a DBCAN-like algorithm \cite{DBSCAN} was used to cluster molecules (by mass-density). These clusters were then used as active regions within the surface hopping code. It is important to note that, although it is not thought to affect the FOB-SH simulations within the single-crystal sample, electrostatics are thought to reduce the mobilities within the more amorphous samples. This is due to an increase in energetic disorder \cite{ESEffectOnMob} from the electrostatics. This will be the subject of further research and in the following chapter, \replace{2}{two} implementations of electrostatic interactions within the FOB-SH code will be presented.
+
+\subsection{Inverse Participation Ratio}
+The inverse participation ratio (IPR) gives a measure of spread of the polaron. A value of \replace{1}{one} would mean the polaron is localised on a single molecule, a completely delocalised polaron would have a value of $N_{mol}$ where $N_{mol}$ is the number of molecules in the system. The formula used in its calculation is given below in equation \eqref{eq:IPR}:
+\begin{equation}
+  IPR(t) = \frac{1}{N_{\text{traj}}} \sum_{n=1}^{N_{\text{traj}}} \frac{1}{\sum_{i}^{N_{\text{mol}}} \left| u_{i}^{n}(t) \right|^4}
+  \label{eq:IPR}
+\end{equation}
+Where $N_{\text{traji (mol)}}$ represents the number of trajectory (molecules) and $u_{i}^{n}(t)$ is the diabatic expansion coefficient at time $t$, on replica $n$ and molecule $i$. 
+\\\\
+The IPR is an important quantity as the level of delocalisation of the wavefunction is positively correlated with its mobility. That is, molecular systems that have a large delocalisation of the charge carrier tend to have larger mobilities. It is also useful in determining if the system has reached equilibrium, as in equilibrium the IPR tends to converge to a constant value.
+\subsubsection{Quantum Localisation Results}
+
+\begin{figure}[htp]
+  \includegraphics[width=\linewidth]{../img/DifferentQuenchTimes/ipr_3_samples.png}
+  \caption{\label{fig:IPR}
+  Mechanism of hole transport in bulk pentacene phases.
+   The transport scenario for amorphous, nanocrystalline and single-crystalline pentacene are shown in the bottom, middle
+  and top row, respectively. Pentacene molecules are shown in grey stick representation and the crystallinity of the phases is indicated on the scale to the right.
+  Isosurfaces of the charge carrier wavefuntion, $\Psi (t)$ (Eq.~\ref{eq:fob-expansion0}), are depicted in red and blue colors for three different times along a FOB-SH trajectory
+	as indicated. \madd{The red and blue colours depict positive and negative phases of the wavefunction.} The initial positions and extensions of the hole polaron are shown in the snapshots to the left (circles in pink), the transitions to the
+  new positions are shown in the snapshots in the middle, and the hole polaron in the new position is shown in the snapshots to the right (circles in blue).
+  Notice the different extent of hole carrier delocalisation for the different phases.}
+\end{figure}
+Three qualitatively different charge transport mechanisms are observed, depending on the crystallinity of the sample. These can be seen in figure \ref{fig:IPR}, where the hole wavefunction is plotted embedded within the molecular system.
+In the amorphous sample (Figure \ref{fig:IPR} bottom row), the localized charge is observed to hop infrequently from one small island to the next via transient
+delocalisation over and relocalisation on a new island, confirming the charge hopping mechanism that is often assumed for disordered structures.
+There is no preferential direction for hopping, the transport is slow and isotropic. The situation is markedly different at \replace{60}{sixty}\% crystallinity (Figure \ref{fig:IPR} middle row)
+In this system, as a consequence of multiple crystal domains forming, the transport mechanism is strongly dependent on the initial position of the charge. If initialized within an interfacial region (more static disorder), the transport remains sluggish and the polaron is localized over just a few molecules. When initialized within the crystal domain, the transport is similar to that of the \replace{80}{eighty}+\% crystallinity samples. In these, more crystalline, systems (Figure \ref{fig:IPR} top row)
+the delocalized charge carrier frequently expands to more than twice its original size, preferably along the high coupling direction T1 within the herringbone layer, followed by collapse to its
+original size at a neighbouring region in the crystal.  These ``diffusive jumps" of a ``flickering" polaron as they have previously been called \cite{FlickPolarons, Giannini2019}
+displace the centre of charge of the polaron by several lattice spacings at a time resulting in high (and anisotropic) charge mobilities.
+\\\\
+To quantify this change in localisation of the wavefunction with respect to crystallinity, the IPR is plotted, along with the hole mobility, in figure \ref{fig:mobilities}. It is clearly visible that the delocalisation of the carrier wavefunction, defined in terms of the inverse participation ratio (IPR, Eq. \eqref{eq:IPR}), increases with increasing crystallinity, reflecting the trend seen in the electronic coupling maps. In the amorphous sample, the static disorder of electronic coupling results in the wavefunction localising, on average, over just \replace{2-3}{two to three} molecules. At \replace{30}{thirty}\% and \replace{60}{sixty}\% crystallinity, the high concentration of defects restricts wavefunction delocalisation over \replace{5-6}{five to six} molecules, whereas at \replace{80}{eighty}\% we observe a marked increase to \replace{10}{ten} molecules, which is still some way off from the value for the single crystal, \replace{17}{seventeen} molecules.  At this point we also see for the first time a clear spatial anisotropy of the charge carrier wavefunction extending more strongly along the T1 high coupling direction in the pentacene crystal (diagonal direction in Figure \ref{fig:crystallinity}). Remarkably, a good correlation between the IPR and the cluster size in the electronic coupling map can be seen in Table \ref{tab:fragments} suggesting that carrier delocalisation is limited by static disorder of electronic coupling. This correlation is lost for the single crystal because in this case delocalisation is limited by the thermal disorder of electronic couplings (i.e., dynamic or electron-phonon coupling). 
+
+\subsection{Hole Mobilities}
+\label{sect:mobilities}
+A full discussion of the calculation of the charge carrier mobility calculation can be found in various papers \cite{Carof2017FSSH,Giannini2018Crossover,Giannini2019}. It is calculated from the Einstein diffusion constant, $D$, which in turn is calculated from the change in the mean squared displacement (MSD) of the charge carrier. The MSD is calculated via equation \eqref{eq:MSD} below
+\begin{align}
+  \label{eq:MSD_Exact}
+  MSD_{ab}(t) &= \frac{1}{N_{\text{traj}}} \sum_{n=1}^{N_{\text{traj}}} \left\langle \Psi^{n}(t) | (\mathbf{R} - \mathbf{R}_{0})^2 | \Psi^{n}(t) \right\rangle \\
+	&\approx \frac{1}{N_{\text{traj}}} \sum_{n=1}^{N_{\text{traj}}} \left(\mremove{\frac{1}{\sum_{i}^{N_{\text{mol}}}}}\madd{\sum_{i}^{N_{\text{mol}}}} \left| u^{n}_{i}(t) \right|^2 (\mathbf{R}_{i}^{n}(t))^2 \right)
+  \label{eq:MSD}
+\end{align}
+\replace{W}{w}here $\Psi^{n}$ is the wavefunction for trajectory $n$, $\mathbf{R}$ is the position coordinate and $\mathbf{R}_{0}$ is the position coordinate at time $t=0$. $\mathbf{R}_{i}^{n}(t)$ is the time-dependent position of the center of mass of molecule $i$ on trajectory $n$. Equation \eqref{eq:MSD_Exact} is the exact quantum mechanical equation for the MSD, equation \eqref{eq:MSD} is the equation that is used to calculate the MSD from the surface hopping output. The quantity is in general a \replace{3x3}{three by three} matrix and the values $a$ and $b$ are indices indexing each of the \replace{3}{three} Cartesian dimensions.
+\\\\
+After a short equilibration, the MSD increases linearly. This is indicative of Einstein diffusion and the coefficient can be calculated, in this linear regime, as in equation \eqref{eq:DiffConst} below:
+\begin{equation}
+  D_{ab} = \frac{1}{2} \lim_{t \rightarrow \infty} \frac{d}{dt}MSD_{ab}(t)
+  \label{eq:DiffConst}
+\end{equation}
+In order to calculate the time-derivative of the MSD, a line of best-fit is fitted to the MSD vs simulation time and the gradient is calculated. This is then used in the calculation of the mobility in equation \eqref{eq:mobility} below.
+\begin{equation}
+	\mu_{ab} = \frac{e D_{ab}}{k_{B} T}
+	\label{eq:mobility}
+\end{equation}
+Where $k_{B}$ is the Boltzmann constant, $e$ the elementary charge and $T$ is the temperature. The charge mobility is a quantity that can be calculated in experimental studies, so is an important quantity to calculate. It shows how quickly charge can be transported across a system and can be used to calculate other important quantities such as drift velocity ($v_{d} = \mu E$) or conductivity ($\sigma \propto \mu N_{carrier}$).
+\subsection{Surface Hopping Results}
+\begin{figure}[htp] 
+  \includegraphics[width=\textwidth]{../img/DifferentQuenchTimes/mobilities.png}
+  \caption{\label{fig:mobilities}Hole mobilities and inverse participation ratio (IPR) for the pentacene phases studied.  
+ In (A), computed hole mobilities and IPR from FOB-SH simulation are shown for bulk pentacene phases 
+ as a function of the crystallinity of the sample (blue and green circles, respectively). The local mobilities and IPR for different regions of the sample are shown in 
+	small circles and the averages are shown in large circles. In (B), computed mobilities for bulk pentacene phases and 2D pentacene layers (hollow circles) 
+	are compared to experimental results (filled circles). The bulk pentacene phases were classified as `amorphous', `polycrystalline' and single-crystalline. \madd{The mean value for each category is given by a horizontal line.}
+ Error bars for computed values indicate the spread in local mobility.  
+ 1,2: ref.~\cite{AmorphPentPumpProbe}, 
+ 3: ref.~\cite{BAE201398}, 
+ 4,5: ref.~\cite{AmorphPentTransportDodgy},
+ 6: this work, $Cr$ = 0\%,
+ 7,8: ref.~\cite{KNIPP2004595},
+ 9,10,11: ref.~\cite{Fritz2005},
+ 12: ref.~\cite{Duffy2008}, 
+ 13,14,15: ref.~\cite{Klauk02},
+ 16: this work, $Cr$ = 30\%,
+ 17: this work, $Cr$ = 60\%,
+ 18:  this work,  $Cr$ = 80\%,
+ 19: ref.~\cite{Zhang2016TF},
+  20: this work, 2D pentacene, 1L,
+ 21: ref.~\cite{Zhang2016TF},
+ 22:  this work, 2D pentacene, 2L,
+ 23,24: ref.~\cite{Lee2006}, 
+ 25: ref.~\cite{Takeyama2012_PentCryst},
+ 26: ref.~\cite{Arabi2016},
+ 27: this work, $Cr$ = 100\%.  
+	Additional information on the device measurements and gate dielectrics used can be found in appendix \ref{ap:PentTable}, Table \ref{tab:ap:expCompPent}.}
+\end{figure}
+\subsubsection{Hole Mobilities}
+Hole mobilities for all samples were obtained as explained in section \ref{sect:mobilities}. For each superstructure multiple active regions were selected to calculate a mobility for. These ``local" charge mobilities can show the impact of structural inhomogeneity of the quenched samples on charge transport. It can be seen that in the disordered samples, especially the one with \mremove{$\sim$}\replace{30}{approximately thirty}\% crystallinity, the local charge mobilities and IPR values exhibit a relatively large spread as some regions are more crystalline and thus more conductive than others (Figure \ref{fig:mobilities}, small open circles). In the structurally more homogenous sample with \replace{80}{eighty}\% crystallinity, the variation in local mobility becomes almost negligible. The average of the local charge mobilities and IPRs correlate well with the crystallinity of the sample (Figure \ref{fig:mobilities}, large circles). In figure \ref{fig:mobilities} Panel B, I have also included results from simulations and experimental measurements of mobility calculated for a \replace{2D}{two dimensional} thin film polymorph of pentacene, to fill the gap between polycrystalline and single-crystalline. The structure for this system is reported in Zhang et al \cite{Zhang2016TF} and the simulations were carried out \replace{by}{by a} previous member of the group\replace{ -Dr}{: Dr} Samuele Giannini.
+\\\\
+Over the last \replace{20}{twenty} years a large number of experimental hole mobilities have been reported for pentacene thin films and crystals from organic field effect transistor (OFET) measurements. Yet, there are several issues to consider when comparing my calculations to these measurements. In OFETs charge transport is typically probed on the micrometer scale over macroscropic time scales, whereas present calculations are carried out for nanoscale samples over short times (ps-ns). Moreover, OFET mobilities have been shown to be very sensitive to many details of the preparation method including, e.g., the gate dielectric used, the surface roughness, deposition rate and temperature etc. This can be seen in the very large spread of experimental mobilities  for amorphous pentacene (figure \ref{fig:mobilities}, panel B -blue section). My calculated value of hole mobility, of 0.14 cm$^2$ V$^{-1}$ s$^{-1}$, fits towards to upper end of this spread. It is suspected that the inclusion of electrostatic interactions may reduce this further. A more in-depth discussion of the role of electrostatics can be seen in Martinelli et al \cite{ESEffectOnMob}.
+\\\\
+Notwithstanding the above caveats, the correlation between experiment and computed FOB-SH mobilities is rather good, which supports the mechanistic picture that my simulations have revealed. The simulated results have been compared to experimental values for the fully amorphous and fully crystalline samples. For the fully crystalline sample the agreement to experiment is very good, my simulations produced a value of 10.3 cm$^2$ V$^{-1}$ s$^{-1}$ whereas experimental studies have reported values ranging from 5-10.5 cm$^2$ V$^{-1}$ s$^{-1}$. Again the value reported in this work sits at the upper end of the experimentally reported values for reasons discussed previously.
+
+\section{Conclusions}
+In this chapter, I have presented a molecular dynamics method for tuning the crystallinity of a pentacene sample based on melting and subsequently quenching the sample over various timescales. I have shown, as was expected, that longer quench times lead to more ordered structures and discussed the mechanism leading to this. That is, in longer quench times the few crystal fragments that begin to seed have a longer time to grow before their growth is impeded by neighbouring crystal fragments. I have displayed various macroscopic properties that confirm that the longer quench times do indeed show more order, including mass-density, angular distribution and the radial distribution function. Further, I have presented networks of electronic coupling within each of the quenched systems, that can be used to get a qualitative feel for the electronic transport properties without expensive quantum dynamics simulations.
+\\\\
+In calculating quantitative values for hole mobilities to compare to experimental values, I have shown that it is now possible to use explicit quantum dynamical calculations to simulate charge carrier transport in large, realistic samples of disordered organic semiconductors. My results are in remarkably good agreement with those available from experiment and provide a molecular-scale picture of the \replace{N}{n}ature of the charge carrier and the transport mechanism as a function of the crystallinity of the system. The notion that charge carrier transport in disordered systems occurs via small polaron hopping is shown to be a reasonably good approximation only for fully amorphous systems - for semi-crystalline and crystalline samples significant charge carrier delocalisation occurs mandating the use of more advanced transport simulations, e.g.  the FOB-SH method used here. In general, there is a good correlation between crystallinity, carrier delocalisation and mobility.  Interestingly, we find that even relatively small amounts of structural disorder can lead to a significant drop in charge carrier delocalisation and hole mobility compared to the single crystal. This is an important consideration when comparing charge carrier mobilities in simulated organic systems, usually perfectly crystalline, with those of experiment, where it is difficult to prepare highly pure crystals devoid of defects. This approach is generally applicable to any molecular organic semiconductor and may be used for identifying new disordered materials with high charge mobility\madd{ and help shape the design rules for creating such materials}. 
+\\\\
+Finally, this study has served to highlight a potential drawback in the FOB-SH methodology as it currently stands. That is, the lack of electrostatic interactions within the simulations. These have not been implemented previously as the group's work was focussed on perfect crystals, where electrostatic interactions are not expected to affect the final result. However, in the more disordered systems this approximation may be a step too far. In the final chapter of this thesis, I will present my implementation of electrostatics within the surface hopping and a possible alternative to expensive Ewald summation.
+
+
+

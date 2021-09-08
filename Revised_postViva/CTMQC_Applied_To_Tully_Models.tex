@@ -3,7 +3,7 @@
 
 The Tully models, first proposed by John Tully in 1990 \cite{tully_molecular_1990}, are a collection of simple \mremove{1}\madd{one} dimensional model systems. They were designed to be simple enough to obtain accurate quantum results to benchmark new nonadiabatic molecular dynamics (NAMD) methods against. Originally there were \replace{3, 1}{three, one} dimensional, \mremove{1}\madd{single} atom models. However, in this work an extra model has been introduced with parameters taken from Gossel \cite{gossel_coupled-trajectory_2018}. This is to allow a full comparison of my implementation of CTMQC with the literature. In this chapter my implementation of CTMQC will be tested using these model systems and by comparing my results with those in the literature.
 \\\\
-In each of the Tully models the (diabatic) Hamiltonian is a function of nuclear positions \madd{, $\mathbf{R}$} and is a 2$\times$2 matrix that takes the form:
+In each of the Tully models the (diabatic) Hamiltonian is a function of nuclear positions\madd{, $\mathbf{R}$} and is a 2$\times$2 matrix that takes the form:
 \begin{equation}
   \hat{H} = \frac{\ \hat{P} ^2}{2M} + \left(
                                               \begin{array}{cc}
@@ -21,7 +21,7 @@ In order to propagate dynamics in the adiabatic basis we need to calculate vario
 \end{equation}
 \replace{W}{w}here $\psi_{l}^{(I)}$ is the adiabatic electronic basis function for adiabatic state $l$. This is given by the eigenvector of the Hamiltonian, on replica $I$, corresponding to state $l$. Illustrations of these \mremove{2}\madd{two} properties can be found below in fig \ref{fig:tully_schematics} for each of the \mremove{4}\madd{four} models systems.
 \begin{figure}[H]
-  \includegraphics[width=\textwidth]{../Chapter_tullyModels/model_schematics.png}
+  \includegraphics[width=\textwidth]{../Chapter_tullyModels/model_schematics_review.png}
   \caption{\label{fig:tully_schematics}Adiabatic potential energy surfaces (orange and blue) and element 1, 2 of the nonadiabatic coupling vector (black) for the \mremove{4}\madd{four} model systems. For parameters see appendix \ref{ap:tully_params}.}
 \end{figure}
 \newpage
@@ -111,9 +111,9 @@ The calculation of the quantum momentum is discussed in detail in Min, 17 \cite{
 	\includegraphics[width=\textwidth]{../img/CTMQC/TullyModels/Spikes/RlkDenom_Rlk_Qlk_Norm.png}
 	\caption{\label{fig:QlkSpike}As the denominator of the $\mathbf{R}_{lk,\nu}$ term approaches zero (bottom panel) the full $\mathbf{R}_{lk, \nu}$ term (2$^{\text{nd}}$ to bottom panel) can approach infinity which propagates through the $\mathcal{Q}_{lk, \nu}^{(I)}$ term (2$^{\text{nd}}$ to top panel) causing discontinuities and norm drift in the populations (top panel). The grey vertical bar denotes the region the denominator approaches 0. The thin solid red lines in the top panel show the norm drift for individual replicas.}
 \end{figure}
-\noindent In figure \ref{fig:QlkSpike}, as the denominator of quantum momentum intercept (the bottom panel) approaches \mremove{0}\madd{zero} the $\mathbf{R}_{lk, \nu}$ term may spike causing a discontinuity in the populations (through the quantum momentum). The reason this only occurs in Models 1, 2 and \mremove{4}\madd{four} is due to the fact that the difference in the adiabatic momenta terms ($\mathbf{f}_{l, \nu}^{(I)} - \mathbf{f}_{k, \nu}^{(I)}$) doesn't cross \mremove{0}\madd{zero} in Model 3 as the time-derivative of the adiabatic energies is always either positive or negative. \madd{d}
+\noindent In figure \ref{fig:QlkSpike}, as the denominator of quantum momentum intercept (the bottom panel) approaches \mremove{0}\madd{zero} the $\mathbf{R}_{lk, \nu}$ term may spike causing a discontinuity in the populations (through the quantum momentum). The reason this only occurs in Models 1, 2 and \mremove{4}\madd{four} is due to the fact that the difference in the adiabatic momenta terms ($\mathbf{f}_{l, \nu}^{(I)} - \mathbf{f}_{k, \nu}^{(I)}$) doesn't cross \mremove{0}\madd{zero} in Model 3 as the time-derivative of the adiabatic energies is always either positive or negative.
 \\\\
-In order to correct for this divergence I have investigated a number of alterations to the calculation of the quantum momentum. These depend on the detection of the spikes/divergences in the $\mathbf{R}_{lk, \nu}$ term and then the appropriate treatment of them. A divergence is recorded \mremove{is 2}\madd{if two} conditions are met. First is a simple threshold on the time-derivative of the intercept term, i.e. $|\mremove{\frac{\delta}{\delta t}}\madd{\frac{d}{dt}} \mathbf{R}_{lk, \nu}| > thresh$. The second condition is a threshold on the intercept denominator i.e. $|\mathbf{R}denom_{lk, \nu}| < thresh$. For example, if the absolute time-derivative of the $\mathbf{R}\mremove{{lk, \nu}}\madd{_{lk, \nu}}$ term is larger than a value (say 5) and the bottom of the fraction in equation \eqref{eq:Rlk} is within 0.01 of 0 then we assume the $\mathbf{R}_{lk, \nu}$ term is diverging and the simulation code then uses a different method of propagating the electronic coefficients.
+In order to correct for this divergence I have investigated a number of alterations to the calculation of the quantum momentum. These depend on the detection of the spikes/divergences in the $\mathbf{R}_{lk, \nu}$ term and then the appropriate treatment of them. A divergence is recorded \mremove{is 2}\madd{if two} conditions are met. First is a simple threshold on the time-derivative of the intercept term, i.e. $|\mremove{\frac{\delta}{\delta t}}\madd{\frac{d}{dt}} \mathbf{R}_{lk, \nu}| > thresh$. The second condition is a threshold on the intercept denominator i.e. $|\mathbf{R})_{\text{denom}, lk, \nu}| < thresh$. For example, if the absolute time-derivative of the $\mathbf{R}\mremove{{lk, \nu}}\madd{_{lk, \nu}}$ term is larger than a value (say 5) and the bottom of the fraction in equation \eqref{eq:Rlk} is within 0.01 of 0 then we assume the $\mathbf{R}_{lk, \nu}$ term is diverging and the simulation code then uses a different method of propagating the electronic coefficients.
 \noindent The alternative propagation methods that have been investigated are:
 \begin{enumerate}
 	\item Use Ehrenfest Dynamics (set e.g. $\mathcal{Q}_{lk, \nu}$ term to 0).
@@ -144,7 +144,7 @@ Multiple tests of the implementation of the quantities in the equations have bee
 \item Checking special cases for when $\sigma$ is replica independent (i.e. $\sigma^{(I)} = \sigma\madd{_{0}}$):
 	\begin{itemize}
 		\item $\sigma = \frac{\hbar}{2 \sigma\madd{_{0}}^2}$
-	  \item $\mathbf{R}_{lk, \nu} = \mathbf{R}_{\nu}^{(I)} \frac{\hbar}{2 \sigma^2}$ (Assuming the positions, $\mathbf{R}_{\nu}^{(I)}$ are also replica independent)
+	  \item $\mathbf{R}_{lk, \nu} = \mathbf{R}_{\nu}^{(I)} \frac{\hbar}{2 \sigma_0^2}$ (Assuming the positions, $\mathbf{R}_{\nu}^{(I)}$ are also replica independent)
 	\end{itemize}
 
 \item If all adiabatic population is localised on a single state ($|C_{l}^{(I)}|^2 = [1, 0, 0, \cdots, 0]$)\replace{. T}{ t}hen we get Ehrenfest dynamics on that replica.
